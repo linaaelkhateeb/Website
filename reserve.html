@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Reservation - Explore France</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Make a Reservation</h1>
+        <p>Reserve your table at one of the best restaurants in France!</p>
+    </div>
+
+    <main class="main-content">
+        <section class="restaurant-system">
+            <h2>Reservation Form</h2>
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Reservation Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Reservation Time:</label>
+                    <input type="time" id="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="people">Number of People:</label>
+                    <input type="number" id="people" min="1" max="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="special-requests">Special Requests:</label>
+                    <textarea id="special-requests" placeholder="Any special requests..." rows="4"></textarea>
+                </div>
+                <button type="submit" id="submit-reservation" class="reserve-button">Confirm Reservation</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="reserve.js"></script>
+</body>
+</html>

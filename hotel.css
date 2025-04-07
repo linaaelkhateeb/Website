@@ -1,0 +1,99 @@
+:root {
+    --background: #f9f6f2;
+    --highlight: #5D2510;
+    --card: #fff;
+    --accent: #806044;
+  }
+  
+  body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--highlight);
+  }
+  
+  .header {
+    background: var(--highlight);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .hotel-system {
+    padding: 2rem;
+  }
+  
+  .hotel-system h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-section {
+    margin-bottom: 2rem;
+  }
+  
+  .price-filter {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hotel-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .hotel-card {
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hotel-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .hotel-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .hotel-info h3 {
+    color: var(--highlight);
+    margin: 0;
+  }
+  
+  .hotel-info p {
+    margin: 0;
+  }
+  
+  .reserve-button {
+    margin-top: auto;
+    background: var(--highlight);
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .reserve-button:hover {
+    background: var(--accent);
+  }
+  
+  input[type="date"] {
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
