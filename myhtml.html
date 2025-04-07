@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreMyCountry - Attractions</title>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+<body>
+    <!-- Homepage Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Amazing Destinations</h1>
+            <p>Find the best attractions, restaurants, and experiences</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for a country, city or attraction...">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Attractions Section -->
+    <h2 class="section-title">Top Attractions</h2>
+    <div class="carousel">
+        <!-- Attraction Card 1: Colosseum -->
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140')"></div>
+            <span class="price-badge">$25</span>
+            <div class="card-content">
+                <h3 class="card-title">Colosseum</h3>
+                <p class="card-location">Rome, Italy</p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="read-more" onclick="toggleReadMore(this)">
+                    Read more
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="read-more-content">
+                    <p>The Colosseum is an oval amphitheatre in the centre of the city of Rome, Italy. Built of travertine limestone, tuff, and brick-faced concrete, it was the largest amphitheatre ever built at the time and held 50,000 to 80,000 spectators.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Attraction Card 2: Leaning Tower -->
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd311b5')"></div>
+            <span class="price-badge">$18</span>
+            <div class="card-content">
+                <h3 class="card-title">Leaning Tower of Pisa</h3>
+                <p class="card-location">Pisa, Italy</p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">☆</span>
+                </div>
+                <div class="read-more" onclick="toggleReadMore(this)">
+                    Read more
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="read-more-content">
+                    <p>The Leaning Tower of Pisa is the campanile, or freestanding bell tower, of the cathedral of the Italian city of Pisa, known worldwide for its nearly four-degree lean, the result of an unstable foundation.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Attraction Card 3: Trevi Fountain -->
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1515859005217-8a1f08870f59')"></div>
+            <span class="price-badge">Free</span>
+            <div class="card-content">
+                <h3 class="card-title">Trevi Fountain</h3>
+                <p class="card-location">Rome, Italy</p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="read-more" onclick="toggleReadMore(this)">
+                    Read more
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="read-more-content">
+                    <p>The Trevi Fountain is a fountain in the Trevi district in Rome, Italy, designed by Italian architect Nicola Salvi and completed by Giuseppe Pannini and several others. Standing 26.3 metres high and 49.15 metres wide, it is the largest Baroque fountain in the city.</p>
+                </div>
+            </div>
+        </div>
+        <!-- NEW Attraction Card 4: Vatican Museums -->
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1515859005217-8a1f08870f59')"></div>
+            <span class="price-badge">$22</span>
+            <div class="card-content">
+                <h3 class="card-title">Vatican Museums</h3>
+                <p class="card-location">Vatican City</p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="read-more" onclick="toggleReadMore(this)">
+                    Read more
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="read-more-content">
+                    <p>The Vatican Museums display works from the immense collection amassed by the Catholic Church throughout the centuries, including some of the most renowned classical sculptures and most important masterpieces of Renaissance art.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NEW Attraction Card 5: Pantheon -->
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1515859005217-8a1f08870f59')"></div>
+            <span class="price-badge">Free</span>
+            <div class="card-content">
+                <h3 class="card-title">Pantheon</h3>
+                <p class="card-location">Rome, Italy</p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">☆</span>
+                </div>
+                <div class="read-more" onclick="toggleReadMore(this)">
+                    Read more
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="read-more-content">
+                    <p>The Pantheon is a former Roman temple, now a church, in Rome, Italy, on the site of an earlier temple commissioned by Marcus Agrippa during the reign of Augustus. It is one of the best-preserved of all Ancient Roman buildings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleReadMore(button) {
+            const card = button.closest('.attraction-card');
+            const content = card.querySelector('.read-more-content');
+            
+            button.classList.toggle('active');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+    </script>
+</body>
+</html>

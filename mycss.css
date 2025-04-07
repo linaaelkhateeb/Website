@@ -1,0 +1,234 @@
+/* Global Styles with Your Organic Palette */
+:root {
+    --organic: #6A6F4C;    /* Primary buttons, accents */
+    --butter: #f9d0ddda;   /* Light overlays */
+    --coconut: #EDE1D2;    /* Card backgrounds */
+    --natural: #806044;    /* Secondary elements */
+    --palm-oil: #5D2510;   /* Headings, strong text */
+    --cocoa: #412F26;      /* Body text */
+    --shadow: 0 4px 6px rgba(93, 37, 16, 0.1);
+    --transition: all 0.3s ease;
+}
+h2, h3 {
+    color: var(--palm-oil); /* #5D2510 */
+    font-family: 'Chewy', cursive;
+  }
+  h1 {
+    color: var(--palm-oil); /* #5D2510 */
+    font-family: 'Chewy', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+p{
+    font-family: 'Chewy', cursive;
+}
+
+body {
+    font-family: 'Chewy', cursive;
+    margin: 0;
+    padding: 0;
+    color: var(--cocoa);
+    background-color: var(--coconut);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 70vh;
+    background-image: url(https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920);
+    background-size: 100% auto;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(106, 111, 76, 0.4); /* Organic overlay */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+    max-width: 800px;
+}
+
+.search-bar {
+    background: white;
+    border-radius: 50px;
+    padding: 8px;
+    display: flex;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: var(--shadow);
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background: var(--organic);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.search-bar button:hover {
+    background: var(--natural);
+}
+
+/* Attractions System */
+.section-title {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 2rem;
+    color: var(--palm-oil);
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    scrollbar-width: thin;
+}
+
+.carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background: var(--organic);
+    border-radius: 4px;
+}
+
+.attraction-card {
+    scroll-snap-align: start;
+    flex: 0 0 300px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+}
+
+.attraction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(93, 37, 16, 0.15);
+}
+
+.card-image {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.card-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(65, 47, 38, 0.5), transparent);
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-title {
+    font-weight: bold;
+    margin: 0 0 5px;
+    color: var(--palm-oil);
+}
+
+.card-location {
+    font-size: 0.9rem;
+    color: var(--natural);
+    margin: 0 0 10px;
+}
+
+.rating {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.star {
+    color: var(--organic);
+    margin-right: 2px;
+}
+
+.price-badge {
+    background: var(--natural);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.read-more {
+    display: flex;
+    align-items: center;
+    color: var(--organic);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.read-more svg {
+    margin-left: 5px;
+    transition: var(--transition);
+}
+
+.read-more-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    color: var(--cocoa);
+}
+
+.read-more.active svg {
+    transform: rotate(180deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero {
+        height: 50vh;
+    }
+    
+    .attraction-card {
+        flex: 0 0 85vw;
+    }
+}
