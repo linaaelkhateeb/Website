@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Japan</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Explore Japan!</h1>
+        <p>Discover the vibrant heart of Japanese cuisine</p>
+    </div>
+
+    <main class="main-content">
+        <!-- Restaurant System Section -->
+        <section class="restaurant-system">
+            <h2>Restaurant Recommendations</h2>
+            <div class="filter-buttons">
+                <h2>Cuisines</h2>
+                <label><input type="checkbox" value="spanish"> Spanish</label>
+                <label><input type="checkbox" value="european"> European</label>
+                <label><input type="checkbox" value="asian"> Asian</label>
+                <label><input type="checkbox" value="italian"> Italian</label> 
+                <br><br>
+            </div>
+
+            <div class="restaurant-cards">
+                <div class="restaurant-card" data-cuisine="spanish">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\jr1.jpg" alt="Spanish Restaurant in Japan">
+                    <div class="restaurant-info">
+                        <h3>El Patio Ginza</h3>
+                        <p>4.7 <span>(890 reviews)</span> - Open now</p>
+                        <p>Spanish - $$$</p>
+                        <p>"Authentic Spanish tapas and paella served in the heart of Tokyo."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="asian">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\jr3.jpg" alt="Asian Fusion Restaurant in Japan">
+                    <div class="restaurant-info">
+                        <h3>Megu Fusion Dining</h3>
+                        <p>4.6 <span>(1,140 reviews)</span> - Open now</p>
+                        <p>Asian Fusion - $$</p>
+                        <p>"Modern Asian cuisine blending Japanese, Thai, and Korean influences."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="italian">
+                    <img src="c:\Users\danae\OneDrive\Desktop\dev proj\jr2.jpg" alt="Italian Restaurant in Japan">
+                    <div class="restaurant-info">
+                        <h3>Trattoria Tokyo</h3>
+                        <p>4.5 <span>(1,005 reviews)</span> - Open now</p>
+                        <p>Italian - $$</p>
+                        <p>"Homemade pasta and wood-fired pizza in a cozy Kyoto neighborhood."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="european">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\jr4.jpg" alt="European Restaurant in Japan">
+                    <div class="restaurant-info">
+                        <h3>Bistro Lumière</h3>
+                        <p>4.8 <span>(950 reviews)</span> - Closed today</p>
+                        <p>European - $$$</p>
+                        <p>"Upscale European dining with views of Tokyo Tower and an extensive wine list."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="web.js"></script>
+</body>
+</html>

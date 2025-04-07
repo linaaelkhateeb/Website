@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Brazil</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Explore Brazil!</h1>
+        <p>Discover the diverse flavors and vibrant culinary scene of Brazil</p>
+    </div>
+
+    <main class="main-content">
+        <!-- Restaurant System Section -->
+        <section class="restaurant-system">
+            <h2>Restaurant Recommendations</h2>
+            <div class="filter-buttons">
+                <h2>Cuisines</h2>
+                <label><input type="checkbox" value="spanish"> Spanish</label>
+                <label><input type="checkbox" value="european"> European</label>
+                <label><input type="checkbox" value="asian"> Asian</label>
+                <label><input type="checkbox" value="italian"> Italian</label> 
+                <br><br>
+            </div>
+
+            <div class="restaurant-cards">
+                <div class="restaurant-card" data-cuisine="spanish">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\br1.jpg" alt="Spanish Restaurant in Brazil">
+                    <div class="restaurant-info">
+                        <h3>Bar do Léo</h3>
+                        <p>4.8 <span>(1,800 reviews)</span> - Open now</p>
+                        <p>Spanish, Tapas - $$$</p>
+                        <p>"Famous for its Spanish tapas and welcoming ambiance in Rio de Janeiro."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="asian">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\br3.jpg" alt="Asian Restaurant in Brazil">
+                    <div class="restaurant-info">
+                        <h3>Kan Suki</h3>
+                        <p>4.6 <span>(1,100 reviews)</span> - Open now</p>
+                        <p>Asian Fusion - $$</p>
+                        <p>"A delicious mix of Asian fusion cuisine, including Japanese and Thai dishes, located in São Paulo."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="italian">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\br4.jpg" alt="Italian Restaurant in Brazil">
+                    <div class="restaurant-info">
+                        <h3>Osteria del Almo</h3>
+                        <p>4.9 <span>(1,400 reviews)</span> - Open now</p>
+                        <p>Italian - $$$</p>
+                        <p>"Serving fresh, handmade pasta with a traditional Italian touch in Rio de Janeiro."</p>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="european">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\br2.jpg" alt="European Restaurant in Brazil">
+                    <div class="restaurant-info">
+                        <h3>La Cuisine Française</h3>
+                        <p>4.7 <span>(950 reviews)</span> - Closed today</p>
+                        <p>European - $$$</p>
+                        <p>"Elegant French-European cuisine in a charming setting in the heart of São Paulo."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="web.js"></script>
+</body>
+</html>

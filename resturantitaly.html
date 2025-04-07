@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Italy</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Explore Italy!</h1>
+        <p>Discover the rich flavors and culinary delights of Italy</p>
+    </div>
+
+    <main class="main-content">
+        <!-- Restaurant System Section -->
+        <section class="restaurant-system">
+            <h2>Restaurant Recommendations</h2>
+            <div class="filter-buttons">
+                <h2>Cuisines</h2>
+                <label><input type="checkbox" value="spanish"> Spanish</label>
+                <label><input type="checkbox" value="european"> European</label>
+                <label><input type="checkbox" value="asian"> Asian</label>
+                <label><input type="checkbox" value="italian"> Italian</label> 
+                <br><br>
+            </div>
+
+            <div class="restaurant-cards">
+                <div class="restaurant-card" data-cuisine="spanish">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\ir1.png" alt="Spanish Restaurant in Italy">
+                    <div class="restaurant-info">
+                        <h3>El Patio Rome</h3>
+                        <p>4.8 <span>(2,015 reviews)</span> - Open now</p>
+                        <p>Spanish, Tapas - $$$</p>
+                        <p>"Experience authentic Spanish tapas and paella in the heart of Rome."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="asian">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\ir3.jpg" alt="Asian Restaurant in Italy">
+                    <div class="restaurant-info">
+                        <h3>Sushi Kaito</h3>
+                        <p>4.6 <span>(1,080 reviews)</span> - Open now</p>
+                        <p>Asian Fusion - $$</p>
+                        <p>"Fresh sushi and Japanese fusion dishes served with an Italian twist in Milan."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="italian">
+                    <img src="ir2.jpg" alt="Italian Restaurant in Italy">
+                    <div class="restaurant-info">
+                        <h3>La Trattoria Roma</h3>
+                        <p>4.9 <span>(1,500 reviews)</span> - Open now</p>
+                        <p>Italian - $$$</p>
+                        <p>"Traditional Roman dishes made with the freshest local ingredients."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card" data-cuisine="european">
+                    <img src="C:\Users\danae\OneDrive\Desktop\dev proj\ir4.jpg" alt="European Restaurant in Italy">
+                    <div class="restaurant-info">
+                        <h3>La Belle Époque</h3>
+                        <p>4.7 <span>(1,020 reviews)</span> - Closed today</p>
+                        <p>European - $$$</p>
+                        <p>"Elegant dining in Florence, offering European-inspired cuisine with a beautiful view of the Arno River."</p><br>
+                        <a href="reserve.html" class="reserve-button">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="web.js"></script>
+</body>
+</html>
