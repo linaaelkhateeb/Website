@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Reservation - Explore France</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Book Your Stay</h1>
+        <p>Reserve your room at one of the best hotels in France!</p>
+    </div>
+
+    <main class="main-content">
+        <section class="hotel-reservation-system">
+            <h2>Hotel Reservation Form</h2>
+            <form id="hotel-reservation-form">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkin">Check-In Date:</label>
+                    <input type="date" id="checkin" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout">Check-Out Date:</label>
+                    <input type="date" id="checkout" required>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests:</label>
+                    <input type="number" id="guests" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="room-type">Room Type:</label>
+                    <select id="room-type" required>
+                        <option value="">-- Select Room Type --</option>
+                        <option value="standard">Standard</option>
+                        <option value="deluxe">Deluxe</option>
+                        <option value="suite">Suite</option>
+                        <option value="family">Family</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="requests">Special Requests:</label>
+                    <textarea id="requests" placeholder="Any special preferences or needs?" rows="4"></textarea>
+                </div>
+                <button type="submit" id="submit-reservation" class="reserve-button">Confirm Reservation</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="reservehotel.js"></script>
+</body>
+</html>
