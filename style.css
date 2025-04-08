@@ -76,32 +76,113 @@ body {
     margin: 2rem 0;
 }
 
-/* Updated Quick Facts Section */
+/* Restaurant Section */
+.restaurant-system {
+    margin-top: 3rem;
+}
+
+.restaurant-system h2 {
+    font-family:'Patrick Hand', cursive;
+    font-size: 1.8rem;
+    color: var(--palm-oil);
+    margin-bottom: 1.5rem;
+}
+
+.filter-buttons {
+    background: var(--coconut);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 2px solid var(--natural);
+}
+
+.filter-buttons h2 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.8rem;
+    color: var(--organic);
+    margin-bottom: 1rem;
+}
+
+.filter-buttons label {
+    font-family: 'Nunito', sans-serif;
+    margin-right: 1.5rem;
+    color: var(--cocoa);
+}
+
+.restaurant-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.restaurant-card {
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--natural);
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--butter);
+}
+
+.restaurant-info {
+    padding: 1.5rem;
+}
+
+.restaurant-info h3 {
+    color: var(--palm-oil);
+    font-family: 'Patrick Hand', cursive;
+    margin-bottom: 0.5rem;
+}
+
+.reserve-button {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    padding: 0.3rem 0.8rem;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Patrick Hand', cursive;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.reserve-button:hover {
+    filter: brightness(1.1);
+}
+
+/* Quick Facts Section */
 .quick-facts {
     background: var(--organic);
-    border: 3px solid var(--natural);
     padding: 1.5rem;
     border-radius: 15px;
-    color: var(--coconut);
+    border: 3px solid var(--natural);
 }
 
 .quick-facts h2 {
-    color: var(--palm-oil);
     font-family: 'Patrick Hand', cursive;
+    color: var(--palm-oil);
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--butter);
-    padding-bottom: 0.5rem;
 }
 
 .fact-item {
+    background: rgba(237, 225, 210, 0.15);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
     display: flex;
     gap: 1rem;
     align-items: center;
-    padding: 1rem;
-    margin: 1rem 0;
-    background: rgba(237, 225, 210, 0.15);
-    border-radius: 10px;
     transition: transform 0.3s ease;
 }
 
@@ -111,35 +192,197 @@ body {
 
 .fact-icon {
     font-size: 2rem;
-    min-width: 50px;
-    text-align: center;
     color: var(--palm-oil);
 }
 
-.fact-content h3 {
-    color: var(--butter);
-    margin: 0 0 0.3rem 0;
-    font-size: 1.1rem;
+/* Hotel Section */
+.hotel-system {
+    padding: 0.5rem;
 }
 
-.fact-content p {
-    font-size: 0.95rem;
-    line-height: 1.4;
+.hotel-system h2 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Hotel Cards Layout */
+.hotel-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual Hotel Card */
+.hotel-card {
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--natural);
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for Hotel Cards */
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Hotel Card Image */
+.hotel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--butter);
+}
+
+/* Hotel Info Section */
+.hotel-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.hotel-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--palm-oil);
+}
+
+.hotel-info span {
+    color: #777;
+}
+
+.hotel-info .price-range {
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--natural);
+}
+
+.hotel-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+/* Reserve Button for Hotel */
+.reserve-button {
+    background: var(--palm-oil);
     color: var(--coconut);
-    margin: 0;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
 }
 
+.reserve-button:hover {
+    background: var(--natural);
+}
+
+/* Responsive Layout for Hotel Cards */
 @media (max-width: 768px) {
-    .main-content {
-        grid-template-columns: 1fr;
-        padding: 1rem;
+    .hotel-cards {
+        justify-content: center;
     }
-    
-    .header h1 {
-        font-size: 2rem;
-    }
-    
-    .article-image {
-        height: 250px;
+
+    .hotel-card {
+        flex: 1 1 80%;
     }
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .restaurant-cards {
+        justify-content: center;
+    }
+
+    .restaurant-card {
+        flex: 1 1 80%;
+    }
+}
+.site-footer {
+    background: var(--palm-oil); /* Changed from --cocoa to match header */
+    color: var(--coconut);
+    padding: 40px 0 20px;
+    border-top: 3px solid var(--natural);
+    font-family: 'Patrick Hand', cursive;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .footer-col h3 {
+    color: var(--butter);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-col li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-col a {
+    color: var(--coconut);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .footer-col a:hover {
+    color: var(--butter);
+  }
+  
+  .footer-col a i {
+    font-size: 0.8rem;
+    color: var(--butter);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-links a {
+    color: var(--coconut);
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+  
+  .social-links a:hover {
+    color: var(--butter);
+  }
+  
+  .copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(237, 225, 210, 0.2);
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive Footer */
+  @media (max-width: 768px) {
+    .footer-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+  
