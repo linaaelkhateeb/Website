@@ -7,7 +7,6 @@
     --cocoa: #412F26;
 }
 
-/* General Reset & Base Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +21,7 @@ body {
     padding-bottom: 4rem;
 }
 
-/* Header Styles */
+
 .header {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -42,7 +41,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Restaurant Section */
+
 .restaurant-system {
     font-family: 'Chewy', cursive;
     padding: 2rem;
@@ -56,7 +55,7 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Filter Buttons */
+
 .filter-buttons {
     margin-bottom: 2rem;
    
@@ -69,7 +68,7 @@ body {
 .filter-buttons h2 {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1rem; /* space between heading and checkboxes */
+    margin-bottom: 1rem; 
     color: var(--palm-oil);
 }
 
@@ -94,7 +93,7 @@ body {
     justify-content: flex-start;
 }
 
-/* Individual Restaurant Card */
+
 .restaurant-card {
     flex: 0 0 250px;
     background: var(--coconut);
