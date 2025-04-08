@@ -7,7 +7,7 @@
     --cocoa: #412F26;
 }
 
-/* General Reset & Base Styles */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +22,7 @@ body {
     padding-bottom: 4rem;
 }
 
-/* Header Styles */
+
 .header {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -42,7 +42,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Restaurant Section */
+
 .restaurant-system {
     font-family: 'Chewy', cursive;
     padding: 2rem;
@@ -56,7 +56,7 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Filter Buttons */
+
 .filter-buttons {
     margin-bottom: 2rem;
    
@@ -69,7 +69,7 @@ body {
 .filter-buttons h2 {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1rem; /* space between heading and checkboxes */
+    margin-bottom: 1rem; 
     color: var(--palm-oil);
 }
 
@@ -85,7 +85,7 @@ body {
     margin-right: 0.5rem;
 }
 
-/* Restaurant Cards Layout */
+
 .restaurant-cards {
     font-family: 'Patrick Hand', cursive;
     display: flex;
@@ -94,7 +94,7 @@ body {
     justify-content: flex-start;
 }
 
-/* Individual Restaurant Card */
+
 .restaurant-card {
     flex: 0 0 250px;
     background: var(--coconut);
@@ -146,7 +146,7 @@ body {
     margin: 0.5rem 0;
 }
 
-/* Reserve Button */
+
 .reserve-button {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -163,7 +163,7 @@ body {
     background: var(--natural);
 }
 
-/* Hotel Section */
+
 .hotel-system {
     padding: 2rem;
 }
@@ -182,9 +182,9 @@ body {
     justify-content: flex-start;
 }
 
-/* Individual Hotel Card */
+
 .hotel-card {
-    flex: 0 0 250px; /* Cards take up 250px width and will wrap */
+    flex: 0 0 250px; 
     background: var(--coconut);
     border-radius: 10px;
     overflow: hidden;
@@ -194,20 +194,20 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Hover effect for Hotel Cards */
+
 .hotel-card:hover {
     transform: translateY(-5px);
 }
 
-/* Hotel Card Image */
+
 .hotel-card img {
-    width: 100%; /* Full width of the card */
-    height: 200px; /* Set fixed height for consistent size */
-    object-fit: cover; /* Make the image cover the area of the box without distortion */
-    border-bottom: 2px solid var(--butter); /* Border for the image */
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-bottom: 2px solid var(--butter); 
 }
 
-/* Hotel Info Section */
+
 .hotel-info {
     padding: 1rem;
     text-align: left;
@@ -234,7 +234,7 @@ body {
     margin: 0.5rem 0;
 }
 
-/* Reserve Button for Hotel */
+
 .reserve-button {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -251,7 +251,7 @@ body {
     background: var(--natural);
 }
 
-/* Responsive Layout for Hotel Cards */
+
 @media (max-width: 768px) {
     .hotel-cards {
         justify-content: center;
@@ -263,7 +263,7 @@ body {
 }
 
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .restaurant-cards {
         justify-content: center;
