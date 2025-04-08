@@ -1,71 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore France</title>
-    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Patrick+Hand&family=Nunito:wght@400;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore France - Complete Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Patrick+Hand&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="header">
-        <h1>Explore France!</h1>
-        <p>Discover Europe's most visited country</p>
-    </div>
 
-    <main class="main-content">
-        <article>
-            <img src="franceHero.jpg" alt="France Map" class="article-image">
-            <div class="image-caption">
-                <p>France is known for its diverse geography, from snowy mountains to sunny beaches.</p>
+  <div class="header">
+    <h1>Explore France!</h1>
+    <p>Discover Europe's most visited country</p>
+  </div>
+
+  <main class="main-content">
+
+    <!-- Country Information Section -->
+    <article>
+      <img src="franceHero.jpg" alt="France Map" class="article-image">
+      <div class="image-caption">
+        <p>France is known for its diverse geography, from snowy mountains to sunny beaches.</p>
+      </div>
+
+      <h2 class="section-title">Geography & Nature</h2>
+      <p>France has stunning natural landscapes including...</p>
+
+      <div class="fun-fact">
+        <h3>🌍 Did You Know?</h3>
+        <p>France is the largest country in the EU!</p>
+      </div>
+
+      <h2 class="section-title">Culture & History</h2>
+      <p>French culture has influenced the world through...</p>
+
+      <!-- Restaurant System Section -->
+      <section class="restaurant-system">
+        <h2 class="section-title">Restaurant Recommendations</h2>
+        <div class="filter-buttons">
+          <h2>Cuisines</h2>
+          <label><input type="checkbox" value="french"> French</label>
+          <label><input type="checkbox" value="european"> European</label>
+          <label><input type="checkbox" value="asian"> Asian</label>
+          <label><input type="checkbox" value="italian"> Italian</label>
+        </div>
+
+        <div class="restaurant-cards">
+          <div class="restaurant-card" data-cuisine="french">
+            <img src="french.jpg" alt="French Restaurant">
+            <div class="restaurant-info">
+              <h3>Boutary Restaurant</h3>
+              <p>4.8 <span>(1,921 reviews)</span> - Closed today</p>
+              <p>French, Seafood - $$$</p>
+              <p>"Caviar is the specialty in the Boutary. My husband and I had the 5 course meal..."</p>
+              <a href="reserve.html" class="reserve-button">Reserve</a>
             </div>
+          </div>
 
-            <h2 class="section-title">Geography & Nature</h2>
-            <p>France has stunning natural landscapes including...</p>
-
-            <div class="fun-fact">
-                <h3>🌍 Did You Know?</h3>
-                <p>France is the largest country in the EU!</p>
+          <div class="restaurant-card" data-cuisine="asian">
+            <img src="asian.jpg" alt="Asian Restaurant">
+            <div class="restaurant-info">
+              <h3>Mian Fan</h3>
+              <p>4.7 <span>(1,115 reviews)</span> - Open now</p>
+              <p>Chinese - Japanese - $$$</p>
+              <p>"Flavorful and delicious Asian food in the middle of Paris"</p>
+              <a href="reserve.html" class="reserve-button">Reserve</a>
             </div>
+          </div>
 
-            <h2 class="section-title">Culture & History</h2>
-            <p>French culture has influenced the world through...</p>
-        </article>
+          <div class="restaurant-card" data-cuisine="italian">
+            <img src="italian.jpg" alt="Italian Restaurant">
+            <div class="restaurant-info">
+              <h3>Da Giuseppe</h3>
+              <p>4.5 <span>(990 reviews)</span> - Open now</p>
+              <p>Italian - $$</p>
+              <p>"Authentic pizza and great atmosphere. Perfect for families!"</p>
+              <a href="reserve.html" class="reserve-button">Reserve</a>
+            </div>
+          </div>
 
-       <!-- Updated Fast Facts Section -->
-<aside class="quick-facts">
-    <h2>France Fast Facts</h2>
-    <div class="fact-item">
+          <div class="restaurant-card" data-cuisine="european">
+            <img src="europe.jpg" alt="European Restaurant">
+            <div class="restaurant-info">
+              <h3>Le Maxan Restaurant</h3>
+              <p>4.8 <span>(503 reviews)</span> - Closed now</p>
+              <p>European - $$</p>
+              <p>"Plenty of help with the menu, including gluten free and vegetarian options"</p>
+              <a href="reserve.html" class="reserve-button">Reserve</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- Fast Facts Sidebar -->
+    <aside class="quick-facts">
+      <h2>France Fast Facts</h2>
+      <div class="fact-item">
         <div class="fact-icon">🌍</div>
         <div class="fact-content">
-            <h3>Geography</h3>
-            <p>Area: 643,801 km²<br>(4th largest in Europe)</p>
+          <h3>Geography</h3>
+          <p>Area: 643,801 km²<br>(4th largest in Europe)</p>
         </div>
-    </div>
-    
-    <div class="fact-item">
+      </div>
+
+      <div class="fact-item">
         <div class="fact-icon">👫</div>
         <div class="fact-content">
-            <h3>Population</h3>
-            <p>67.4 million people<br>(20% under 18 years old)</p>
+          <h3>Population</h3>
+          <p>67.4 million people<br>(20% under 18 years old)</p>
         </div>
-    </div>
+      </div>
 
-    <div class="fact-item">
+      <div class="fact-item">
         <div class="fact-icon">🏛️</div>
         <div class="fact-content">
-            <h3>Government</h3>
-            <p>Republic since 1792<br>25 regions</p>
+          <h3>Government</h3>
+          <p>Republic since 1792<br>25 regions</p>
         </div>
-    </div>
+      </div>
 
-    <div class="fact-item">
+      <div class="fact-item">
         <div class="fact-icon">🦁</div>
         <div class="fact-content">
-            <h3>National Symbols</h3>
-            <p>Animal: Gallic Rooster<br>Motto: Liberté, Égalité, Fraternité</p>
+          <h3>National Symbols</h3>
+          <p>Animal: Gallic Rooster<br>Motto: Liberté, Égalité, Fraternité</p>
+        </div>
+      </div>
+      <!-- People and Culture Section -->
+
+    <h2>People and Culture</h2>
+
+    <div class="culture-info">
+        <div class="fact-item">
+            <div class="fact-icon">🎉</div>
+            <div class="fact-text">
+                <h3>Festivals</h3>
+                <p>Experience vibrant local festivals with parades, music, and dance!</p>
+            </div>
+        </div>
+        <div class="fact-item">
+            <div class="fact-icon">🗣️</div>
+            <div class="fact-text">
+                <h3>Languages</h3>
+                <p>Learn about the various languages spoken, from regional dialects to the national language.</p>
+            </div>
+        </div>
+        <div class="fact-item">
+            <div class="fact-icon">🎭</div>
+            <div class="fact-text">
+                <h3>Traditions</h3>
+                <p>Delve into the rich cultural traditions that have been passed down through generations.</p>
+            </div>
         </div>
     </div>
-</aside>
-    </main>
+</section>
+
+    </aside>
+
+    <!-- Hotel Section from First File (added below as requested) -->
+    <section class="hotel-system">
+      <h2>Hotel Recommendations</h2>
+      <div class="filter-buttons">
+        <h2>Star rating</h2>
+        <label><input type="checkbox" value="1/2"> 1/2 stars</label>
+        <label><input type="checkbox" value="3"> 3 stars</label>
+        <label><input type="checkbox" value="4"> 4 stars</label>
+        <label><input type="checkbox" value="5"> 5 stars</label>
+        <br><br>
+      </div>
+
+      <div class="hotel-cards">
+        <div class="hotel-card" data-rate="1/2">
+          <img src="fri1.jpg" alt="Hotel Image">
+          <div class="hotel-info">
+            <h3>hotelF1 Paris Porte de Montreuil</h3>
+            <p>$$$ / night</p>
+            <p><span>642 reviews</span></p>
+            <p>Affordable, central, and clean</p>
+            <p>Free WiFi</p>
+            <a href="reserve.html" class="reserve-button">Reserve</a><br>
+          </div>
+        </div>
+
+        <div class="hotel-card" data-rate="3">
+          <img src="fri2.jpg" alt="hotel Image">
+          <div class="hotel-info">
+            <h3>Séjours & Affaires Montreuil Saint Mandé</h3>
+            <p>$$$ / night</p>
+            <p>281 reviews</p>
+            <p>"Staff were helpful, but no food service"</p><br><br>
+            <a href="reserve.html" class="reserve-button">Reserve</a>
+          </div>
+        </div>
+
+        <div class="hotel-card" data-rate="4">
+          <img src="fri3.jpg" alt="Hotel Image">
+          <div class="hotel-info">
+            <h3>Timhotel Tour Montparnasse</h3>
+            <p><span>(1050 reviews)</span></p>
+            <p>$$$/ night</p>
+            <p>"Very clean and near metro station"</p>
+            <p>Staff were friendly. Perfect if you are sight seeing!</p><br><br>
+            <a href="reserve.html" class="reserve-button">Reserve</a>
+          </div>
+        </div>
+
+        <div class="hotel-card" data-rate="5">
+          <img src="fri4.jpg" alt="hotel Image">
+          <div class="hotel-info">
+            <h3>L'Hôtel du Collectionneur Paris</h3>
+            <p>(3020 reviews)</p>
+            <p>$$$$/ night</p>
+            <p>Elegant design, spa access, and stunning Eiffel Tower view!""</p>
+            <p>Excellent breakfast and great service.</p><br><br>
+            <a href="reserve.hote.html" class="reserve-button">Reserve</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+
 </body>
 </html>
