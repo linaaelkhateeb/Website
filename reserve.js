@@ -9,9 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const time = document.getElementById("time").value;
       const people = document.getElementById("people").value;
   
+
+      
+      alert(`🎉 Reservation Confirmed! 🎉`);
+  
+      reservationForm.reset(); 
+    });
+
      
       alert(`🎉 Reservation Confirmed! 🎉`);
   
       reservationForm.reset(); 
+
   });
   

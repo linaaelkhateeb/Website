@@ -7,7 +7,7 @@
     --cocoa: #412F26;
 }
 
-/* General Reset & Base Styles */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +22,7 @@ body {
     padding-bottom: 4rem;
 }
 
-/* Header Styles */
+
 .header {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -42,7 +42,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Restaurant Section */
+
 .restaurant-system {
     font-family: 'Chewy', cursive;
     padding: 2rem;
@@ -56,7 +56,7 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Filter Buttons */
+
 .filter-buttons {
     margin-bottom: 2rem;
    
@@ -69,7 +69,7 @@ body {
 .filter-buttons h2 {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1rem; /* space between heading and checkboxes */
+    margin-bottom: 1rem; 
     color: var(--palm-oil);
 }
 
@@ -85,7 +85,7 @@ body {
     margin-right: 0.5rem;
 }
 
-/* Restaurant Cards Layout */
+
 .restaurant-cards {
     font-family: 'Patrick Hand', cursive;
     display: flex;
@@ -94,7 +94,7 @@ body {
     justify-content: flex-start;
 }
 
-/* Individual Restaurant Card */
+
 .restaurant-card {
     flex: 0 0 250px;
     background: var(--coconut);
@@ -146,7 +146,7 @@ body {
     margin: 0.5rem 0;
 }
 
-/* Reserve Button */
+
 .reserve-button {
     background: var(--palm-oil);
     color: var(--coconut);
@@ -163,84 +163,107 @@ body {
     background: var(--natural);
 }
 
-/* Review Section */
-.review-system {
-    background: var(--organic);
-    color: var(--coconut);
+
+.hotel-system {
     padding: 2rem;
+}
+
+.hotel-system h2 {
+    font-family: 'Chewy', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Hotel Cards Layout */
+.hotel-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+
+.hotel-card {
+    flex: 0 0 250px; 
+    background: var(--coconut);
     border-radius: 10px;
-    margin: 3rem 2rem 0;
-}
-
-.review-system h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.review-form {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.star-rating .star {
-    font-size: 2rem;
-    color: gray;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.star-rating .star.selected {
-    color: gold;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
 }
 
 
-textarea {
-    width: 100%;
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.hotel-card img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-bottom: 2px solid var(--butter); 
+}
+
+
+.hotel-info {
     padding: 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--natural);
-    resize: vertical;
-    margin-bottom: 1rem;
+    text-align: left;
 }
 
-#submit-review {
+.hotel-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--palm-oil);
+}
+
+.hotel-info span {
+    color: #777;
+}
+
+.hotel-info .price-range {
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--natural);
+}
+
+.hotel-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+
+.reserve-button {
     background: var(--palm-oil);
     color: var(--coconut);
-    padding: 1rem 2rem;
     border: none;
+    padding: 0.7rem 1rem;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
 }
 
-#submit-review:hover {
+.reserve-button:hover {
     background: var(--natural);
 }
 
-/* Review Cards */
-.review-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+
+@media (max-width: 768px) {
+    .hotel-cards {
+        justify-content: center;
+    }
+
+    .hotel-card {
+        flex: 1 1 80%;
+    }
 }
 
-.review-card {
-    background: var(--coconut);
-    color: var(--cocoa);
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
 
-.rating {
-    font-size: 1.5rem;
-    color: gold;
-    margin-bottom: 0.5rem;
-}
 
-/* Responsive */
 @media (max-width: 768px) {
     .restaurant-cards {
         justify-content: center;
@@ -250,3 +273,4 @@ textarea {
         flex: 1 1 80%;
     }
 }
+
