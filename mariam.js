@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Calculate totals
       const baseDailyCost = 50; // Base cost per person per day
       const totalDailyCost = baseDailyCost + dailyActivityCost;
-      const totalCost = days * travelers * totalDailyCost;
+      const totalCost = days * travelers * totalDailyCost;  
       const dailyRate = totalDailyCost * travelers;
       const budgetDifference = maxBudget - totalCost;
       
