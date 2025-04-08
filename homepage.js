@@ -10,3 +10,10 @@ function toggleReadMore(button) {
                 content.style.maxHeight = content.scrollHeight + 'px';
             }
         }
+
+        function toggleReadMore(element) {
+            element.classList.toggle('active');
+            const content = element.nextElementSibling;
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
+        }
+    

@@ -6,7 +6,6 @@
     <title>Organic Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
-
 </head>
 <body>
     <div class="login-container">
@@ -31,17 +30,27 @@
                     <input type="checkbox" id="remember">
                     <label for="remember">Remember me</label>
                 </div>
-                <a href="#" class="forgot-password">Forgot password?</a>
+                <a href="forgetpass.html" class="forgot-password">Forgot password?</a>
             </div>
             
             <button type="submit" class="login-btn">Login</button>
             
             <div class="signup-link">
-                Don't have an account? <a href="signup.html" target="_blank">Sign up</a>
+                Don't have an account? <a href="signup.html">Sign up</a>
             </div>
         </form>
     </div>
 
-    <script src="login.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your login logic here
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            console.log('Login attempted with:', username, password);
+            // In a real application, you would send this to your server
+        });
+    </script>
 </body>
 </html>
