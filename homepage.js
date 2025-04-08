@@ -16,4 +16,16 @@ function toggleReadMore(button) {
             const content = element.nextElementSibling;
             content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
         }
-    
+    function performSearch() {
+    const input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+    if (!input) {
+        alert("Please enter a search term.");
+        return;
+    }
+
+    const filename = `${input}.html`;
+
+    // Redirect directly — works for local files
+    window.location.href = filename;
+}
