@@ -156,7 +156,15 @@ p{
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(93, 37, 16, 0.15);
 }
+.card-title a {
+  color: inherit; /* Keeps the original text color */
+  text-decoration: none; /* Removes underline */
+}
 
+.card-title a:hover {
+  text-decoration: #806044;
+  text-decoration: underline;
+}
 .card-image {
     height: 180px;
     background-size: cover;
