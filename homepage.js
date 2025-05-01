@@ -18,6 +18,8 @@ function toggleReadMore(button) {
         }
     function performSearch() {
     const input = document.getElementById('searchInput').value.trim().toLowerCase();
+                if(input==spain){
+                            window.location.href=spainnns.html;
 
     if (!input) {
         alert("Please enter a search term.");
