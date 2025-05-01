@@ -23,12 +23,9 @@ function toggleReadMore(button) {
         alert("Please enter a search term.");
         return;
     }
-                
-            if(input!=spain){
+    
     const filename = `${input}.html`;
-            }
-                else{
-                       const filename=`${input}nns.html`;
+        
 
     // Redirect directly — works for local files
     window.location.href = filename;
