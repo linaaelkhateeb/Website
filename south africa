@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Africa Travel Guide</title>
+      <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Patrick+Hand&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Discover South Africa</h1>
+        <p>The Rainbow Nation</p>
+    </header>
+
+    <main class="main-content">
+        <div class="content-left">
+            <img src="south africa.avif" 
+                 alt="South African Flag" 
+                 class="article-image">
+            <p class="image-caption">South Africa's National Flag</p>
+
+            <h2 class="section-title">Essential Information</h2>
+            <div class="fun-fact">
+                <p>🇿🇦 Home to 11 official languages and 3 capital cities</p>
+            </div>
+
+            <h2 class="section-title">Restaurants</h2>
+            <div class="restaurant-cards">
+                <div class="restaurant-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Table_Mountain_DanieVDM.jpg" 
+                         alt="Table Mountain">
+                    <div class="restaurant-info">
+                        <h3>Table Mountain</h3>
+                        <p>Iconic flat-topped mountain overlooking Cape Town</p>
+                        <button class="reserve-button">View Tours</button>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Krugerpark_Lion_Cubbing.jpg" 
+                         alt="Kruger National Park">
+                    <div class="restaurant-info">
+                        <h3>Kruger National Park</h3>
+                        <p>One of Africa's largest game reserves</p>
+                        <button class="reserve-button">Safari Packages</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title"> Hotels</h2>
+            <div class="hotel-cards">
+                <div class="hotel-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Robben_Island.jpg" 
+                         alt="Robben Island">
+                    <div class="hotel-info">
+                        <h3>Robben Island</h3>
+                        <p>UNESCO World Heritage Site & former prison</p>
+                        <button class="reserve-button">Book Tour</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="quick-facts">
+                <h2>Quick Facts</h2>
+                <div class="fact-item">
+                    <span class="fact-icon">🌍</span>
+                    <div>
+                        <p><strong>Capital:</strong><br>Pretoria, Cape Town, Bloemfontein</p>
+                    </div>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-icon">💰</span>
+                    <div>
+                        <p><strong>Currency:</strong><br>South African Rand (ZAR)</p>
+                    </div>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-icon">🗣️</span>
+                    <div>
+                        <p><strong>Languages:</strong><br>11 official including Zulu, Xhosa, English</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
