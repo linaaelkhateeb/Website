@@ -1,0 +1,276 @@
+:root {
+    --organic: #6A6F4C;
+    --butter: #f9d0ddda;
+    --coconut: #EDE1D2;
+    --natural: #806044;
+    --palm-oil: #5D2510;
+    --cocoa: #412F26;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito',sans-serif;
+    line-height: 1.6;
+    background: var(--coconut);
+    color: var(--cocoa);
+    padding-bottom: 4rem;
+}
+
+
+.header {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 5px solid var(--butter);
+}
+
+.header h1 {
+    font-family: 'Chewy', cursive;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+   
+    font-size: 1.2rem;
+}
+
+
+.restaurant-system {
+    font-family: 'Chewy', cursive;
+    padding: 2rem;
+}
+   
+    
+
+.restaurant-system h2 {
+    font-family: 'Chewy', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+
+.filter-buttons {
+    margin-bottom: 2rem;
+   
+        font-family: 'Chewy', cursive;
+        font-size: 1.5rem;
+        margin: 0.5rem 0;
+       
+      
+}
+.filter-buttons h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem; 
+    color: var(--palm-oil);
+}
+
+
+
+.filter-buttons label {
+    margin-right: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filter-buttons input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+
+.restaurant-cards {
+    font-family: 'Patrick Hand', cursive;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+
+.restaurant-card {
+    flex: 0 0 250px;
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid var(--butter);
+}
+.restaurant-card {
+    height: 500px; 
+}
+
+
+.restaurant-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.restaurant-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--palm-oil);
+}
+
+.restaurant-info span {
+    color: #777;
+}
+
+.restaurant-info .price-range {
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--natural);
+}
+
+.restaurant-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+
+.reserve-button {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    border: none;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.reserve-button:hover {
+    background: var(--natural);
+}
+
+
+.hotel-system {
+    padding: 2rem;
+}
+
+.hotel-system h2 {
+    font-family: 'Chewy', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Hotel Cards Layout */
+.hotel-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+
+.hotel-card {
+    flex: 0 0 250px; 
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.hotel-card img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-bottom: 2px solid var(--butter); 
+}
+
+
+.hotel-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.hotel-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--palm-oil);
+}
+
+.hotel-info span {
+    color: #777;
+}
+
+.hotel-info .price-range {
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--natural);
+}
+
+.hotel-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+
+.reserve-button {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    border: none;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.reserve-button:hover {
+    background: var(--natural);
+}
+
+
+@media (max-width: 768px) {
+    .hotel-cards {
+        justify-content: center;
+    }
+
+    .hotel-card {
+        flex: 1 1 80%;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .restaurant-cards {
+        justify-content: center;
+    }
+
+    .restaurant-card {
+        flex: 1 1 80%;
+    }
+}
+
