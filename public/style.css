@@ -1,0 +1,388 @@
+:root {
+    --organic: #6A6F4C;
+    --butter: #f9d0ddda;
+    --coconut: #EDE1D2;
+    --natural: #806044;
+    --palm-oil: #5D2510;
+    --cocoa: #412F26;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    background: var(--coconut);
+}
+
+.header {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 5px solid var(--butter);
+}
+
+.header h1 {
+    font-family: 'Chewy', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2rem;
+}
+
+.article-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 3px solid var(--natural);
+}
+
+.image-caption {
+    background: var(--coconut);
+    color: var(--cocoa);
+    padding: 1rem;
+    margin-top: -5px;
+    border: 2px solid var(--natural);
+    border-radius: 0 0 8px 8px;
+}
+
+.section-title {
+    color: var(--palm-oil);
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    border-bottom: 3px solid var(--organic);
+    padding-bottom: 0.5rem;
+}
+
+.fun-fact {
+    background: var(--organic);
+    color: var(--coconut);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+/* Restaurant Section */
+.restaurant-system {
+    margin-top: 3rem;
+}
+
+.restaurant-system h2 {
+    font-family:'Patrick Hand', cursive;
+    font-size: 1.8rem;
+    color: var(--palm-oil);
+    margin-bottom: 1.5rem;
+}
+
+.filter-buttons {
+    background: var(--coconut);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 2px solid var(--natural);
+}
+
+.filter-buttons h2 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.8rem;
+    color: var(--organic);
+    margin-bottom: 1rem;
+}
+
+.filter-buttons label {
+    font-family: 'Nunito', sans-serif;
+    margin-right: 1.5rem;
+    color: var(--cocoa);
+}
+
+.restaurant-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.restaurant-card {
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--natural);
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--butter);
+}
+
+.restaurant-info {
+    padding: 1.5rem;
+}
+
+.restaurant-info h3 {
+    color: var(--palm-oil);
+    font-family: 'Patrick Hand', cursive;
+    margin-bottom: 0.5rem;
+}
+
+.reserve-button {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    padding: 0.3rem 0.8rem;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Patrick Hand', cursive;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.reserve-button:hover {
+    filter: brightness(1.1);
+}
+
+/* Quick Facts Section */
+.quick-facts {
+    background: var(--organic);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 3px solid var(--natural);
+}
+
+.quick-facts h2 {
+    font-family: 'Patrick Hand', cursive;
+    color: var(--palm-oil);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.fact-item {
+    background: rgba(237, 225, 210, 0.15);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.fact-item:hover {
+    transform: translateX(5px);
+}
+
+.fact-icon {
+    font-size: 2rem;
+    color: var(--palm-oil);
+}
+
+/* Hotel Section */
+.hotel-system {
+    padding: 0.5rem;
+}
+
+.hotel-system h2 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Hotel Cards Layout */
+.hotel-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual Hotel Card */
+.hotel-card {
+    background: var(--coconut);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--natural);
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for Hotel Cards */
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Hotel Card Image */
+.hotel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--butter);
+}
+
+/* Hotel Info Section */
+.hotel-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.hotel-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--palm-oil);
+}
+
+.hotel-info span {
+    color: #777;
+}
+
+.hotel-info .price-range {
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--natural);
+}
+
+.hotel-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+/* Reserve Button for Hotel */
+.reserve-button {
+    background: var(--palm-oil);
+    color: var(--coconut);
+    border: none;
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.reserve-button:hover {
+    background: var(--natural);
+}
+
+/* Responsive Layout for Hotel Cards */
+@media (max-width: 768px) {
+    .hotel-cards {
+        justify-content: center;
+    }
+
+    .hotel-card {
+        flex: 1 1 80%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .restaurant-cards {
+        justify-content: center;
+    }
+
+    .restaurant-card {
+        flex: 1 1 80%;
+    }
+}
+.site-footer {
+    background: var(--palm-oil); /* Changed from --cocoa to match header */
+    color: var(--coconut);
+    padding: 40px 0 20px;
+    border-top: 3px solid var(--natural);
+    font-family: 'Patrick Hand', cursive;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .footer-col h3 {
+    color: var(--butter);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-col li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-col a {
+    color: var(--coconut);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .footer-col a:hover {
+    color: var(--butter);
+  }
+  
+  .footer-col a i {
+    font-size: 0.8rem;
+    color: var(--butter);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-links a {
+    color: var(--coconut);
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+  
+  .social-links a:hover {
+    color: var(--butter);
+  }
+  
+  .copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(237, 225, 210, 0.2);
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive Footer */
+  @media (max-width: 768px) {
+    .footer-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+  
