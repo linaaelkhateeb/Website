@@ -2,10 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Trip = require('../models/trips')
 
-function ensureAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'admin') return next()
-    return res.status(403).json({ message: 'Admins only' })
-}
+const { ensureAdmin } = require('../middleware/auth'); // ✅ CORRECT
+
 
 // Create a trip
 router.post('/', ensureAdmin, async (req, res) => {

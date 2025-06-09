@@ -1,11 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Country = require('../models/country')
-
-function ensureAgency(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'agency') return next()
-    return res.status(403).json({ message: 'Agencies only' })
-}
+const { ensureAgency } = require('../middleware/roles');
 
 // Suggest a country (pending approval)
 router.post('/suggest', ensureAgency, async (req, res) => {
