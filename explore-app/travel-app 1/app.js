@@ -51,7 +51,9 @@ app.use((req, res, next) => {
 })
 
 // Routes
+app.use('/agency', require('./routes/agencyCountryRequests'))
 app.use('/', require('./routes/auth'))
+app.use('/admin/trips', require('./routes/admintrips'))
 app.use('/dashboard', require('./routes/users'))
 
 // ✅ Country management routes
