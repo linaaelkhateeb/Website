@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Country = require('../models/country')
-const { ensureAgency } = require('../middleware/roles');
+const { ensureAgency } = require('../middleware/auth');
 
 // Suggest a country (pending approval)
 router.post('/suggest', ensureAgency, async (req, res) => {
