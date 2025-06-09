@@ -165,3 +165,10 @@ body {
         font-size: 0.8rem;
     }
 }
+
+.flash.success {
+  color: green;
+}
+.flash.error {
+  color: red;
+}

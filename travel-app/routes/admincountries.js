@@ -2,10 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Country = require('../models/country')
 
-function ensureAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'admin') return next()
-    return res.status(403).json({ message: 'Admins only' })
-}
+const { ensureAdmin } = require('../middleware/auth'); // ✅ CORRECT
+
+
 
 // Create a new country
 router.post('/', ensureAdmin, async (req, res) => {
