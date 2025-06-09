@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <link rel="stylesheet" href="/homepage.css?v=3.14159">
+<script src="/sidebar.js"></script>
+
 </head>
 <body>
     <!-- Header Section -->
@@ -27,16 +29,63 @@
                     <li><a href="/countries.html"><i class="fas fa-flag"></i> Countries</a></li>
                     <li><a href="/BudgetPlanner.html"><i class="fas fa-map-marked-alt"></i> Budget Planner</a></li>
                     <div class="auth-buttons">
-                        <li class="login-btn"><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                        <li class="signup-btn"><a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+    <% if (user) { %>
+    <!-- Profile Link -->
+    <li class="user-profile">
+         <a href="#" id="profileToggle"><i class="fas fa-user-circle"></i> <%= user.name %></a>
+    </li>
 
-                        <li class="user-profile" style="display: none;"><a href="#" id="profileLink"><i class="fas fa-user-circle"></i> Profile</a></li>
-                        <li class="logout-btn" style="display: none;"><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </div>
+
+    <!-- Admin Tools -->
+    <% if (user.role === 'admin') { %>
+      <li>
+        <a href="/admin/categories"><i class="fas fa-cogs"></i> Admin Panel</a>
+      </li>
+    <% } %>
+
+    <!-- Agency Tools -->
+    <% if (user.role === 'agency') { %>
+      <li>
+        <a href="/agency/countries"><i class="fas fa-briefcase"></i> My Countries</a>
+      </li>
+    <% } %>
+
+    <!-- Logout -->
+    <li class="logout-btn">
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </li>
+
+  <% } else { %>
+    <!-- Guest View: Login / Register -->
+    <li class="login-btn">
+      <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </li>
+    <li class="signup-btn">
+      <a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a>
+    </li>
+  <% } %>
+  </div>
+
                 </ul>
+                 
             </nav>
         </div>
     </header>
+    <% if (success) { %>
+  <div class="alert success"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  <div class="alert error"><%= error %></div>
+<% } %>
+<div id="sidebar" class="sidebar">
+  <button class="close-btn" onclick="toggleSidebar()">×</button>
+  <h2><%= user.name %></h2>
+  <p><strong>Email:</strong> <%= user.email %></p>
+  <p><strong>Role:</strong> <%= user.role %></p>
+  <a href="/dashboard">Go to Full Dashboard</a><br>
+  <a href="/logout" class="logout-link">Logout</a>
+</div>
+
 
     <!-- Homepage Hero Section -->
     <section class="hero">
@@ -272,7 +321,22 @@
                 .bindPopup('<a href="' + country.page + '">' + country.name + '</a>');
         });
     </script>
-    
+    <script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('show');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const profileLink = document.getElementById('profileToggle');
+    if (profileLink) {
+      profileLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebar();
+      });
+    }
+  });
+</script>    
 <script src="homepage.js"></script>
 </body>
 </html>

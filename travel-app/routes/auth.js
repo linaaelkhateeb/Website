@@ -48,18 +48,16 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
-
-
-// Logout handler
-router.post('/logout', (req, res) => {
-    req.logout((err) => {
+//logoutt
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
     if (err) {
-        req.flash('error', 'Error during logout');
-        return res.redirect('/');
+      req.flash('error', 'Error during logout');
+      return res.redirect('/');
     }
     req.flash('success', 'Logged out successfully');
-    res.redirect('/login');
-});
+    res.redirect('/'); 
+  });
 });
 
 

@@ -44,12 +44,27 @@ app.use(flash())
 
 
 
-// Middleware to pass flash messages to all views
+// // Middleware to pass flash messages to all views
+// app.use((req, res, next) => {
+//     res.locals.success = req.flash('success');
+//     res.locals.error = req.flash('error');
+//     next();
+// });
+
+// app.use((req, res, next) => {
+//   res.locals.user = req.user;
+//   next();
+// });
+// Middleware to pass flash messages and user data to all views
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user; // ✅ makes `user` available in all EJS views
     next();
 });
+
+
 
 // Routes
 app.use('/agency', require('./routes/agencyCountryRequests'))

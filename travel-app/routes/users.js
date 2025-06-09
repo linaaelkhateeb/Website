@@ -1,22 +1,12 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const { ensureAuth } = require('../middleware/auth');
 
-function ensureAuth(req, res, next) {
-    if (req.isAuthenticated()) return next()
-    return res.status(401).json({ message: 'Unauthorized: Please log in' })
-}
 
 router.get('/', ensureAuth, (req, res) => {
-    const { role } = req.user
-    return res.status(200).json({
-        message: `Welcome ${role}`,
-        user: {
-            id: req.user._id,
-            name: req.user.name,
-            email: req.user.email,
-            role: req.user.role,
-        },
-    })
-})
+    res.render('dashboard', {
+        user: req.user,
+    });
+});
 
-module.exports = router
+module.exports = router;
