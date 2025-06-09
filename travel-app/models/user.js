@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
         enum: ['client', 'admin', 'agency'],
         default: 'client',
     },
+    isTrusted: {
+        type: Boolean,
+        default: false, // All new agencies start untrusted
+    },
 })
 
 // Hash password before saving

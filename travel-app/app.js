@@ -55,6 +55,11 @@ app.use('/agency', require('./routes/agencyCountryRequests'))
 app.use('/', require('./routes/auth'))
 app.use('/admin/trips', require('./routes/admintrips'))
 app.use('/dashboard', require('./routes/users'))
+app.use('/agency/trips', require('./routes/agencytrips'))
+app.use('/agency/view', require('./routes/agencyViewData'))
+app.use('/agency/locations', require('./routes/agencyLocations'))
+app.use('/admin/locations', require('./routes/adminLocations'))
+app.use('/admin', require('./routes/adminusers'))
 
 // ✅ Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
