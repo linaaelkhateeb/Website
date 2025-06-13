@@ -1,3 +1,4 @@
+
 const Trip = require('../models/trips');
 
 // Get all trips
@@ -93,4 +94,34 @@ exports.getAgencyTrips = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Failed to fetch your trips', error: err.message });
     }
-};
+const Trip = require('../models/trips'); // adjust if the model path is different
+
+exports.searchTrips = async (req, res) => {
+  const { location, category, priceMin, priceMax } = req.query;
+
+  let filter = {};
+
+
+  if (location) {
+    filter.location = { $regex: location, $options: 'i' }; // case-insensitive match
+  }
+
+  if (category) {
+    filter.category = category;
+  }
+
+  if (priceMin || priceMax) {
+    filter.price = {};
+    if (priceMin) filter.price.$gte = parseFloat(priceMin);
+    if (priceMax) filter.price.$lte = parseFloat(priceMax);
+  }
+
+  try {
+    const trips = await Trip.find(filter);
+    res.render('trips/search', { trips });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+
+}; }

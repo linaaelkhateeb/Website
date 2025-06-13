@@ -1,0 +1,6 @@
+<h1>Countries</h1>
+<ul>
+  <% countries.forEach(c => { %>
+    <li><a href="/countries/<%= c._id %>"><%= c.name %></a></li>
+  <% }) %>
+</ul>

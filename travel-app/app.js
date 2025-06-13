@@ -67,6 +67,10 @@ app.use((req, res, next) => {
 
 
 // Routes
+const countryRoutes = require('./routes/countryRoutes');
+app.use('/countries', countryRoutes);
+const tripRoutes = require('./routes/tripRoutes');
+app.use('/trips', tripRoutes);
 app.use('/agency', require('./routes/agencyCountryRequests'))
 app.use('/', require('./routes/auth'))
 app.use('/admin/trips', require('./routes/admintrips'))
