@@ -45,6 +45,33 @@
   <p>No trips found matching your search.</p>
 <% } %>
 
+<h1>Search results for “<%= query %>”</h1>
+
+<% if (trips && trips.length > 0) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Country</th>
+        <!-- etc -->
+      </tr>
+    </thead>
+    <tbody>
+      <% trips.forEach(trip => { %>
+        <tr>
+          <td><%= trip.title %></td>
+          <td><%= trip.price %></td>
+          <td><%= trip.country %></td>
+          <!-- etc -->
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>No trips found matching your search.</p>
+<% } %>
+
 
 </body>
 </html>
