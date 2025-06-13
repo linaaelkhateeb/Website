@@ -1,346 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExploreMyCountry - Attractions</title>
-   
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<link rel="stylesheet" href="/homepage.css?v=3.14159">
-<script src="/sidebar.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ExploreMyCountry - Attractions</title>
 
-</head>
-<body>
-    <!-- Header Section -->
-    <header class="site-header">
-        <div class="container">
-            <div class="logo">
-                <h1><i class="fas fa-globe-americas"></i> ExploreMyCountry</h1>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span class="hamburger"></span>
-            </div>
-            
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/countries.html"><i class="fas fa-flag"></i> Countries</a></li>
-                    <li><a href="/BudgetPlanner.html"><i class="fas fa-map-marked-alt"></i> Budget Planner</a></li>
-                    <div class="auth-buttons">
-    <% if (user) { %>
-    <!-- Profile Link -->
-    <li class="user-profile">
-         <a href="#" id="profileToggle"><i class="fas fa-user-circle"></i> <%= user.name %></a>
-    </li>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="/homepage.css?v=3.14159" />
+        <script src="/sidebar.js"></script>
+    </head>
+    <body>
+        <!-- Header Section -->
+        <header class="site-header">
+            <div class="container">
+                <div class="logo">
+                    <h1>
+                        <i class="fas fa-globe-americas"></i> ExploreMyCountry
+                    </h1>
+                </div>
 
+                <div class="mobile-menu-toggle">
+                    <span class="hamburger"></span>
+                </div>
 
-    <!-- Admin Tools -->
-    <% if (user.role === 'admin') { %>
-      <li>
-        <a href="/admin/categories"><i class="fas fa-cogs"></i> Admin Panel</a>
-      </li>
-    <% } %>
-
-    <!-- Agency Tools -->
-    <% if (user.role === 'agency') { %>
-      <li>
-        <a href="/agency/countries"><i class="fas fa-briefcase"></i> My Countries</a>
-      </li>
-    <% } %>
-
-    <!-- Logout -->
-    <li class="logout-btn">
-      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </li>
-
-  <% } else { %>
-    <!-- Guest View: Login / Register -->
-    <li class="login-btn">
-      <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
-    </li>
-    <li class="signup-btn">
-      <a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a>
-    </li>
-  <% } %>
-  </div>
-
-                </ul>
-                 
-            </nav>
-        </div>
-    </header>
-    <% if (success) { %>
-  <div class="alert success"><%= success %></div>
-<% } %>
-<% if (error) { %>
-  <div class="alert error"><%= error %></div>
-<% } %>
-
-<% if (user) { %>
-  <div id="sidebar" class="sidebar">
-    <button class="close-btn" onclick="toggleSidebar()">×</button>
-    <h2><%= user.name %></h2>
-    <p><strong>Email:</strong> <%= user.email %></p>
-    <p><strong>Role:</strong> <%= user.role %></p>
-    <a href="/dashboard">Go to Full Dashboard</a><br>
-    <a href="/logout" class="logout-link">Logout</a>
-  </div>
-<% } %>
-
-
-
-    <!-- Homepage Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Discover Amazing Destinations</h1>
-            <p>Find the best attractions, restaurants, and experiences</p>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for a country, city or attraction...">
-                <button>Search</button>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Attractions Section -->
-    <h2 class="section-title">Top Attractions</h2>
-    <div class="carousel-container">
-    <div class="carousel">
-        <!-- Attraction Card 1: Colosseum -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140')"></div>
-            <span class="price-badge">$25</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="italy.html">Italy</a>
-                </h3>
-                <p class="card-location">Rome, Italy</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>Italy is famous for its rich history, art, and architecture. Home to iconic landmarks like the Colosseum, Venice's canals, and Florence's Renaissance art, Italy offers a perfect blend of culture, cuisine, and breathtaking landscapes.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 2: Leaning Tower -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216')"></div>
-            <span class="price-badge">$18</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="spain.html">Spain</a>
-                </h3>
-                <p class="card-location">Madrid, Spain</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">☆</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                               <p>Spain is known for its vibrant culture, stunning architecture like Gaudí's Sagrada Familia, beautiful beaches, and delicious cuisine. From flamenco dancing in Seville to the running of the bulls in Pamplona, Spain offers unforgettable experiences.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 3: Trevi Fountain -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1492571350019-22de08371fd3')"></div>
-            <span class="price-badge">Free</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="japan.html">Japan</a>
-                </h3>
-                <p class="card-location">Tokyo, Japan</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                                <p>Japan blends ancient traditions with cutting-edge modernity. From the cherry blossoms of Kyoto's temples to Tokyo's neon-lit streets, Japan offers unique experiences including sushi, onsens, bullet trains, and beautiful landscapes like Mount Fuji.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 4: Vatican Museums -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325')"></div>
-            <span class="price-badge">$22</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="brazil.html">Brazil</a>
-                </h3>
-                <p class="card-location">Brazilia, Brazil</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>Brazil is home to the Amazon rainforest, vibrant cities like Rio de Janeiro with its iconic Christ the Redeemer statue, stunning beaches, and the world-famous Carnival festival. The country offers incredible biodiversity and rich cultural heritage.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 5: Pantheon -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1431274172761-fca41d930114')"></div>
-            <span class="price-badge">Free</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="webproject.html">France</a>
-                </h3>
-                <p class="card-location">Paris, France</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">☆</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>France is renowned for its art, fashion, cuisine, and architecture. From the Eiffel Tower in Paris to the lavender fields of Provence and the French Riviera's beaches, France offers world-class museums, wine regions, and picturesque countryside.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<h2 class="section-title">Explore the Map</h2>
-<div class="map-wrapper">
-    <div id="map"></div>
-</div>
-
-
-    <!-- Footer Section -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-columns">
-                <!-- Column 1: About Us -->
-                <div class="footer-col">
-                    <h3><i class="fas fa-info-circle"></i> About Us</h3>
+                <nav class="main-nav">
                     <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Our Story</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mission</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Team</a></li>
+                        <li>
+                            <a href="/index.html"
+                                ><i class="fas fa-home"></i> Home</a
+                            >
+                        </li>
+                        <li>
+                            <a href="/countries.html"
+                                ><i class="fas fa-flag"></i> Countries</a
+                            >
+                        </li>
+                        <li>
+                            <a href="/BudgetPlanner.html"
+                                ><i class="fas fa-map-marked-alt"></i> Budget
+                                Planner</a
+                            >
+                        </li>
+                        <div class="auth-buttons">
+                            <% if (user) { %>
+                            <!-- Profile Link -->
+                            <li class="user-profile">
+                                <a href="#" id="profileToggle"
+                                    ><i class="fas fa-user-circle"></i> <%=
+                                    user.name %></a
+                                >
+                            </li>
+
+                            <!-- Admin Tools -->
+                            <% if (user.role === 'admin') { %>
+                            <li>
+                                <a href="/admin/categories"
+                                    ><i class="fas fa-cogs"></i> Admin Panel</a
+                                >
+                            </li>
+                            <% } %>
+
+                            <!-- Agency Tools -->
+                            <% if (user.role === 'agency') { %>
+                            <li>
+                                <a href="/agency/countries"
+                                    ><i class="fas fa-briefcase"></i> My
+                                    Countries</a
+                                >
+                            </li>
+                            <% } %>
+
+                            <!-- Logout -->
+                            <li class="logout-btn">
+                                <a href="/logout"
+                                    ><i class="fas fa-sign-out-alt"></i>
+                                    Logout</a
+                                >
+                            </li>
+
+                            <% } else { %>
+                            <!-- Guest View: Login / Register -->
+                            <li class="login-btn">
+                                <a href="/login"
+                                    ><i class="fas fa-sign-in-alt"></i> Login</a
+                                >
+                            </li>
+                            <li class="signup-btn">
+                                <a href="/register"
+                                    ><i class="fas fa-user-plus"></i> Sign Up</a
+                                >
+                            </li>
+                            <% } %>
+                        </div>
                     </ul>
+                </nav>
+            </div>
+        </header>
+        <% if (success) { %>
+        <div class="alert success"><%= success %></div>
+        <% } %> <% if (error) { %>
+        <div class="alert error"><%= error %></div>
+        <% } %> <% if (user) { %>
+        <div id="sidebar" class="sidebar">
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+            <h2><%= user.name %></h2>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Role:</strong> <%= user.role %></p>
+            <a href="/dashboard">Go to Full Dashboard</a><br />
+            <a href="/logout" class="logout-link">Logout</a>
+        </div>
+        <% } %>
+
+        <!-- Homepage Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Amazing Destinations</h1>
+                <p>Find the best attractions, restaurants, and experiences</p>
+                <div class="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Search for a country, city or attraction..."
+                    />
+                    <button>Search</button>
                 </div>
-      
-                <!-- Column 2: Contact -->
-                <div class="footer-col">
-                    <h3><i class="fas fa-envelope"></i> Contact</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-phone-alt"></i> +1 (123) 456-7890</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Travel St, World</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> info@exploremycountry.com</a></li>
-                    </ul>
+            </div>
+        </section>
+
+        <!-- Attractions Section -->
+        <h2 class="section-title">Top Attractions</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- Attraction Card 1: Colosseum -->
+                <div class="attraction-card">
+                    <div
+                        class="card-image"
+                        style="
+                            background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140');
+                        "
+                    ></div>
+                    <span class="price-badge">$25</span>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="italy.html">Italy</a>
+                        </h3>
+                        <p class="card-location">Rome, Italy</p>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="read-more" onclick="toggleReadMore(this)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p>
+                                Italy is famous for its rich history, art, and
+                                architecture. Home to iconic landmarks like the
+                                Colosseum, Venice's canals, and Florence's
+                                Renaissance art, Italy offers a perfect blend of
+                                culture, cuisine, and breathtaking landscapes.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-      
-                <!-- Column 3: Social Media -->
-                <div class="footer-col">
-                    <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-pinterest"></i></a>
+
+                <!-- Attraction Card 2: Leaning Tower -->
+                <div class="attraction-card">
+                    <div
+                        class="card-image"
+                        style="
+                            background-image: url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216');
+                        "
+                    ></div>
+                    <span class="price-badge">$18</span>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="spain.html">Spain</a>
+                        </h3>
+                        <p class="card-location">Madrid, Spain</p>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                        </div>
+                        <div class="read-more" onclick="toggleReadMore(this)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p>
+                                Spain is known for its vibrant culture, stunning
+                                architecture like Gaudí's Sagrada Familia,
+                                beautiful beaches, and delicious cuisine. From
+                                flamenco dancing in Seville to the running of
+                                the bulls in Pamplona, Spain offers
+                                unforgettable experiences.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction Card 3: Trevi Fountain -->
+                <div class="attraction-card">
+                    <div
+                        class="card-image"
+                        style="
+                            background-image: url('https://images.unsplash.com/photo-1492571350019-22de08371fd3');
+                        "
+                    ></div>
+                    <span class="price-badge">Free</span>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="japan.html">Japan</a>
+                        </h3>
+                        <p class="card-location">Tokyo, Japan</p>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="read-more" onclick="toggleReadMore(this)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p>
+                                Japan blends ancient traditions with
+                                cutting-edge modernity. From the cherry blossoms
+                                of Kyoto's temples to Tokyo's neon-lit streets,
+                                Japan offers unique experiences including sushi,
+                                onsens, bullet trains, and beautiful landscapes
+                                like Mount Fuji.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction Card 4: Vatican Museums -->
+                <div class="attraction-card">
+                    <div
+                        class="card-image"
+                        style="
+                            background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325');
+                        "
+                    ></div>
+                    <span class="price-badge">$22</span>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="brazil.html">Brazil</a>
+                        </h3>
+                        <p class="card-location">Brazilia, Brazil</p>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="read-more" onclick="toggleReadMore(this)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p>
+                                Brazil is home to the Amazon rainforest, vibrant
+                                cities like Rio de Janeiro with its iconic
+                                Christ the Redeemer statue, stunning beaches,
+                                and the world-famous Carnival festival. The
+                                country offers incredible biodiversity and rich
+                                cultural heritage.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction Card 5: Pantheon -->
+                <div class="attraction-card">
+                    <div
+                        class="card-image"
+                        style="
+                            background-image: url('https://images.unsplash.com/photo-1431274172761-fca41d930114');
+                        "
+                    ></div>
+                    <span class="price-badge">Free</span>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="webproject.html">France</a>
+                        </h3>
+                        <p class="card-location">Paris, France</p>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                        </div>
+                        <div class="read-more" onclick="toggleReadMore(this)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p>
+                                France is renowned for its art, fashion,
+                                cuisine, and architecture. From the Eiffel Tower
+                                in Paris to the lavender fields of Provence and
+                                the French Riviera's beaches, France offers
+                                world-class museums, wine regions, and
+                                picturesque countryside.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-      
-            <!-- Copyright -->
-            <div class="copyright">
-                <p>&copy; 2023 ExploreMyCountry. All rights reserved.</p>
-            </div>
         </div>
-    </footer>
-    <script>
-        var map = L.map('map').setView([20, 0], 2); // World view
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-    
-        var countries = [
-            { name: 'France', lat: 48.8566, lon: 2.3522, page: 'france.html' },
-            { name: 'Italy', lat: 41.9028, lon: 12.4964, page: 'italy.html' },
-            { name: 'Spain', lat: 40.4168, lon: -3.7038, page: 'spain.html' },
-            { name: 'Germany', lat: 52.52, lon: 13.4050, page: 'germany.html' },
-            { name: 'United Kingdom', lat: 51.5074, lon: -0.1278, page: 'uk.html' },
-            { name: 'United States', lat: 38.9072, lon: -77.0369, page: 'usa.html' },
-            { name: 'Canada', lat: 45.4215, lon: -75.6972, page: 'canada.html' },
-            { name: 'Japan', lat: 35.6895, lon: 139.6917, page: 'japan.html' },
-            { name: 'Australia', lat: -33.8688, lon: 151.2093, page: 'australia.html' },
-            { name: 'Brazil', lat: -15.7939, lon: -47.8828, page: 'brazil.html' },
-            { name: 'India', lat: 28.6139, lon: 77.2090, page: 'india.html' },
-            { name: 'China', lat: 39.9042, lon: 116.4074, page: 'china.html' },
-            { name: 'South Africa', lat: -25.7479, lon: 28.2293, page: 'southafrica.html' },
-            { name: 'Egypt', lat: 30.0444, lon: 31.2357, page: 'egypt.html' }
-        ];
-    
-        countries.forEach(function(country) {
-            L.marker([country.lat, country.lon]).addTo(map)
-                .bindPopup('<a href="' + country.page + '">' + country.name + '</a>');
-        });
-    </script>
-    <script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('show');
-  }
+        <h2 class="section-title">Explore the Map</h2>
+        <div class="map-wrapper">
+            <div id="map"></div>
+        </div>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const profileLink = document.getElementById('profileToggle');
-    if (profileLink) {
-      profileLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleSidebar();
-      });
-    }
-  });
-</script>    
-<script src="homepage.js"></script>
-</body>
+        <!-- Footer Section -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Column 1: About Us -->
+                    <div class="footer-col">
+                        <h3><i class="fas fa-info-circle"></i> About Us</h3>
+                        <ul>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-chevron-right"></i> Our
+                                    Story</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Mission</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Team</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: Contact -->
+                    <div class="footer-col">
+                        <h3><i class="fas fa-envelope"></i> Contact</h3>
+                        <ul>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-phone-alt"></i> +1 (123)
+                                    456-7890</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-map-marker-alt"></i> 123
+                                    Travel St, World</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="fas fa-envelope"></i>
+                                    info@exploremycountry.com</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Social Media -->
+                    <div class="footer-col">
+                        <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    <p>&copy; 2023 ExploreMyCountry. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <script>
+            var map = L.map('map').setView([20, 0], 2) // World view
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+            }).addTo(map)
+
+            var countries = [
+                {
+                    name: 'France',
+                    lat: 48.8566,
+                    lon: 2.3522,
+                    page: 'france.html',
+                },
+                {
+                    name: 'Italy',
+                    lat: 41.9028,
+                    lon: 12.4964,
+                    page: 'italy.html',
+                },
+                {
+                    name: 'Spain',
+                    lat: 40.4168,
+                    lon: -3.7038,
+                    page: 'spain.html',
+                },
+                {
+                    name: 'Germany',
+                    lat: 52.52,
+                    lon: 13.405,
+                    page: 'germany.html',
+                },
+                {
+                    name: 'United Kingdom',
+                    lat: 51.5074,
+                    lon: -0.1278,
+                    page: 'uk.html',
+                },
+                {
+                    name: 'United States',
+                    lat: 38.9072,
+                    lon: -77.0369,
+                    page: 'usa.html',
+                },
+                {
+                    name: 'Canada',
+                    lat: 45.4215,
+                    lon: -75.6972,
+                    page: 'canada.html',
+                },
+                {
+                    name: 'Japan',
+                    lat: 35.6895,
+                    lon: 139.6917,
+                    page: 'japan.html',
+                },
+                {
+                    name: 'Australia',
+                    lat: -33.8688,
+                    lon: 151.2093,
+                    page: 'australia.html',
+                },
+                {
+                    name: 'Brazil',
+                    lat: -15.7939,
+                    lon: -47.8828,
+                    page: 'brazil.html',
+                },
+                {
+                    name: 'India',
+                    lat: 28.6139,
+                    lon: 77.209,
+                    page: 'india.html',
+                },
+                {
+                    name: 'China',
+                    lat: 39.9042,
+                    lon: 116.4074,
+                    page: 'china.html',
+                },
+                {
+                    name: 'South Africa',
+                    lat: -25.7479,
+                    lon: 28.2293,
+                    page: 'southafrica.html',
+                },
+                {
+                    name: 'Egypt',
+                    lat: 30.0444,
+                    lon: 31.2357,
+                    page: 'egypt.html',
+                },
+            ]
+
+            countries.forEach(function (country) {
+                L.marker([country.lat, country.lon])
+                    .addTo(map)
+                    .bindPopup(
+                        '<a href="' +
+                            country.page +
+                            '">' +
+                            country.name +
+                            '</a>'
+                    )
+            })
+        </script>
+        <script>
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar')
+                sidebar.classList.toggle('show')
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const profileLink = document.getElementById('profileToggle')
+                if (profileLink) {
+                    profileLink.addEventListener('click', (e) => {
+                        e.preventDefault()
+                        toggleSidebar()
+                    })
+                }
+            })
+        </script>
+        <script src="homepage.js"></script>
+    </body>
 </html>
