@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Trips</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .trip { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    form { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>Search Trips</h1>
+
+  <form action="/trips/search" method="GET">
+    <input type="text" name="location" placeholder="Location">
+    <select name="category">
+      <option value="">All Categories</option>
+      <option value="beach">Beach</option>
+      <option value="adventure">Adventure</option>
+      <!-- Add more categories -->
+    </select>
+    <input type="number" name="priceMin" placeholder="Min Price">
+    <input type="number" name="priceMax" placeholder="Max Price">
+    <button type="submit">Search</button>
+  </form>
+
+  <hr>
+
+<% 
+  const validTrips = trips.filter(trip => trip.location && trip.price && trip.category); 
+%>
+
+<% if (validTrips.length > 0) { %>
+  <h2>Available Trips</h2>
+  <% validTrips.forEach(trip => { %>
+    <div class="trip">
+      <p>Location: <%= trip.location %></p>
+      <p>Category: <%= trip.category %></p>
+      <p>Price: $<%= trip.price %></p>
+    </div>
+  <% }) %>
+<% } else { %>
+  <p>No trips found matching your search.</p>
+<% } %>
+
+
+</body>
+</html>
