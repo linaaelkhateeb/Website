@@ -2,7 +2,7 @@
 <html lang="en">
 <head> <link rel="stylesheet" href="/homepage.css" /> 
   <meta charset="UTF-8">
-  <title>Search trips</title>
+  <title>Search Trips</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     .trip { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
@@ -59,13 +59,14 @@
     </thead>
     <tbody>
       <% trips.forEach(trip => { %>
-        <tr>
-          <td><%= trip.title %></td> 
-          <td><%= trip.price %></td>
-          <td><%= trip.country?.name || 'Unknown' %></td>
-          <!-- etc -->
-        </tr>
-      <% }) %>
+  <div class="trip">
+    <p><strong>Title:</strong> <%= trip.title %></p>
+    <p><strong>Price:</strong> $<%= trip.price %></p>
+    <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>
+    <hr>
+  </div>
+<% }) %>
+
     </tbody>
   </table>
 <% } else { %>
