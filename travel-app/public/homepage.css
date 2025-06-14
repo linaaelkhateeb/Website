@@ -582,3 +582,68 @@ html {
       grid-template-columns: 1fr;
     }
   }
+
+/* Related Trips Section */
+.trips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.trip {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.2rem 1.5rem;
+  min-width: 260px;
+  max-width: 320px;
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trip strong {
+  font-size: 1.1rem;
+  color: var(--palm-oil);
+}
+
+.trip span {
+  font-size: 0.97rem;
+  color: #555;
+}
+
+.trip form {
+  margin-top: 0.7rem;
+}
+
+.trip button {
+  background: var(--organic);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.trip button:hover {
+  background: var(--natural);
+}
+
+@media (max-width: 700px) {
+  .trips-list {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .trip {
+    min-width: 90vw;
+    max-width: 98vw;
+    flex: 1 1 90vw;
+  }
+}

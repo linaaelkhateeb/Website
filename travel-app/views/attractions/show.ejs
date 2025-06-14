@@ -102,5 +102,26 @@
   <p><a href="/login">Log in</a> to add a review.</p>
 <% } %>
 
+<!-- Related Trips Section -->
+<h2>Related Trips & Packages</h2>
+<% if (relatedTrips && relatedTrips.length) { %>
+  <ul class="trips-list">
+    <% relatedTrips.forEach(trip => { %>
+      <li class="trip">
+        <strong><%= trip.title %></strong><br>
+        <span><%= trip.description %></span><br>
+        <span>Country: <%= trip.country?.name %></span><br>
+        <span>Category: <%= trip.category?.name %></span><br>
+        <form action="/bookings" method="POST" style="display:inline;">
+          <input type="hidden" name="tripId" value="<%= trip._id %>">
+          <button type="submit">Book Now</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No related trips or packages available.</p>
+<% } %>
+
 <a href="/attractions">← Back to All Attractions</a>
 <%- include('../partials/footer') %>

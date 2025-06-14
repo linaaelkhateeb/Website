@@ -3,6 +3,7 @@ const express    = require('express');
 const router     = express.Router();
 const Attraction = require('../models/Attraction');
 const Review = require('../models/Review');
+const Trip = require('../models/trips');
 
 // List all attractions (EJS view)
 router.get('/', async (req, res, next) => {
@@ -45,8 +46,16 @@ router.get('/:id', async (req, res, next) => {
     if (req.user) {
       userReview = await Review.findOne({ reviewable: attraction._id, reviewableType: 'Attraction', user: req.user._id });
     }
+    // Fetch related trips (same country or location, approved only)
+    const relatedTrips = await Trip.find({
+      isApproved: true,
+      $or: [
+        { country: attraction.country._id },
+        { locations: attraction.location._id }
+      ]
+    }).populate('country category locations');
     // Otherwise, render the detail view
-    res.render('attractions/show', { attraction, reviews, userReview });
+    res.render('attractions/show', { attraction, reviews, userReview, relatedTrips });
   } catch (err) {
     next(err);
   }
