@@ -1,0 +1,59 @@
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-globe-americas"></i> ExploreMyCountry</h1>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span class="hamburger"></span>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/countries.html"><i class="fas fa-flag"></i> Countries</a></li>
+                    <li><a href="/BudgetPlanner.html"><i class="fas fa-map-marked-alt"></i> Budget Planner</a></li>
+                    <div class="auth-buttons">
+    <% if (user) { %>
+    <!-- Profile Link -->
+    <li class="user-profile">
+         <a href="#" id="profileToggle"><i class="fas fa-user-circle"></i> <%= user.name %></a>
+    </li>
+
+
+    <!-- Admin Tools -->
+    <% if (user.role === 'admin') { %>
+      <li>
+        <a href="/admin/categories"><i class="fas fa-cogs"></i> Admin Panel</a>
+      </li>
+    <% } %>
+
+    <!-- Agency Tools -->
+    <% if (user.role === 'agency') { %>
+      <li>
+        <a href="/agency/countries"><i class="fas fa-briefcase"></i> My Countries</a>
+      </li>
+    <% } %>
+
+    <!-- Logout -->
+    <li class="logout-btn">
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </li>
+
+  <% } else { %>
+    <!-- Guest View: Login / Register -->
+    <li class="login-btn">
+      <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </li>
+    <li class="signup-btn">
+      <a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a>
+    </li>
+  <% } %>
+  </div>
+
+                </ul>
+                 
+            </nav>
+        </div>
+    </header>

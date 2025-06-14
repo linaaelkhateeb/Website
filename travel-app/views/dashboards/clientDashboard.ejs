@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/homepage.css?v=3.14159">
+<% if (success) { %>
+  <div class="alert success"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  <div class="alert error"><%= error %></div>
+<% } %>
+
+<link rel="stylesheet" href="/dashboard.css">
+
+<div class="dashboard-wrapper">
+  
+  <main class="dashboard-main">
+    <h1>Welcome, <%= user.name %></h1>
+    <p>You are logged in as <strong><%= user.role %></strong></p>
+
+    <section class="dashboard-overview">
+      <div class="card">
+        <h3>Upcoming Trips</h3>
+        <p>--</p>
+      </div>
+      <div class="card">
+        <h3>Saved Places</h3>
+        <p>--</p>
+      </div>
+      <div class="card">
+        <h2>Your Bookings:</h2>
+
+<% if (bookings.length === 0) { %>
+  <p>You have no bookings yet. <a href="/trips">Browse trips now!</a></p>
+<% } else { %>
+  <ul>
+    <% bookings.forEach(b => { %>
+      <li>
+        Trip: <%= b.trip ? b.trip.title : 'Trip not available' %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+      </div>
+    </section>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

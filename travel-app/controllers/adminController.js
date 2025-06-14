@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
+const Trip = require('../models/trips');
 
 exports.trustAgency = async (req, res) => {
     try {
@@ -110,5 +111,25 @@ exports.getAllAdminCategories = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
+};
+
+
+
+
+exports.adminDashboard = async (req, res) => {
+  try {
+    const totalTrips = await Trip.countDocuments();
+    const pendingTrips = await Trip.countDocuments({ isApproved: false });
+    const trustedAgencies = await User.countDocuments({ role: 'agency', isTrusted: true });
+
+    res.render('dashboards/adminDashboard', {
+      user: req.user,
+      totalTrips,
+      pendingTrips,
+      trustedAgencies
+    });
+  } catch (err) {
+    res.status(500).send('Error loading admin dashboard');
+  }
 };
 

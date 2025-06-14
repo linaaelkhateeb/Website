@@ -1,6 +1,8 @@
 const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
+const Trip = require('../models/trips');
+
 
 exports.createLocation = async (req, res) => {
     try {
@@ -50,3 +52,20 @@ exports.getAllCategories = async (req, res) => {
     }
 };
 
+
+exports.agencyDashboard = async (req, res) => {
+  try {
+    const tripsListed = await Trip.countDocuments({ createdBy: req.user._id });
+    const locationsAdded = await Location.countDocuments({ createdBy: req.user._id });
+    const countriesManaged = await Country.countDocuments({ createdBy: req.user._id });
+
+    res.render('dashboards/agencyDashboard', {
+      user: req.user,
+      tripsListed,
+      locationsAdded,
+      countriesManaged
+    });
+  } catch (err) {
+    res.status(500).send('Error loading agency dashboard');
+  }
+};

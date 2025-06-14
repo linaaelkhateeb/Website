@@ -10,8 +10,10 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-require('./config/db') // MongoDB connection
+// require('./config/db') // MongoDB connection
+const connectDB = require('./config/db');
 require('./config/passport')(passport) // ✅ Correctly initialize Passport strategy
+connectDB();
 
 const app = express()
 
@@ -67,15 +69,23 @@ app.use((req, res, next) => {
 
 
 // Routes
-app.use('/agency', require('./routes/agencyCountryRequests'))
-app.use('/', require('./routes/auth'))
-app.use('/admin/trips', require('./routes/admintrips'))
-app.use('/dashboard', require('./routes/users'))
-app.use('/agency/trips', require('./routes/agencytrips'))
-app.use('/agency/view', require('./routes/agencyViewData'))
-app.use('/agency/locations', require('./routes/agencyLocations'))
-app.use('/admin/locations', require('./routes/adminLocations'))
-app.use('/admin', require('./routes/adminusers'))
+
+// One for auth and user routes:
+app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/users'));
+
+// Admin-specific:
+app.use('/admin', require('./routes/adminusers'));
+app.use('/admin/trips', require('./routes/admintrips'));
+app.use('/admin/locations', require('./routes/adminLocations'));
+
+// Agency-specific:
+app.use('/agency', require('./routes/agencyCountryRequests'));
+app.use('/agency/trips', require('./routes/agencytrips'));
+app.use('/agency/view', require('./routes/agencyViewData'));
+app.use('/agency/locations', require('./routes/agencyLocations'));
+
+
 
 // ✅ Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
@@ -85,18 +95,18 @@ app.use('/agency/countries', require('./routes/agencyCountryRequests'))
 app.use('/admin/categories', require('./routes/adminCategories'))
 
 // MongoDB connection
-mongoose
-    .connect(process.env.CONNECTION_STRING, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: 'proj-database',
-    })
-    .then(() => {
-        console.log('Database Connection is ready...')
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+// mongoose
+//     .connect(process.env.CONNECTION_STRING, {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//         dbName: 'proj-database',
+//     })
+//     .then(() => {
+//         console.log('Database Connection is ready...')
+//     })
+//     .catch((err) => {
+//         console.log(err)
+//     })
 
     app.get('/', (req, res) => {
     res.render('home');

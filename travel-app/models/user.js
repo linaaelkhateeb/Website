@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false, // All new agencies start untrusted
     },
+      businessName: { type: String },
+  phone: { type: String },
+  website: { type: String },
+  description: { type: String },
+
 })
 
 // Hash password before saving
