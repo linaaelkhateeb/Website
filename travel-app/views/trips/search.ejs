@@ -13,38 +13,38 @@
 
   <h1>Search Trips</h1>
 
-  <form action="/trips/search" method="GET">
-    <input type="text" name="location" placeholder="Location">
-    <select name="category">
-      <option value="">All Categories</option>
-      <option value="beach">Beach</option>
-      <option value="adventure">Adventure</option>
-      <!-- Add more categories -->
-    </select>
-    <input type="number" name="priceMin" placeholder="Min Price">
-    <input type="number" name="priceMax" placeholder="Max Price">
-    <button type="submit">Search</button>
-  </form>
+<form action="/trips/search" method="GET">
+  <input type="text" name="location" placeholder="Country" value="<%= query?.location || '' %>" />
+  <select name="category">
+    <option value="">All Categories</option>
+    <% categories.forEach(cat => { %>
+      <option value="<%= cat._id %>" <%= query?.category === String(cat._id) ? 'selected' : '' %>><%= cat.name %></option>
+    <% }) %>
+  </select>
+  <input type="number" name="priceMin" placeholder="Min Price" value="<%= query?.priceMin || '' %>" />
+  <input type="number" name="priceMax" placeholder="Max Price" value="<%= query?.priceMax || '' %>" />
+  <button type="submit">Search</button>
+</form>
 
-  <hr>
+<% if (query?.location || query?.category || query?.priceMin || query?.priceMax) { %>
+  <h2>Search results for “<%= query.location || '' %>”</h2>
 
-<% 
-  const validTrips = trips.filter(trip => trip.location && trip.price && trip.category); 
-%>
-
-<% if (validTrips.length > 0) { %>
-  <h2>Available Trips</h2>
-  <% validTrips.forEach(trip => { %>
-    <div class="trip">
-      <p>Location: <%= trip.location %></p>
-      <p>Category: <%= trip.category %></p>
-      <p>Price: $<%= trip.price %></p>
-    </div>
-  <% }) %>
-<% } else { %>
-  <p>No trips found matching your search.</p>
+  <% if (trips.length === 0) { %>
+    <p>No trips found matching your search.</p>
+  <% } else { %>
+    <h3>Available Trips</h3>
+    <% trips.forEach(trip => { %>
+      <div class="trip-card">
+        <p><strong>Title:</strong> <%= trip.title %></p>
+        <p><strong>Price:</strong> $<%= trip.price %></p>
+        <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>
+        <p><strong>Category:</strong> <%= trip.category?.name || 'Not specified' %></p>
+      </div>
+    <% }) %>
+  <% } %>
 <% } %>
 
+<<<<<<< HEAD
 <h1>Search results for “<%= query %>”</h1>
 
 <% if (trips && trips.length > 0) { %>
@@ -74,5 +74,7 @@
 <% } %>
 
 
+=======
+>>>>>>> salma2
 </body>
 </html>
