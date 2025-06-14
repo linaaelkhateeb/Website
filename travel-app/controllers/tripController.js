@@ -51,7 +51,9 @@ exports.getAgencyTrips = async (req, res) => {
     }
 }
 
+
 //  PUBLIC: Get trip by ID
+
 exports.getTripById = async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id).populate(
@@ -123,7 +125,9 @@ exports.approveTrip = async (req, res) => {
     }
 }
 
+
 //  ADMIN: Reject trip
+
 exports.rejectTrip = async (req, res) => {
     try {
         const trip = await Trip.findByIdAndUpdate(

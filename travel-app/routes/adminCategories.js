@@ -2,7 +2,11 @@
 // const router = express.Router()
 // const Category = require('../models/category')
 
-// const { ensureAdmin } = require('../middleware/auth'); //  CORRECT
+
+// const { ensureAdmin } = require('../middleware/auth'); 
+
+
+
 
 // // Add a new category
 // router.post('/', ensureAdmin, async (req, res) => {

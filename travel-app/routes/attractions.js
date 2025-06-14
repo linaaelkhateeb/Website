@@ -1,3 +1,4 @@
+
 const express = require('express')
 const router = express.Router()
 const Attraction = require('../models/attraction')
@@ -30,3 +31,4 @@ router.get('/', async (req, res) => {
 })
 
 module.exports = router
+

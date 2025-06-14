@@ -31,13 +31,20 @@
 
 // module.exports = router
 
-const express = require('express')
-const router = express.Router()
-const { ensureAdmin } = require('../middleware/auth')
-const adminController = require('../controllers/adminController')
 
-router.post('/', ensureAdmin, adminController.createCountry)
-router.get('/', ensureAdmin, adminController.getAllCountries)
-router.patch('/:id', ensureAdmin, adminController.updateCountry)
+const express = require('express');
+const router = express.Router();
+const { ensureAuth, ensureAdmin } = require('../middleware/auth');
+const adminController = require('../controllers/adminController');
+
+router.post('/', ensureAdmin, adminController.createCountry);
+router.get('/', ensureAdmin, adminController.getAllCountries);
+router.patch('/:id', ensureAdmin, adminController.updateCountry);
+
+
+router.get('/new', ensureAuth, ensureAdmin, (req, res) => {
+  res.render('countries/new'); // Make sure it matches the folder name
+});
+
 
 module.exports = router
