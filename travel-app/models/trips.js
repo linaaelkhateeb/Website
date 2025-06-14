@@ -9,13 +9,12 @@ const tripSchema = new mongoose.Schema(
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         isApproved: { type: Boolean, default: false },
         price: { type: Number, required: true },
-        place: { type: String, required: true },
+        city: { type: String, required: true },
 
-        // ✅ Add this:
+        //  Add this:
         locations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
     },
     { timestamps: true }
 )
-
 
 module.exports = mongoose.model('trips', tripSchema)
