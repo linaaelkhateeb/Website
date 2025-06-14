@@ -11,7 +11,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 require('./config/db') // MongoDB connection
-require('./config/passport')(passport) //  initialize Passport strategy
+require('./config/passport')(passport) // initialize Passport strategy
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'))
 
 // Body parser
 app.use(express.urlencoded({ extended: false }))
-app.use(express.json()) // Parse JSON requests (e.g., Postman)
+app.use(express.json())
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')))
@@ -56,15 +56,11 @@ app.use(flash())
 // Middleware to pass flash messages and user data to all views
 
 app.use((req, res, next) => {
-
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user; //  makes `user` available in all EJS views
-    next();
-});
-
-
-
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
+    res.locals.user = req.user //  makes `user` available in all EJS views
+    next()
+})
 
 // Routes
 const countryRoutes = require('./routes/countryRoutes')
@@ -81,7 +77,6 @@ app.use('/agency/locations', require('./routes/agencyLocations'))
 app.use('/admin/locations', require('./routes/adminLocations'))
 app.use('/admin', require('./routes/adminusers'))
 app.use('/attractions', require('./routes/attractions'))
-
 
 // Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
