@@ -1,8 +1,4 @@
 const Trip = require('../models/trips')
-<<<<<<< HEAD
-
-//  AGENCY: Create a trip
-=======
 const Country = require('../models/country');
 
 //  AGENCY: Create a trip
@@ -89,7 +85,6 @@ exports.createTrip = async (req, res) => {
 };
 
 // Agency: Submit a trip for approval
->>>>>>> salma2
 exports.agencyCreateTrip = async (req, res) => {
     try {
         const {
@@ -118,7 +113,6 @@ exports.agencyCreateTrip = async (req, res) => {
             isApproved: false,
         })
 
-<<<<<<< HEAD
         await trip.save()
         res.status(201).json({ message: 'Trip submitted for approval', trip })
     } catch (err) {
@@ -235,8 +229,6 @@ exports.rejectTrip = async (req, res) => {
     }
 }
 
-=======
->>>>>>> salma2
 //  ADMIN: Get all trips
 exports.getAllTrips = async (req, res) => {
     try {
@@ -251,35 +243,6 @@ exports.getAllTrips = async (req, res) => {
         })
     }
 }
-<<<<<<< HEAD
-
-//  PUBLIC/USER: Search trips (HTML)
-exports.searchTrips = async (req, res) => {
-    const { location, category, priceMin, priceMax } = req.query
-    let filter = {}
-
-    if (location) {
-        filter.locations = { $in: [location] }
-    }
-    if (category) {
-        filter.category = category
-    }
-    if (priceMin || priceMax) {
-        filter.price = {}
-        if (priceMin) filter.price.$gte = parseFloat(priceMin)
-        if (priceMax) filter.price.$lte = parseFloat(priceMax)
-    }
-
-    try {
-        const trips = await Trip.find(filter).populate(
-            'country category createdBy locations'
-        )
-        res.render('trips/search', { trips })
-    } catch (err) {
-        res.status(500).send('Server Error')
-    }
-}
-=======
 exports.searchTrips = async (req, res) => {
   const { location, category, priceMin, priceMax } = req.query;
   const filter = { isApproved: true };
@@ -319,4 +282,3 @@ exports.searchTrips = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
->>>>>>> salma2

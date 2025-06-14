@@ -1,80 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> <link rel="stylesheet" href="/homepage.css" /> 
+<head>
+  <link rel="stylesheet" href="/homepage.css" /> 
   <meta charset="UTF-8">
   <title>Search Trips</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
-    .trip { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    .trip-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
     form { margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
   </style>
 </head>
 <body>
 
   <h1>Search Trips</h1>
 
-<form action="/trips/search" method="GET">
-  <input type="text" name="location" placeholder="Country" value="<%= query?.location || '' %>" />
-  <select name="category">
-    <option value="">All Categories</option>
-    <% categories.forEach(cat => { %>
-      <option value="<%= cat._id %>" <%= query?.category === String(cat._id) ? 'selected' : '' %>><%= cat.name %></option>
-    <% }) %>
-  </select>
-  <input type="number" name="priceMin" placeholder="Min Price" value="<%= query?.priceMin || '' %>" />
-  <input type="number" name="priceMax" placeholder="Max Price" value="<%= query?.priceMax || '' %>" />
-  <button type="submit">Search</button>
-</form>
+  <form action="/trips/search" method="GET">
+    <input type="text" name="location" placeholder="Country" value="<%= query?.location || '' %>" />
 
-<% if (query?.location || query?.category || query?.priceMin || query?.priceMax) { %>
-  <h2>Search results for “<%= query.location || '' %>”</h2>
+  
 
-  <% if (trips.length === 0) { %>
-    <p>No trips found matching your search.</p>
-  <% } else { %>
-    <h3>Available Trips</h3>
-    <% trips.forEach(trip => { %>
-      <div class="trip-card">
-        <p><strong>Title:</strong> <%= trip.title %></p>
-        <p><strong>Price:</strong> $<%= trip.price %></p>
-        <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>
-        <p><strong>Category:</strong> <%= trip.category?.name || 'Not specified' %></p>
-      </div>
-    <% }) %>
+    <input type="number" name="priceMin" placeholder="Min Price" value="<%= query?.priceMin || '' %>" />
+    <input type="number" name="priceMax" placeholder="Max Price" value="<%= query?.priceMax || '' %>" />
+    <button type="submit">Search</button>
+  </form>
+
+  <% if (query?.location || query?.priceMin || query?.priceMax) { %>
+    <h2>Search results for “<%= query.location || '' %>”</h2>
+
+    <% if (trips && trips.length > 0) { %>
+      <h3>Available Trips</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Country</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% trips.forEach(trip => { %>
+            <tr>
+              <td><%= trip.title %></td>
+              <td>$<%= trip.price %></td>
+              <td><%= trip.country?.name || 'Not specified' %></td>
+              <td><%= trip.category?.name || 'Not specified' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No trips found matching your search.</p>
+    <% } %>
   <% } %>
-<% } %>
 
-<<<<<<< HEAD
-<h1>Search results for “<%= query %>”</h1>
-
-<% if (trips && trips.length > 0) { %>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Country</th>
-        <!-- etc -->
-      </tr>
-    </thead>
-    <tbody>
-      <% trips.forEach(trip => { %>
-  <div class="trip">
-    <p><strong>Title:</strong> <%= trip.title %></p>
-    <p><strong>Price:</strong> $<%= trip.price %></p>
-    <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>
-    <hr>
-  </div>
-<% }) %>
-
-    </tbody>
-  </table>
-<% } else { %>
-  <p>No trips found matching your search.</p>
-<% } %>
-
-
-=======
->>>>>>> salma2
 </body>
 </html>
