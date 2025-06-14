@@ -11,3 +11,26 @@ exports.viewCountry = async (req, res) => {
   const attractions = await Attraction.find({ country: country._id });
   res.render('countries/show', { country, attractions });
 };
+
+exports.renderNewCountryForm = (req, res) => {
+  res.render('admin/countries/new');
+};
+
+exports.createCountry = async (req, res) => {
+  try {
+    const { name, description, lat, lng } = req.body;
+
+    const newCountry = new Country({
+      name,
+      
+    });
+
+    await newCountry.save();
+    req.flash('success', 'Country added successfully');
+    res.redirect('/admin/countries');
+  } catch (error) {
+    console.error('Error creating country:', error);
+    req.flash('error', 'Failed to add country');
+    res.redirect('/admin/countries/new');
+  }
+};

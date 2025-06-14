@@ -1,7 +1,7 @@
 // controllers/tripController.js
 const Trip = require('../models/trips')
 
-// ✅ AGENCY: Create a trip
+//  AGENCY: Create a trip
 exports.agencyCreateTrip = async (req, res) => {
     try {
         const {
@@ -37,7 +37,7 @@ exports.agencyCreateTrip = async (req, res) => {
     }
 }
 
-// ✅ AGENCY: Get agency’s own trips
+//  AGENCY: Get agency’s own trips
 exports.getAgencyTrips = async (req, res) => {
     try {
         const trips = await Trip.find({ createdBy: req.user._id }).populate(
@@ -52,7 +52,7 @@ exports.getAgencyTrips = async (req, res) => {
     }
 }
 
-// ✅ PUBLIC: Get trip by ID
+// PUBLIC: Get trip by ID
 exports.getTripById = async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id).populate(
@@ -68,7 +68,7 @@ exports.getTripById = async (req, res) => {
     }
 }
 
-// ✅ ADMIN: Create trip directly
+//  ADMIN: Create trip directly
 exports.createTrip = async (req, res) => {
     try {
         const {
@@ -106,7 +106,7 @@ exports.createTrip = async (req, res) => {
     }
 }
 
-// ✅ ADMIN: Approve trip
+//  ADMIN: Approve trip
 exports.approveTrip = async (req, res) => {
     try {
         const trip = await Trip.findByIdAndUpdate(
@@ -124,7 +124,7 @@ exports.approveTrip = async (req, res) => {
     }
 }
 
-// ✅ ADMIN: Reject trip
+// ADMIN: Reject trip
 exports.rejectTrip = async (req, res) => {
     try {
         const trip = await Trip.findByIdAndUpdate(
@@ -142,7 +142,7 @@ exports.rejectTrip = async (req, res) => {
     }
 }
 
-// ✅ ADMIN: Get all trips
+//  ADMIN: Get all trips
 exports.getAllTrips = async (req, res) => {
     try {
         const trips = await Trip.find().populate(
@@ -157,7 +157,7 @@ exports.getAllTrips = async (req, res) => {
     }
 }
 
-// ✅ PUBLIC/USER: Search trips (HTML)
+//  PUBLIC/USER: Search trips (HTML)
 exports.searchTrips = async (req, res) => {
     const { location, category, priceMin, priceMax } = req.query
     let filter = {}

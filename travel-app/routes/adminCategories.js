@@ -2,7 +2,7 @@
 // const router = express.Router()
 // const Category = require('../models/category')
 
-// const { ensureAdmin } = require('../middleware/auth'); // ✅ CORRECT
+// const { ensureAdmin } = require('../middleware/auth'); 
 
 
 

@@ -2,8 +2,8 @@ const express = require('express');
 const router  = express.Router();
 const Trip    = require('../models/trips');
 
-// 1) SEARCH — must come first
-// GET /trips/search?q=…
+//  SEARCH — must come first
+// GET /trips/search
 router.get('/search', async (req, res) => {
   try {
     const { q } = req.query;
@@ -19,7 +19,7 @@ router.get('/search', async (req, res) => {
 });
 
 
-// 2) FETCH ONE BY ID
+// FETCH ONE BY ID
 router.get('/:id', async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id);

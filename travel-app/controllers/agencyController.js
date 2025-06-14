@@ -4,7 +4,7 @@ const Country = require('../models/country')
 const Category = require('../models/category')
 const User = require('../models/user')
 
-// ✅ CREATE LOCATION (with isTrusted check)
+//  CREATE LOCATION (with isTrusted check)
 exports.createLocation = async (req, res) => {
     try {
         const { name, description, country } = req.body
@@ -38,7 +38,7 @@ exports.createLocation = async (req, res) => {
     }
 }
 
-// ✅ CREATE TRIP (with price and place)
+//  CREATE TRIP (with price and place)
 exports.createTrip = async (req, res) => {
     try {
         const { title, description, country, category, price, place } = req.body
@@ -73,7 +73,7 @@ exports.createTrip = async (req, res) => {
     }
 }
 
-// ✅ GET APPROVED COUNTRIES
+// GET APPROVED COUNTRIES
 exports.getApprovedCountries = async (req, res) => {
     try {
         const countries = await Country.find({ isApproved: true })
@@ -83,7 +83,7 @@ exports.getApprovedCountries = async (req, res) => {
     }
 }
 
-// ✅ GET ALL CATEGORIES
+// GET ALL CATEGORIES
 exports.getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find()
