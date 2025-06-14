@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <link rel="stylesheet" href="/homepage.css" /> 
   <meta charset="UTF-8">
-  <title>Search Trips</title>
+  <title>Search trips</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     .trip { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
@@ -60,9 +60,9 @@
     <tbody>
       <% trips.forEach(trip => { %>
         <tr>
-          <td><%= trip.title %></td>
+          <td><%= trip.title %></td> 
           <td><%= trip.price %></td>
-          <td><%= trip.country %></td>
+          <td><%= trip.country?.name || 'Unknown' %></td>
           <!-- etc -->
         </tr>
       <% }) %>
