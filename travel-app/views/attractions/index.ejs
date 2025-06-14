@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<h1>All Attractions</h1>
+
+<div class="attraction-grid">
+  <% attractions.forEach(attr => { %>
+    <div class="card">
+      <a href="/attractions/<%= attr._id %>">
+        <% if (attr.images && attr.images.length) { %>
+          <img src="<%= attr.images[0] %>" alt="<%= attr.name %>">
+        <% } else { %>
+          <div class="placeholder">No Image</div>
+        <% } %>
+        <div class="card-content">
+          <h2><%= attr.name %></h2>
+          <p class="meta"><%= attr.country?.name || 'Unknown Country' %> • <%= attr.location?.name || 'Unknown Location' %></p>
+          <p class="price">$<%= attr.price %></p>
+          <% if (attr.averageRating && attr.averageRating > 0) { %>
+            <p class="rating">⭐ <%= attr.averageRating.toFixed(1) %>/5</p>
+          <% } else { %>
+            <p class="rating">No ratings yet</p>
+          <% } %>
+        </div>
+      </a>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>

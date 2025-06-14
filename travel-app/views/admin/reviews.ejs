@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/homepage.css">
+<h1>Pending Reviews (Admin)</h1>
+<% if (reviews && reviews.length) { %>
+  <ul class="reviews-list">
+    <% reviews.forEach(review => { %>
+      <li class="review">
+        <strong>User:</strong> <%= review.user?.name || 'Anonymous' %><br>
+        <strong>Attraction:</strong> <%= review.reviewable?.name || 'Unknown' %><br>
+        <strong>Rating:</strong> ⭐ <%= review.rating %>/5<br>
+        <strong>Text:</strong> <%= review.text %><br>
+        <form action="/api/v1/attractions/admin/reviews/<%= review._id %>/approve" method="POST" style="display:inline;">
+          <button type="submit">Approve</button>
+        </form>
+        <form action="/api/v1/attractions/admin/reviews/<%= review._id %>/reject" method="POST" style="display:inline;">
+          <button type="submit">Reject</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No pending reviews.</p>
+<% } %>
+<%- include('../partials/footer') %> 

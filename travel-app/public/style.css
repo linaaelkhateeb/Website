@@ -378,6 +378,71 @@ body {
     border-top: 1px solid rgba(237, 225, 210, 0.2);
     font-size: 0.9rem;
   }
+
+  /* Container for all cards – make it a vertical stack */
+.attraction-grid {
+  display: flex;
+  flex-direction: column;  /* stack items vertically */
+  gap: 1rem;               /* space between cards */
+  padding: 1rem;
+}
+
+/* Card styling */
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Image in the card */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Fallback if no image */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: #f0f0f0;
+  color: #888;
+}
+
+/* Card text content */
+.card-content {
+  padding: 0.5rem 1rem 1rem;
+}
+
+.card-content h2 {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.rating {
+  font-size: 0.9rem;
+  color: #e8a200;
+}
+
   
   /* Responsive Footer */
   @media (max-width: 768px) {
@@ -385,4 +450,5 @@ body {
       grid-template-columns: 1fr;
     }
   }
+
   

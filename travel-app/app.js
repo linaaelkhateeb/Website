@@ -6,7 +6,11 @@ const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
 const path = require('path')
-const dotenv = require('dotenv')
+const dotenv = require('dotenv')  
+const Attraction = require('./models/Attraction')
+const reviewRoutes     = require('./routes/reviews');
+
+
 
 dotenv.config()
 
@@ -33,7 +37,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
     })
-)
+) 
 
 // Passport middleware
 app.use(passport.initialize())
@@ -64,6 +68,13 @@ app.use((req, res, next) => {
     next();
 });
 
+const attractionRoutes = require('./routes/attractions');
+const attractionWeb = require('./routes/attractionWeb');
+
+
+
+// Routes
+app.use('/agency', require('./routes/agencyCountryRequests'))
 
 
 // Routes
@@ -76,6 +87,16 @@ app.use('/agency/view', require('./routes/agencyViewData'))
 app.use('/agency/locations', require('./routes/agencyLocations'))
 app.use('/admin/locations', require('./routes/adminLocations'))
 app.use('/admin', require('./routes/adminusers'))
+app.use('/api/v1/attractions', attractionRoutes);
+app.use('/attractions', attractionWeb);
+
+app.use(
+  '/api/v1/attractions/:id/reviews',
+  reviewRoutes
+);
+
+
+
 
 // ✅ Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
@@ -98,8 +119,59 @@ mongoose
         console.log(err)
     })
 
-    app.get('/', (req, res) => {
-    res.render('home');
+app.get('/', async (req, res, next) => {
+  try {
+    // Ensure at least one country and location exist
+    const Country = require('./models/country');
+    const Location = require('./models/location');
+    const Category = require('./models/category');
+    let country = await Country.findOne();
+    if (!country) {
+      country = await Country.create({ name: 'Sample Country', description: 'A sample country', isApproved: true });
+    }
+    let location = await Location.findOne();
+    if (!location) {
+      location = await Location.create({ name: 'Sample Location', description: 'A sample location', country: country._id, isApproved: true });
+    }
+    let category = await Category.findOne();
+    if (!category) {
+      category = await Category.create({ name: 'Sample Category', description: 'A sample category' });
+    }
+    // Update attractions missing country/location or image
+    const Attraction = require('./models/Attraction');
+    const sampleImage = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+    await Attraction.updateMany({ $or: [ { country: { $exists: false } }, { country: null } ] }, { country: country._id });
+    await Attraction.updateMany({ $or: [ { location: { $exists: false } }, { location: null } ] }, { location: location._id });
+    await Attraction.updateMany({ $or: [ { category: { $exists: false } }, { category: null } ] }, { category: category._id });
+    await Attraction.updateMany({ $or: [ { images: { $exists: false } }, { images: { $size: 0 } } ] }, { images: [sampleImage] });
+    // Create a sample attraction if none exist
+    const attractionCount = await Attraction.countDocuments();
+    if (attractionCount === 0) {
+      await Attraction.create({
+        name: 'Sample Attraction',
+        description: 'A beautiful place to visit!',
+        country: country._id,
+        location: location._id,
+        category: category._id,
+        price: 20,
+        images: [sampleImage]
+      });
+    }
+    // Fetch attractions for homepage
+    const attractions = await Attraction
+      .find()
+      .limit(5)
+      .sort({ createdAt: -1 })
+      .populate('country location category');
+    res.render('home', {
+      user: req.user,
+      success: req.flash('success'),
+      error: req.flash('error'),
+      attractions
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 

@@ -1,0 +1,106 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/homepage.css">
+<h1><%= attraction.name %></h1>
+<p><%= attraction.description %></p>
+<p>Country: <%= attraction.country.name %></p>
+<p>Location: <%= attraction.location.name %></p>
+<p>Category: <%= attraction.category.name %></p>
+<p>Price: $<%= attraction.price %></p>
+
+<!-- Average Rating -->
+<% if (attraction.averageRating && attraction.averageRating > 0) { %>
+  <h3>Average Rating: ⭐ <%= attraction.averageRating.toFixed(1) %>/5</h3>
+<% } else { %>
+  <h3>No ratings yet</h3>
+<% } %>
+
+<!-- Reviews List -->
+<h2>Reviews</h2>
+<% if (reviews && reviews.length) { %>
+  <ul class="reviews-list">
+    <% reviews.forEach(review => { %>
+      <li class="review">
+        <strong><%= review.user?.name || 'Anonymous' %></strong>
+        <span> - <%= new Date(review.createdAt).toLocaleDateString() %></span><br>
+        <span>Rating: ⭐ <%= review.rating %>/5</span><br>
+        <span><%= review.text %></span>
+        <% if (review.photos && review.photos.length) { %>
+          <div class="review-photos">
+            <% review.photos.forEach(photo => { %>
+              <img src="<%= photo.url %>" alt="Review photo" style="max-width:100px;max-height:100px;" />
+              <% if (photo.caption) { %><div><%= photo.caption %></div><% } %>
+            <% }) %>
+          </div>
+        <% } %>
+        <% if (review.status && review.status !== 'approved') { %>
+          <div class="review-status"><em>Status: <%= review.status %></em></div>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No reviews yet.</p>
+<% } %>
+
+<!-- Review Submission Form (for logged-in users) -->
+<% if (user) { %>
+  <% if (userReview) { %>
+    <p><strong>You have already reviewed this attraction.</strong></p>
+    <p>Your review:</p>
+    <div class="review">
+      <span>Rating: ⭐ <%= userReview.rating %>/5</span><br>
+      <span><%= userReview.text %></span>
+      <% if (userReview.photos && userReview.photos.length) { %>
+        <div class="review-photos">
+          <% userReview.photos.forEach(photo => { %>
+            <img src="<%= photo.url %>" alt="Review photo" style="max-width:100px;max-height:100px;" />
+            <% if (photo.caption) { %><div><%= photo.caption %></div><% } %>
+          <% }) %>
+        </div>
+      <% } %>
+      <% if (userReview.status !== 'approved') { %>
+        <div class="review-status"><em>Status: <%= userReview.status %></em></div>
+      <% } %>
+      <form action="/api/v1/attractions/<%= attraction._id %>/reviews/<%= userReview._id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+      <!-- Optionally, add an edit form here -->
+    </div>
+  <% } else { %>
+    <h3>Add Your Review</h3>
+    <form action="/api/v1/attractions/<%= attraction._id %>/reviews" method="POST" enctype="multipart/form-data" id="reviewForm">
+      <label for="rating">Rating:</label>
+      <div id="star-rating" class="star-rating">
+        <% for (let i = 1; i <= 5; i++) { %>
+          <span class="star" data-value="<%= i %>">&#9733;</span>
+        <% } %>
+      </div>
+      <input type="hidden" name="rating" id="rating" required>
+      <br>
+      <label for="text">Review:</label><br>
+      <textarea name="text" id="text" rows="3" required></textarea><br>
+      <label for="photo">Photo (optional):</label>
+      <input type="file" name="photo" id="photo" accept="image/*"><br>
+      <button type="submit">Submit Review</button>
+    </form>
+    <script>
+      // Star rating selection logic
+      const stars = document.querySelectorAll('.star-rating .star');
+      const ratingInput = document.getElementById('rating');
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const value = this.getAttribute('data-value');
+          ratingInput.value = value;
+          stars.forEach(s => {
+            s.style.color = s.getAttribute('data-value') <= value ? '#e8a200' : '#ccc';
+          });
+        });
+      });
+    </script>
+  <% } %>
+<% } else { %>
+  <p><a href="/login">Log in</a> to add a review.</p>
+<% } %>
+
+<a href="/attractions">← Back to All Attractions</a>
+<%- include('../partials/footer') %>

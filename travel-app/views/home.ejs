@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<%- include('partials/header') %>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ExploreMyCountry - Attractions</title>
@@ -10,8 +9,8 @@
 <link rel="stylesheet" href="/homepage.css?v=3.14159">
 <script src="/sidebar.js"></script>
 
-</head>
-<body>
+
+
     <!-- Header Section -->
     <header class="site-header">
         <div class="container">
@@ -77,14 +76,17 @@
 <% if (error) { %>
   <div class="alert error"><%= error %></div>
 <% } %>
-<div id="sidebar" class="sidebar">
-  <button class="close-btn" onclick="toggleSidebar()">×</button>
-  <h2><%= user.name %></h2>
-  <p><strong>Email:</strong> <%= user.email %></p>
-  <p><strong>Role:</strong> <%= user.role %></p>
-  <a href="/dashboard">Go to Full Dashboard</a><br>
-  <a href="/logout" class="logout-link">Logout</a>
-</div>
+<% if (user) { %>
+  <div id="sidebar" class="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">×</button>
+    <h2><%= user.name %></h2>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p><strong>Role:</strong> <%= user.role %></p>
+    <a href="/dashboard">Go to Full Dashboard</a><br>
+    <a href="/logout" class="logout-link">Logout</a>
+  </div>
+<% } %>
+
 
 
     <!-- Homepage Hero Section -->
@@ -101,153 +103,40 @@
     
     <!-- Attractions Section -->
     <h2 class="section-title">Top Attractions</h2>
-    <div class="carousel-container">
-    <div class="carousel">
-        <!-- Attraction Card 1: Colosseum -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140')"></div>
-            <span class="price-badge">$25</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="italy.html">Italy</a>
-                </h3>
-                <p class="card-location">Rome, Italy</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>Italy is famous for its rich history, art, and architecture. Home to iconic landmarks like the Colosseum, Venice's canals, and Florence's Renaissance art, Italy offers a perfect blend of culture, cuisine, and breathtaking landscapes.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 2: Leaning Tower -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216')"></div>
-            <span class="price-badge">$18</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="spain.html">Spain</a>
-                </h3>
-                <p class="card-location">Madrid, Spain</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">☆</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                               <p>Spain is known for its vibrant culture, stunning architecture like Gaudí's Sagrada Familia, beautiful beaches, and delicious cuisine. From flamenco dancing in Seville to the running of the bulls in Pamplona, Spain offers unforgettable experiences.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 3: Trevi Fountain -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1492571350019-22de08371fd3')"></div>
-            <span class="price-badge">Free</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="japan.html">Japan</a>
-                </h3>
-                <p class="card-location">Tokyo, Japan</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                                <p>Japan blends ancient traditions with cutting-edge modernity. From the cherry blossoms of Kyoto's temples to Tokyo's neon-lit streets, Japan offers unique experiences including sushi, onsens, bullet trains, and beautiful landscapes like Mount Fuji.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 4: Vatican Museums -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325')"></div>
-            <span class="price-badge">$22</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="brazil.html">Brazil</a>
-                </h3>
-                <p class="card-location">Brazilia, Brazil</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>Brazil is home to the Amazon rainforest, vibrant cities like Rio de Janeiro with its iconic Christ the Redeemer statue, stunning beaches, and the world-famous Carnival festival. The country offers incredible biodiversity and rich cultural heritage.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Attraction Card 5: Pantheon -->
-        <div class="attraction-card">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1431274172761-fca41d930114')"></div>
-            <span class="price-badge">Free</span>
-            <div class="card-content">
-                <h3 class="card-title">
-                    <a href="webproject.html">France</a>
-                </h3>
-                <p class="card-location">Paris, France</p>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">☆</span>
-                </div>
-                <div class="read-more" onclick="toggleReadMore(this)">
-                    Read more
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="read-more-content">
-                    <p>France is renowned for its art, fashion, cuisine, and architecture. From the Eiffel Tower in Paris to the lavender fields of Provence and the French Riviera's beaches, France offers world-class museums, wine regions, and picturesque countryside.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<h2 class="section-title">Explore the Map</h2>
-<div class="map-wrapper">
-    <div id="map"></div>
-</div>
+    <% if (attractions && attractions.length) { %>
+      <div class="carousel">
+        <% attractions.forEach(attr => { %>
+          <div class="card">
+            <a href="/attractions/<%= attr._id %>">
+              <% if (attr.images?.length) { %>
+                <img src="<%= attr.images[0] %>" alt="<%= attr.name %>">
+              <% } else { %>
+                <div class="placeholder">No Image</div>
+              <% } %>
+              <div class="card-content">
+                <h3><%= attr.name %></h3>
+                <p class="meta">
+                  <%= attr.country?.name || 'Unknown Country' %> •
+                  <%= attr.location?.name || 'Unknown Location' %>
+                </p>
+                <p class="price">$<%= attr.price %></p>
+                <% if (attr.averageRating && attr.averageRating > 0) { %>
+                  <p class="rating">⭐ <%= attr.averageRating.toFixed(1) %>/5</p>
+                <% } else { %>
+                  <p class="rating">No ratings yet</p>
+                <% } %>
+              </div>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>No attractions available.</p>
+    <% } %>
+
+    <!-- Map Section -->
+    <h2 class="section-title">Explore the Map</h2>
+
 
 
     <!-- Footer Section -->
@@ -338,5 +227,4 @@
   });
 </script>    
 <script src="homepage.js"></script>
-</body>
-</html>
+<%- include('partials/footer') %>
