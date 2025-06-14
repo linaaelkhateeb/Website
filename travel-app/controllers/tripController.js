@@ -243,31 +243,25 @@ exports.getAllTrips = async (req, res) => {
         })
     }
 }
+const Category = require('../models/category'); // make sure this is at the top
+
 exports.searchTrips = async (req, res) => {
   const { location, category, priceMin, priceMax } = req.query;
   const filter = { isApproved: true };
-  let country = null;
 
   try {
-    // Match country by name (if entered)
+    // Look up country by name
     if (location) {
-      country = await Country.findOne({ name: { $regex: location, $options: 'i' } });
-      if (country) {
-        filter.country = country._id;
-      } else {
-        // No matching country found
-        return res.render('trips/search', {
-          trips: [],
-          query: req.query,
-          message: 'No trips found matching your search.'
-        });
+      const foundCountry = await Country.findOne({ name: { $regex: location, $options: 'i' } });
+      if (foundCountry) {
+        filter.country = foundCountry._id;
       }
     }
 
-    // Match category
+    // Category filter
     if (category) filter.category = category;
 
-    // Match price range
+    // Price filter
     if (priceMin || priceMax) {
       filter.price = {};
       if (priceMin) filter.price.$gte = parseFloat(priceMin);
@@ -275,10 +269,23 @@ exports.searchTrips = async (req, res) => {
     }
 
     const trips = await Trip.find(filter).populate('country category');
-    res.render('trips/search', { trips, query: req.query, message: trips.length === 0 ? 'No trips found matching your search.' : null });
+    const categories = await Category.find(); // ✅ Fetch categories
+
+    res.render('trips/search', {
+      trips,
+      query: req.query,
+      categories,
+      message: trips.length === 0 ? 'No trips found.' : null,
+    });
 
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).render('trips/search', {
+      trips: [],
+      query: req.query,
+      categories: [],
+      message: 'Server Error',
+    });
   }
 };
+
