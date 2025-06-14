@@ -40,7 +40,7 @@ const express = require('express');
 const router = express.Router();
 const ensureAgency = require('../middleware/ensureAgency');
 const agencyController = require('../controllers/agencyController');
-
+router.get('/new', ensureAgency, agencyController.renderNewLocationForm);
 router.post('/', ensureAgency, agencyController.createLocation);
 
 module.exports = router;
