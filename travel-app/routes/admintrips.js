@@ -82,15 +82,21 @@
 // })
 
 // module.exports = router
-const express = require('express');
-const router = express.Router();
-const { ensureAdmin } = require('../middleware/auth');
-const tripController = require('../controllers/tripController');
+const express = require('express')
+const router = express.Router()
+const { ensureAdmin } = require('../middleware/auth')
+const tripController = require('../controllers/tripController')
 
-router.get('/', ensureAdmin, tripController.getAllTrips);
-router.post('/', ensureAdmin, tripController.createTrip);
-router.put('/:id/approve', ensureAdmin, tripController.approveTrip);
-router.put('/:id/reject', ensureAdmin, tripController.rejectTrip);
+// GET all trips
+router.get('/', ensureAdmin, tripController.getAllTrips)
 
-module.exports = router;
+// Admin creates a new trip
+router.post('/', ensureAdmin, tripController.createTrip)
 
+// Approve a trip
+router.put('/:id/approve', ensureAdmin, tripController.approveTrip)
+
+// Reject a trip
+router.put('/:id/reject', ensureAdmin, tripController.rejectTrip)
+
+module.exports = router

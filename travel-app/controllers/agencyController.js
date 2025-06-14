@@ -4,15 +4,15 @@ const Country = require('../models/country')
 const Category = require('../models/category')
 const User = require('../models/user')
 
-// ✅ CREATE LOCATION (with isTrusted check)
+//  CREATE LOCATION (with city + isTrusted check)
 exports.createLocation = async (req, res) => {
     try {
-        const { name, description, country } = req.body
+        const { name, description, country, city } = req.body
 
-        if (!name || !country) {
-            return res
-                .status(400)
-                .json({ message: 'Name and country are required' })
+        if (!name || !country || !city) {
+            return res.status(400).json({
+                message: 'Name, country, and city are required',
+            })
         }
 
         const user = await User.findById(req.user._id)
@@ -21,6 +21,7 @@ exports.createLocation = async (req, res) => {
             name,
             description,
             country,
+            city,
             createdBy: user._id,
             isApproved: user.isTrusted === true,
         })
@@ -38,13 +39,24 @@ exports.createLocation = async (req, res) => {
     }
 }
 
-// ✅ CREATE TRIP (with price and place)
+//  CREATE TRIP (with price and city)
 exports.createTrip = async (req, res) => {
     try {
-        const { title, description, country, category, price, place } = req.body
+        const {
+            title,
+            description,
+            country,
+            category,
+            price,
+            locations,
+            city,
+        } = req.body
 
-        if (!title || !country || !category || !price || !place) {
-            return res.status(400).json({ message: 'All fields are required' })
+        if (!title || !country || !category || !price || !city) {
+            return res.status(400).json({
+                message:
+                    'All fields are required (including title, country, category, price, and city)',
+            })
         }
 
         const trip = new Trip({
@@ -53,7 +65,7 @@ exports.createTrip = async (req, res) => {
             country,
             category,
             price,
-            place,
+            city,
             locations: locations || [],
             createdBy: req.user._id,
             isApproved: false,
@@ -73,7 +85,7 @@ exports.createTrip = async (req, res) => {
     }
 }
 
-// ✅ GET APPROVED COUNTRIES
+//  GET APPROVED COUNTRIES
 exports.getApprovedCountries = async (req, res) => {
     try {
         const countries = await Country.find({ isApproved: true })
@@ -83,7 +95,7 @@ exports.getApprovedCountries = async (req, res) => {
     }
 }
 
-// ✅ GET ALL CATEGORIES
+//  GET ALL CATEGORIES
 exports.getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find()

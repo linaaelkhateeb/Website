@@ -42,8 +42,6 @@ app.use(passport.session())
 // Flash messages
 app.use(flash())
 
-
-
 // // Middleware to pass flash messages to all views
 // app.use((req, res, next) => {
 //     res.locals.success = req.flash('success');
@@ -58,19 +56,17 @@ app.use(flash())
 // Middleware to pass flash messages and user data to all views
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user; // ✅ makes `user` available in all EJS views
-    next();
-});
-
-
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
+    res.locals.user = req.user // ✅ makes `user` available in all EJS views
+    next()
+})
 
 // Routes
-const countryRoutes = require('./routes/countryRoutes');
-app.use('/countries', countryRoutes);
-const tripRoutes = require('./routes/tripRoutes');
-app.use('/trips', tripRoutes);
+const countryRoutes = require('./routes/countryRoutes')
+app.use('/countries', countryRoutes)
+const tripRoutes = require('./routes/tripRoutes')
+app.use('/trips', tripRoutes)
 app.use('/agency', require('./routes/agencyCountryRequests'))
 app.use('/', require('./routes/auth'))
 app.use('/admin/trips', require('./routes/admintrips'))
@@ -80,6 +76,7 @@ app.use('/agency/view', require('./routes/agencyViewData'))
 app.use('/agency/locations', require('./routes/agencyLocations'))
 app.use('/admin/locations', require('./routes/adminLocations'))
 app.use('/admin', require('./routes/adminusers'))
+app.use('/attractions', require('./routes/attractions'))
 
 // ✅ Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
@@ -102,10 +99,9 @@ mongoose
         console.log(err)
     })
 
-    app.get('/', (req, res) => {
-    res.render('home');
-});
-
+app.get('/', (req, res) => {
+    res.render('home')
+})
 
 // Server
 app.listen(3003, () => {
