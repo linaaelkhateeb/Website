@@ -5,6 +5,15 @@ const Category = require('../models/category')
 const User = require('../models/user')
 
 
+exports.renderNewLocationForm = async (req, res) => {
+  try {
+    const countries = await Country.find({ isApproved: true });
+    res.render('agency/locations/new', { countries });
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+};
+
 //  CREATE LOCATION (with city + isTrusted check)
 
 exports.createLocation = async (req, res) => {
@@ -112,3 +121,6 @@ exports.getAllCategories = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message })
     }
 }
+
+// Show the new location form
+
