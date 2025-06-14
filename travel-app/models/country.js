@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const countrySchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  coordinates: {
-    lat: Number,
-    lng: Number
-  }
-});
+    name: { type: String, required: true },
+    description: String,
+    coordinates: {
+        lat: Number,
+        lng: Number,
+    },
+    isApproved: { type: Boolean, default: true }, //  Add approval flag
+})
 
-module.exports = mongoose.model('Country', countrySchema);
+module.exports = mongoose.model('Country', countrySchema)

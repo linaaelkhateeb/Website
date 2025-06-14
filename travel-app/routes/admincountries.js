@@ -2,9 +2,8 @@
 // const router = express.Router()
 // const Country = require('../models/country')
 
-// const { ensureAdmin } = require('../middleware/auth'); // ✅ CORRECT
-
-
+// const { ensureAdmin } = require('../middleware/auth'); //  CORRECT
+// const { ensureAdmin } = require('../middleware/auth'); // CORRECT
 
 // // Create a new country
 // router.post('/', ensureAdmin, async (req, res) => {
@@ -32,20 +31,20 @@
 
 // module.exports = router
 
+
 const express = require('express');
 const router = express.Router();
 const { ensureAuth, ensureAdmin } = require('../middleware/auth');
-
 const adminController = require('../controllers/adminController');
 
 router.post('/', ensureAdmin, adminController.createCountry);
 router.get('/', ensureAdmin, adminController.getAllCountries);
 router.patch('/:id', ensureAdmin, adminController.updateCountry);
-router.post('/', ensureAdmin, adminController.createCountry);
 
 
 router.get('/new', ensureAuth, ensureAdmin, (req, res) => {
   res.render('countries/new'); // Make sure it matches the folder name
 });
 
-module.exports = router;
+
+module.exports = router

@@ -2,7 +2,9 @@
 // const router = express.Router()
 // const Category = require('../models/category')
 
+
 // const { ensureAdmin } = require('../middleware/auth'); 
+
 
 
 
@@ -29,12 +31,12 @@
 // })
 
 // module.exports = router
-const express = require('express');
-const router = express.Router();
-const { ensureAdmin } = require('../middleware/auth');
-const adminController = require('../controllers/adminController');
+const express = require('express')
+const router = express.Router()
+const { ensureAdmin } = require('../middleware/auth')
+const adminController = require('../controllers/adminController')
 
-router.post('/', ensureAdmin, adminController.createCategory);
-router.get('/', ensureAdmin, adminController.getAllAdminCategories);
+router.post('/', ensureAdmin, adminController.createCategory)
+router.get('/', ensureAdmin, adminController.getAllAdminCategories)
 
-module.exports = router;
+module.exports = router

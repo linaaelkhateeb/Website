@@ -1,4 +1,3 @@
-// controllers/tripController.js
 const Trip = require('../models/trips')
 
 //  AGENCY: Create a trip
@@ -11,10 +10,10 @@ exports.agencyCreateTrip = async (req, res) => {
             category,
             locations,
             price,
-            place,
+            city,
         } = req.body
 
-        if (!title || !country || !category || !price || !place) {
+        if (!title || !country || !category || !price || !city) {
             return res.status(400).json({ message: 'Missing required fields' })
         }
 
@@ -25,7 +24,7 @@ exports.agencyCreateTrip = async (req, res) => {
             category,
             locations: locations || [],
             price,
-            place,
+            city,
             createdBy: req.user._id,
             isApproved: false,
         })
@@ -52,7 +51,9 @@ exports.getAgencyTrips = async (req, res) => {
     }
 }
 
-// PUBLIC: Get trip by ID
+
+//  PUBLIC: Get trip by ID
+
 exports.getTripById = async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id).populate(
@@ -78,10 +79,10 @@ exports.createTrip = async (req, res) => {
             category,
             locations,
             price,
-            place,
+            city,
         } = req.body
 
-        if (!title || !country || !category || !price || !place) {
+        if (!title || !country || !category || !price || !city) {
             return res.status(400).json({ message: 'Missing required fields' })
         }
 
@@ -92,7 +93,7 @@ exports.createTrip = async (req, res) => {
             category,
             locations: locations || [],
             price,
-            place,
+            city,
             isApproved: true,
         })
 
@@ -124,7 +125,9 @@ exports.approveTrip = async (req, res) => {
     }
 }
 
-// ADMIN: Reject trip
+
+//  ADMIN: Reject trip
+
 exports.rejectTrip = async (req, res) => {
     try {
         const trip = await Trip.findByIdAndUpdate(

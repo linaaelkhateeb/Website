@@ -3,9 +3,15 @@
 // const router = express.Router()
 // const Country = require('../models/country')
 // const Category = require('../models/category')
+
 // const ensureAgency = require('../middleware/ensureAgency') // 
 
 //approved countries (agency-only)
+
+// const ensureAgency = require('../middleware/ensureAgency') 
+
+// // Get approved countries (agency-only)
+
 // router.get('/countries', ensureAgency, async (req, res) => {
 //     try {
 //         const countries = await Country.find({ isApproved: true })
@@ -15,7 +21,10 @@
 //     }
 // })
 
+
 //  Get all categories (agency-only)
+
+
 // router.get('/categories', ensureAgency, async (req, res) => {
 //     try {
 //         const categories = await Category.find()
@@ -26,12 +35,12 @@
 // })
 
 // module.exports = router
-const express = require('express');
-const router = express.Router();
-const ensureAgency = require('../middleware/ensureAgency');
-const agencyController = require('../controllers/agencyController');
+const express = require('express')
+const router = express.Router()
+const ensureAgency = require('../middleware/ensureAgency')
+const agencyController = require('../controllers/agencyController')
 
-router.get('/countries', ensureAgency, agencyController.getApprovedCountries);
-router.get('/categories', ensureAgency, agencyController.getAllCategories);
+router.get('/countries', ensureAgency, agencyController.getApprovedCountries)
+router.get('/categories', ensureAgency, agencyController.getAllCategories)
 
-module.exports = router;
+module.exports = router
