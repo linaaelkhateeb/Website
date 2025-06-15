@@ -5,6 +5,17 @@ function toggleReadMore(button) {
     button.classList.toggle('active');
     content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
 }
+const Trip = require('../models/trips');
+
+exports.renderHomePage = async (req, res) => {
+  try {
+    const trips = await Trip.find({ isApproved: true }).populate('country');
+    res.render('home', { trips }); // pass trips to EJS
+  } catch (err) {
+    res.status(500).send('Error loading homepage');
+  }
+};
+
 
 function performSearch() {
     const input = document.getElementById('searchInput').value.trim().toLowerCase();

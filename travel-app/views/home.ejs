@@ -5,10 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ExploreMyCountry - Attractions</title>
 
-        <link
+      <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link
             rel="stylesheet"
             href="https://unpkg.com/leaflet/dist/leaflet.css"
         />
+          <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <link rel="stylesheet" href="/homepage.css?v=3.14159" />
       
@@ -292,18 +298,50 @@
                 </div>
             </div>
         </div>
-        <h2 class="section-title">Explore the Map</h2>
-        <div class="map-wrapper">
-            <div id="map"></div>
-        </div>
+  
+<link
+  rel="stylesheet"
+  />
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-vA3D3G3LyrFzN24f9KRzEwUpKUBuX3MZ2CRGPrZMTjU="
+  crossorigin=""
+></script>
+<h2 class="section-title">Explore the Map</h2>
+<div class="map-wrapper">
+  <div id="map" style="height: 500px; margin-bottom: 20px;"></div>
+</div>
+
+<!-- Leaflet and dynamic map setup -->
+<script>
+  const trips = JSON.parse(`<%- JSON.stringify(trips || []) %>`);
+  const map = L.map('map').setView([26.8206, 30.8025], 5); // Egypt center
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  trips.forEach(trip => {
+    if (trip.coordinates?.lat && trip.coordinates?.lng) {
+      L.marker([trip.coordinates.lat, trip.coordinates.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${trip.title}</strong><br>${trip.country?.name || ''}<br>$${trip.price}`);
+    }
+  });
+</script>
+
+
+
+
+
 
         <%- include('partials/footer') %>
         <script>
-            var map = L.map('map').setView([20, 0], 2) // World view
+            var mapp = L.map('mappp').setView([20, 0], 2) // World view
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
-            }).addTo(map)
+            }).addTo(mapp)
 
             var countries = [
                 {
