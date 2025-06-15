@@ -7,7 +7,7 @@ const User = require('../models/user')
 
 exports.renderNewLocationForm = async (req, res) => {
   try {
-    const countries = await Country.find({ isApproved: true });
+    const countries = await Country.find();
     res.render('agency/locations/new', { countries });
   } catch (err) {
     res.status(500).send('Server error');
@@ -118,9 +118,26 @@ exports.getAllCategories = async (req, res) => {
         const categories = await Category.find()
         res.json(categories)
     } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.message })
+        res.status(500).json({ message: 'Server error', error: err.message });
     }
 }
 
 // Show the new location form
 
+
+exports.agencyDashboard = async (req, res) => {
+  try {
+    const tripsListed = await Trip.countDocuments({ createdBy: req.user._id });
+    const locationsAdded = await Location.countDocuments({ createdBy: req.user._id });
+    const countriesManaged = await Country.countDocuments({ createdBy: req.user._id });
+
+    res.render('dashboards/agencyDashboard', {
+      user: req.user,
+      tripsListed,
+      locationsAdded,
+      countriesManaged
+    });
+  } catch (err) {
+    res.status(500).send('Error loading agency dashboard');
+  }
+};

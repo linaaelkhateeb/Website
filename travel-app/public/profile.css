@@ -1,0 +1,116 @@
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 40px auto;
+  max-width: 1000px;
+  font-family: 'Patrick Hand', cursive;
+}
+
+.profile-sidebar {
+  flex: 1 1 250px;
+  text-align: center;
+  background: var(--coconut);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  background: var(--natural);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-family: 'Chewy', cursive;
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px;
+}
+
+.upload-btn {
+  margin-top: 10px;
+  background: var(--palm-oil);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #a94442;
+}
+
+.profile-name {
+  color: var(--palm-oil);
+}
+
+.profile-email {
+  color: var(--cocoa);
+  font-size: 14px;
+}
+
+.profile-main {
+  flex: 2 1 500px;
+  background: var(--butter);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.profile-main h1 {
+  color: var(--palm-oil);
+}
+
+.profile-main label {
+  display: block;
+  margin-top: 15px;
+  color: var(--cocoa);
+}
+
+.profile-main input,
+.profile-main textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: 'Patrick Hand', cursive;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+.password-field span {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.save-btn {
+  margin-top: 20px;
+  background: var(--organic);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: var(--palm-oil);
+}

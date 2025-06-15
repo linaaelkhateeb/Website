@@ -1,0 +1,35 @@
+<% if (user) { %>
+  <div id="sidebar" class="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">×</button>
+
+    <!-- Initials Circle -->
+    <div class="sidebar-avatar">
+      <%= user.name ? user.name.charAt(0).toUpperCase() : '' %><%= user.name.split(' ')[1] ? user.name.split(' ')[1].charAt(0).toUpperCase() : '' %>
+    </div>
+
+    <!-- Full Name -->
+    <div class="sidebar-name">
+      <%= user.name %>
+    </div>
+
+    <!-- Sidebar Links -->
+    <nav class="sidebar-nav">
+      <a href="/profile">Profile</a>
+      <% if (user.role === 'admin') { %>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="#">Countries</a>
+        <a href="#">Trips</a>
+        <a href="#">Agencies</a>
+      <% } else if (user.role === 'agency') { %>
+        <a href="/agency/dashboard">Dashboard</a>
+        <a href="#">Contact Us</a>
+      <% } else { %>
+        <a href="/client/dashboard">Dashboard</a>
+        <a href="#">Countries</a>
+        <a href="#">Trips</a>
+        <a href="#">Contact Us</a>
+      <% } %>
+      <a href="/logout" class="logout-link">Logout</a>
+    </nav>
+  </div>
+<% } %>

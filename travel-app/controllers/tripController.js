@@ -164,9 +164,12 @@ exports.createTrip = async (req, res) => {
             locations,
             price,
             city,
+            lat, 
+            lng,
+            
         } = req.body
 
-        if (!title || !country || !category || !price || !city) {
+        if (!title || !country || !category || !price || !city|| !lat || !lng) {
             return res.status(400).json({ message: 'Missing required fields' })
         }
 
@@ -179,6 +182,11 @@ exports.createTrip = async (req, res) => {
             price,
             city,
             isApproved: true,
+             coordinates: {
+            lat: parseFloat(lat),
+            lng: parseFloat(lng)
+  
+             }
         })
 
         await newTrip.save()
@@ -250,18 +258,21 @@ exports.searchTrips = async (req, res) => {
   const filter = { isApproved: true };
 
   try {
-    // Look up country by name
     if (location) {
       const foundCountry = await Country.findOne({ name: { $regex: location, $options: 'i' } });
       if (foundCountry) {
         filter.country = foundCountry._id;
+      } else {
+        return res.render('trips/search', {
+          trips: [],
+          query: req.query,
+          categories: [], // include if needed
+          message: 'No trips found for that country.'
+        });
       }
     }
 
-    // Category filter
     if (category) filter.category = category;
-
-    // Price filter
     if (priceMin || priceMax) {
       filter.price = {};
       if (priceMin) filter.price.$gte = parseFloat(priceMin);
@@ -269,13 +280,10 @@ exports.searchTrips = async (req, res) => {
     }
 
     const trips = await Trip.find(filter).populate('country category');
-    const categories = await Category.find(); // ✅ Fetch categories
-
     res.render('trips/search', {
       trips,
       query: req.query,
-      categories,
-      message: trips.length === 0 ? 'No trips found.' : null,
+      categories: [], // if you're using them
     });
 
   } catch (err) {
@@ -284,7 +292,7 @@ exports.searchTrips = async (req, res) => {
       trips: [],
       query: req.query,
       categories: [],
-      message: 'Server Error',
+      message: 'Server error'
     });
   }
 };

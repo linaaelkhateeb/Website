@@ -1,6 +1,6 @@
 const Country = require('../models/country');
 const Attraction = require('../models/attraction');
-
+const Location = require('../models/location');
 exports.listCountries = async (req, res) => {
   const countries = await Country.find();
   res.render('countries/index', { countries });
@@ -11,6 +11,7 @@ exports.viewCountry = async (req, res) => {
   const attractions = await Attraction.find({ country: country._id });
   res.render('countries/show', { country, attractions });
 };
+
 
 exports.renderNewCountryForm = (req, res) => {
   res.render('admin/countries/new');
@@ -34,3 +35,13 @@ exports.createCountry = async (req, res) => {
     res.redirect('/admin/countries/new');
   }
 };
+//exports.getLocationsByCountry = async (req, res) => {
+//try {
+//const countryId = req.params.id;
+//const country = await Country.findById(countryId);
+//const locations = await Location.find({ country: countryId, isApproved: true });
+//res.render('countries/show', { country, locations });
+//} catch (err) {
+//res.status(500).send('Server error');
+//}
+//};

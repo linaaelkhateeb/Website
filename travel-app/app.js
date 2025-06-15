@@ -4,9 +4,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const methodOverride = require('method-override');
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
+const Trip = require('./models/trips');
 
 dotenv.config()
 
@@ -41,6 +43,9 @@ app.use(passport.session())
 
 // Flash messages
 app.use(flash())
+//method-override
+
+app.use(methodOverride('_method'));
 
 // // Middleware to pass flash messages to all views
 // app.use((req, res, next) => {
@@ -67,25 +72,53 @@ const countryRoutes = require('./routes/countryRoutes')
 app.use('/countries', countryRoutes)
 const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
-app.use('/agency', require('./routes/agencyCountryRequests'))
-app.use('/', require('./routes/auth'))
-app.use('/admin/trips', require('./routes/admintrips'))
-app.use('/dashboard', require('./routes/users'))
-app.use('/agency/trips', require('./routes/agencytrips'))
-app.use('/agency/view', require('./routes/agencyViewData'))
-app.use('/agency/locations', require('./routes/agencyLocations'))
-app.use('/admin/locations', require('./routes/adminLocations'))
-app.use('/admin', require('./routes/adminusers'))
+
+// One for auth and user routes:
+app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/users'));
+
+// Admin-specific:
+app.use('/admin', require('./routes/adminusers'));
+app.use('/admin/trips', require('./routes/admintrips'));
+app.use('/admin/locations', require('./routes/adminLocations'));
+
+// Agency-specific:
+app.use('/agency', require('./routes/agencyCountryRequests'));
+app.use('/agency/trips', require('./routes/agencytrips'));
+app.use('/agency/view', require('./routes/agencyViewData'));
+app.use('/agency/locations', require('./routes/agencyLocations'));
+
+
 app.use('/attractions', require('./routes/attractions'))
 
 // Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
-app.use('/agency/countries', require('./routes/agencyCountryRequests'))
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
+// routes/tripRoutes.js or app.js or wherever your home route is
 
-// MongoDB connection
+
+app.get('/', async (req, res) => {
+  try {
+    const trips = await Trip.find({ isApproved: true }).populate('country');
+
+    res.render('home', {
+      trips,                           // ✅ This makes trips available to home.ejs
+      user: req.user || null,          // (if you need the user in navbar/sidebar)
+      success: req.flash('success'),   // optional
+      error: req.flash('error')        // optional
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+app.get('/', async (req, res) => {
+  const trips = await Trip.find({ isApproved: true }).populate('country');
+  res.render('home', { user: req.user, trips });
+});
+//MongoDB connection
 mongoose
     .connect(process.env.CONNECTION_STRING, {
         useNewUrlParser: true,
@@ -104,6 +137,6 @@ app.get('/', (req, res) => {
 })
 
 // Server
-app.listen(3003, () => {
-    console.log('Server running on http://localhost:3003')
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000')
 })

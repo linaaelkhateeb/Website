@@ -26,35 +26,64 @@
     <button type="submit">Search</button>
   </form>
 
-  <% if (query?.location || query?.priceMin || query?.priceMax) { %>
-    <h2>Search results for “<%= query.location || '' %>”</h2>
+ <% let isSearching = query?.location || query?.category || query?.priceMin || query?.priceMax; %>
 
-    <% if (trips && trips.length > 0) { %>
-      <h3>Available Trips</h3>
-      <table>
-        <thead>
+<% if (isSearching) { %>
+  <h2>Search results for “<%= query.location || '' %>”</h2>
+
+  <% if (trips.length === 0) { %>
+    <p>No trips found matching your search.</p>
+  <% } else { %>
+    <h3>Available Trips</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Country</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% trips.forEach(trip => { %>
           <tr>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Country</th>
-            <th>Category</th>
+            <td><%= trip.title %></td>
+            <td>$<%= trip.price %></td>
+            <td><%= trip.country?.name || 'Not specified' %></td>
+            <td><%= trip.category?.name || 'Not specified' %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% trips.forEach(trip => { %>
-            <tr>
-              <td><%= trip.title %></td>
-              <td>$<%= trip.price %></td>
-              <td><%= trip.country?.name || 'Not specified' %></td>
-              <td><%= trip.category?.name || 'Not specified' %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    <% } else { %>
-      <p>No trips found matching your search.</p>
-    <% } %>
+        <% }) %>
+      </tbody>
+    </table>
   <% } %>
+<% } else { %>
+  <h3>Available Trips</h3>
+  <% if (trips.length === 0) { %>
+    <p>No trips available.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Country</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% trips.forEach(trip => { %>
+          <tr>
+            <td><%= trip.title %></td>
+            <td>$<%= trip.price %></td>
+            <td><%= trip.country?.name || 'Not specified' %></td>
+            <td><%= trip.category?.name || 'Not specified' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+<% } %>
+
 
 </body>
 </html>
