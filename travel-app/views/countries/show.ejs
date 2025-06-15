@@ -1,44 +1,16 @@
-<h1><%= country.name %></h1>
-<p><%= country.description %></p>
-
-<h2>Attractions</h2>
-
-<% if (attractions.length > 0) { %>
-  <ul>
-    <% attractions.forEach(attraction => { %>
-      <li>
-        <strong><%= attraction.title %></strong> — 
-        <%= attraction.description %> | Price: $<%= attraction.price %>
-      </li>
-    <% }) %>
-  </ul>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <title><%= country.name %> - Locations</title> <link rel="stylesheet" href="/homepage.css" /> </head> <body> <h1>Locations in <%= country.name %></h1>
+<% if (locations.length === 0) { %>
+<p>No locations available.</p>
 <% } else { %>
-  <p>No attractions found for this country.</p>
+<ul>
+<% locations.forEach(loc => { %>
+<li>
+<h2><%= loc.name %></h2>
+<p><%= loc.city %></p>
+<p><%= loc.description %></p>
+</li>
+<% }) %>
+</ul>
 <% } %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title><%= country.name %> - Attractions</title>
-  <link rel="stylesheet" href="/homepage.css" />
-</head>
-<body>
-  <h1>Attractions in <%= country.name %></h1>
 
-  <% if (trips.length === 0) { %>
-    <p>No attractions found for this country.</p>
-  <% } else { %>
-    <div class="trip-list">
-      <% trips.forEach(trip => { %>
-        <div class="trip-card">
-          <h2><%= trip.title %></h2>
-          <p><%= trip.description %></p>
-          <p><strong>Category:</strong> <%= trip.category?.name %></p>
-          <p><strong>City:</strong> <%= trip.city %></p>
-          <p><strong>Price:</strong> $<%= trip.price %></p>
-        </div>
-      <% }) %>
-    </div>
-  <% } %>
-</body>
-</html>
+</body> </html>

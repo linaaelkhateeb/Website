@@ -32,8 +32,13 @@ const router = express.Router();
 const ensureAdmin = require('../middleware/ensureAdmin');
 const adminController = require('../controllers/adminController');
 
-router.get('/', ensureAdmin, adminController.getAllLocations);
-router.put('/:id/approve', ensureAdmin, adminController.approveLocation);
-router.put('/:id/reject', ensureAdmin, adminController.rejectLocation);
+// Show all pending locations (HTML view)
+router.get('/', ensureAdmin, adminController.getPendingLocations);
+
+// Approve or reject locations
+router.post('/:id/approve', ensureAdmin, adminController.approveLocation);
+router.post('/:id/reject', ensureAdmin, adminController.rejectLocation);
+
+router.get('/all', ensureAdmin, adminController.getAllLocations);
 
 module.exports = router;

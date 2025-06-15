@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const methodOverride = require('method-override');
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
@@ -41,6 +42,9 @@ app.use(passport.session())
 
 // Flash messages
 app.use(flash())
+//method-override
+
+app.use(methodOverride('_method'));
 
 // // Middleware to pass flash messages to all views
 // app.use((req, res, next) => {
