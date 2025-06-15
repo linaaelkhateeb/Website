@@ -4,8 +4,6 @@ const Country = require('../models/country');
 const Category = require('../models/category');
 const Trip = require('../models/trips');
 
-
-
 // Mark agency as trusted
 exports.trustAgency = async (req, res) => {
   try {
@@ -31,8 +29,6 @@ exports.getAllLocations = async (req, res) => {
   }
 };
 
-
-
 // Approve a location
 exports.approveLocation = async (req, res) => {
   try {
@@ -41,8 +37,7 @@ exports.approveLocation = async (req, res) => {
       { isApproved: true },
       { new: true }
     );
-    if (!location)
-      return res.status(404).json({ message: 'Location not found' });
+    if (!location) return res.status(404).json({ message: 'Location not found' });
     res.json({ message: 'Location approved', location });
   } catch (err) {
     res.status(500).json({ message: 'Failed to approve location', error: err.message });
@@ -53,8 +48,7 @@ exports.approveLocation = async (req, res) => {
 exports.rejectLocation = async (req, res) => {
   try {
     const location = await Location.findByIdAndDelete(req.params.id);
-    if (!location)
-      return res.status(404).json({ message: 'Location not found' });
+    if (!location) return res.status(404).json({ message: 'Location not found' });
     res.json({ message: 'Location rejected and removed' });
   } catch (err) {
     res.status(500).json({ message: 'Failed to reject location', error: err.message });
@@ -115,37 +109,26 @@ exports.getAllAdminCategories = async (req, res) => {
   }
 };
 
-
+// Admin dashboard
 exports.adminDashboard = async (req, res) => {
   try {
-    // Counts
     const totalUsers = await User.countDocuments();
     const trustedAgencies = await User.countDocuments({ role: 'agency', isTrusted: true });
     const totalTrips = await Trip.countDocuments();
     const totalLocations = await Location.countDocuments();
     const totalCountries = await Country.countDocuments();
 
-    
-    // Define start and end of today
-const startOfToday = new Date();
-startOfToday.setHours(0, 0, 0, 0);
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
 
-const endOfToday = new Date();
-endOfToday.setHours(23, 59, 59, 999);
+    const recentUsers = await User.find({
+      createdAt: { $gte: startOfToday, $lte: endOfToday }
+    }).sort({ createdAt: -1 });
 
-// Get all users created today
-const recentUsers = await User.find({
-  createdAt: { $gte: startOfToday, $lte: endOfToday }
-}).sort({ createdAt: -1 });
-
-    // Trips per Country (for Bar Chart)
     const tripsPerCountry = await Trip.aggregate([
-      {
-        $group: {
-          _id: "$country",
-          count: { $sum: 1 }
-        }
-      },
+      { $group: { _id: "$country", count: { $sum: 1 } } },
       {
         $lookup: {
           from: "countries",
@@ -154,19 +137,10 @@ const recentUsers = await User.find({
           as: "countryInfo"
         }
       },
-      {
-        $unwind: "$countryInfo"
-      },
-      {
-        $project: {
-          _id: 0,
-          country: "$countryInfo.name",
-          count: 1
-        }
-      }
+      { $unwind: "$countryInfo" },
+      { $project: { _id: 0, country: "$countryInfo.name", count: 1 } }
     ]);
 
-    // Trips & Locations Status (for Pie Chart)
     const approvedTrips = await Trip.countDocuments({ isApproved: true });
     const pendingTrips = await Trip.countDocuments({ isApproved: false });
     const approvedLocations = await Location.countDocuments({ isApproved: true });
@@ -176,7 +150,7 @@ const recentUsers = await User.find({
       user: req.user,
       totalUsers,
       trustedAgencies,
-      totalTrips: totalTrips + totalLocations, // combined as "Trips & Locations"
+      totalTrips: totalTrips + totalLocations,
       totalCountries,
       recentUsers,
       tripsPerCountry,
@@ -192,13 +166,27 @@ const recentUsers = await User.find({
   }
 };
 
-
-// Get pending locations (not approved yet)
+// Get pending and approved agency-submitted locations
 exports.getPendingLocations = async (req, res) => {
   try {
-    const pendingLocations = await Location.find({ isApproved: false }).populate('country createdBy');
-    res.render('admin/locations/index', { pendingLocations }); // 🟢 This now matches your view
+    const agencyUsers = await User.find({ role: 'agency' }).select('_id');
+    const agencyIds = agencyUsers.map(user => user._id);
+
+    const pendingLocations = await Location.find({
+      isApproved: false,
+      createdBy: { $in: agencyIds }
+    }).populate('country createdBy');
+
+    const approvedAgencyLocations = await Location.find({
+      isApproved: true,
+      createdBy: { $in: agencyIds }
+    }).populate('country createdBy');
+
+    res.render('admin/locations/index', {
+      pendingLocations,
+      approvedLocations: approvedAgencyLocations
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch pending locations', error: err.message });
+    res.status(500).json({ message: 'Failed to fetch locations', error: err.message });
   }
 };

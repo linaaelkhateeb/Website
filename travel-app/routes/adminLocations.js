@@ -41,4 +41,5 @@ router.post('/:id/reject', ensureAdmin, adminController.rejectLocation);
 
 router.get('/all', ensureAdmin, adminController.getAllLocations);
 
+
 module.exports = router;
