@@ -1,21 +1,16 @@
 const Trip = require('../models/trips');
-const Booking = require('../models/booking'); // you’ll create this model
 
 exports.bookTrip = async (req, res) => {
   try {
-    const { tripId } = req.body;
-    const userId = req.user._id;
-
-    const booking = new Booking({
-      trip: tripId,
-      user: userId,
+    const newBooking = await Booking.create({
+      user: req.user._id,
+      trip: req.body.tripId
     });
 
-    await booking.save();
-   res.redirect('/mybookings?success=Booking confirmed!');
-
+    res.redirect(`/payment?bookingId=${newBooking._id}`);
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Booking failed');
+    console.error('Booking failed:', err);
+    res.redirect('/trips/search?error=Booking failed');
   }
 };
+
