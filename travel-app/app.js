@@ -68,6 +68,10 @@ const countryRoutes = require('./routes/countryRoutes')
 app.use('/countries', countryRoutes)
 const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
+const bookingRoutes = require('./routes/bookings');
+app.use('/bookings', bookingRoutes); // ✅ This is correct
+
+
 
 // One for auth and user routes:
 app.use('/', require('./routes/auth'));
