@@ -1,6 +1,11 @@
 const express = require('express');
 const router  = express.Router();
 const Trip    = require('../models/trips');
+const tripController = require('../controllers/tripController');
+
+router.get('/search', tripController.searchTrips);
+
+module.exports = router;
 
 //  SEARCH — must come first
 // GET /trips/search

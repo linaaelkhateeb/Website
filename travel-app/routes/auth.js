@@ -18,30 +18,66 @@ router.get('/register', (req, res) => {
 
 // REGISTER
 router.post('/register', async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const {
+    name,
+    email,
+    password,
+    role,
+    businessName,
+    phone,
+    website,
+    description
+  } = req.body;
 
   if (!name || !email || !password) {
-    req.flash('error', 'All fields are required');
+    req.flash('error', 'Name, email, and password are required.');
     return res.redirect('/register');
+  }
+
+  // 🛑 Prevent manual admin role manipulation
+  let finalRole = role;
+  if (role === 'admin') {
+    req.flash('error', 'You cannot register as an admin.');
+    return res.redirect('/register');
+  }
+
+  // 🧾 Validate agency-only fields
+  if (finalRole === 'agency') {
+    if (!businessName || !phone || !description) {
+      req.flash('error', 'All agency fields are required.');
+      return res.redirect('/register');
+    }
   }
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      req.flash('error', 'Email already registered');
+      req.flash('error', 'Email already registered.');
       return res.redirect('/register');
     }
 
-    const newUser = new User({ name, email, password, role });
+    // Prepare user object conditionally
+    let newUserData = { name, email, password, role: finalRole };
+
+    if (finalRole === 'agency') {
+      newUserData.businessName = businessName;
+      newUserData.phone = phone;
+      newUserData.website = website;
+      newUserData.description = description;
+    }
+
+    const newUser = new User(newUserData);
     await newUser.save();
 
-    req.flash('success', 'Account created. Please log in.');
-    return res.redirect('/login');
+    req.flash('success', 'Registration successful. Please log in.');
+    res.redirect('/login');
   } catch (err) {
-    req.flash('error', 'Server error. Please try again.');
-    return res.redirect('/register');
+    console.error(err);
+    req.flash('error', 'Something went wrong.');
+    res.redirect('/register');
   }
 });
+
 
 // LOGIN
 router.post('/login', passport.authenticate('local', {

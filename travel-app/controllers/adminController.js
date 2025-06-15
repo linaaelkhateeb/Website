@@ -2,6 +2,9 @@ const User = require('../models/user');
 const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
+const Trip = require('../models/trips');
+
+
 
 // Mark agency as trusted
 exports.trustAgency = async (req, res) => {
@@ -112,6 +115,82 @@ exports.getAllAdminCategories = async (req, res) => {
   }
 };
 
+
+exports.adminDashboard = async (req, res) => {
+  try {
+    // Counts
+    const totalUsers = await User.countDocuments();
+    const trustedAgencies = await User.countDocuments({ role: 'agency', isTrusted: true });
+    const totalTrips = await Trip.countDocuments();
+    const totalLocations = await Location.countDocuments();
+    const totalCountries = await Country.countDocuments();
+
+    
+    // Define start and end of today
+const startOfToday = new Date();
+startOfToday.setHours(0, 0, 0, 0);
+
+const endOfToday = new Date();
+endOfToday.setHours(23, 59, 59, 999);
+
+// Get all users created today
+const recentUsers = await User.find({
+  createdAt: { $gte: startOfToday, $lte: endOfToday }
+}).sort({ createdAt: -1 });
+
+    // Trips per Country (for Bar Chart)
+    const tripsPerCountry = await Trip.aggregate([
+      {
+        $group: {
+          _id: "$country",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $lookup: {
+          from: "countries",
+          localField: "_id",
+          foreignField: "_id",
+          as: "countryInfo"
+        }
+      },
+      {
+        $unwind: "$countryInfo"
+      },
+      {
+        $project: {
+          _id: 0,
+          country: "$countryInfo.name",
+          count: 1
+        }
+      }
+    ]);
+
+    // Trips & Locations Status (for Pie Chart)
+    const approvedTrips = await Trip.countDocuments({ isApproved: true });
+    const pendingTrips = await Trip.countDocuments({ isApproved: false });
+    const approvedLocations = await Location.countDocuments({ isApproved: true });
+    const pendingLocations = await Location.countDocuments({ isApproved: false });
+
+    res.render('dashboards/adminDashboard', {
+      user: req.user,
+      totalUsers,
+      trustedAgencies,
+      totalTrips: totalTrips + totalLocations, // combined as "Trips & Locations"
+      totalCountries,
+      recentUsers,
+      tripsPerCountry,
+      approvedTrips,
+      pendingTrips,
+      approvedLocations,
+      pendingLocations
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error loading admin dashboard');
+  }
+};
 
 
 // Get pending locations (not approved yet)

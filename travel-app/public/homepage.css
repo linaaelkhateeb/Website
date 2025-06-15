@@ -78,7 +78,7 @@ p{
     padding: 0 20px;
     max-width: 800px;
 }
-.sidebar {
+/* .sidebar {
   position: fixed;
   top: 0;
   right: -100%;
@@ -95,7 +95,7 @@ p{
 
 .sidebar.show {
   right: 0;
-}
+} */
 
 .close-btn {
   background: none;
@@ -600,3 +600,93 @@ html {
       grid-template-columns: 1fr;
     }
   }
+/* === Clean Sidebar Styling === */
+/* === Elegant Sidebar Styling === */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background:  #faded1; 
+  box-shadow: var(--shadow);
+  padding: 0px 20px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+
+.close-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: var(--palm-oil);
+}
+
+.sidebar-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 20px auto 10px auto;  /* smaller top margin for better balance */
+  background: var(--natural);
+  color: #fff;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 80px;
+  border-radius: 50%;
+  font-family: 'Chewy', cursive;
+}
+
+.sidebar-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--palm-oil);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.sidebar-nav a {
+  display: block;
+  background: var(--natural);  /* deep earthy tone for contrast */
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;  /* white text for good contrast */
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+  background: var(--butter);  /* soft warm hover */
+  color: var(--palm-oil);     /* darker text on hover */
+}
+
+.logout-link {
+  background:#a94442 ;  /* darker, serious tone */
+  color: #fff;  /* white text for contrast */
+}
+
+.logout-link:hover {
+  background: #a94442;  /* muted red on hover */
+  color: #fff;
+}
+
