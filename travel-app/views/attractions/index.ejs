@@ -1,0 +1,27 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <title>Attractions</title>
+     <link rel="stylesheet" href="/homepage.css" /> </head> <body> <main> <h1>Attractions</h1>
+<section class="attractions-container">
+  <% if (!attractions || attractions.length === 0) { %>
+    <p>No attractions available for this country.</p>
+  <% } else { %>
+    <% attractions.forEach(attraction => { %>
+      <article class="attraction-card">
+        <h2><%= attraction.title %></h2>
+        <p><%= attraction.description %></p>
+
+        <% if (attraction.category) { %>
+          <p><strong>Category:</strong> <%= attraction.category.name %></p>
+        <% } %>
+
+        <% if (attraction.city) { %>
+          <p><strong>City:</strong> <%= attraction.city %></p>
+        <% } %>
+
+        <% if (attraction.price) { %>
+          <p><strong>Price:</strong> $<%= attraction.price %></p>
+        <% } %>
+      </article>
+    <% }) %>
+  <% } %>
+</section>
+</main> </body> </html>

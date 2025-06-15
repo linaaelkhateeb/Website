@@ -1,71 +1,105 @@
-const Trip = require('../models/trips');
+const Trip = require('../models/trips')
+const Country = require('../models/country');
 
-// Get all trips
-exports.getAllTrips = async (req, res) => {
+//  AGENCY: Create a trip
+exports.agencyCreateTrip = async (req, res) => {
     try {
-        const trips = await Trip.find().populate('country category createdBy locations');
-        res.json(trips);
-    } catch (err) {
-        res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
-    }
-};
+        const {
+            title,
+            description,
+            country,
+            category,
+            locations,
+            price,
+            city,
+        } = req.body
 
-// Create a new trip
-exports.createTrip = async (req, res) => {
-    try {
-        const { title, description, country, category, locations } = req.body;
-
-        const newTrip = new Trip({
+        if (!title || !country || !category || !price || !city) {
+            return res.status(400).json({ message: 'Missing required fields' })
+        }
+        const trips = await Trip.find(filter).populate('country');
+        const trip = new Trip({
             title,
             description,
             country,
             category,
             locations: locations || [],
-            isApproved: true,
-        });
+            price,
+            city,
+            createdBy: req.user._id,
+            isApproved: false,
+        })
 
-        await newTrip.save();
-        res.status(201).json(newTrip);
+        await trip.save()
+        res.status(201).json({ message: 'Trip submitted for approval', trip })
     } catch (err) {
-        res.status(500).json({ message: 'Failed to create trip', error: err.message });
+        res.status(500).json({ message: 'Server error', error: err.message })
     }
-};
+}
 
-// Approve a trip
-exports.approveTrip = async (req, res) => {
+//  AGENCY: Get agency’s own trips
+exports.getAgencyTrips = async (req, res) => {
     try {
-        const trip = await Trip.findByIdAndUpdate(
-            req.params.id,
-            { isApproved: true },
-            { new: true }
-        );
-        if (!trip) return res.status(404).json({ message: 'Trip not found' });
-        res.json({ message: 'Trip approved', trip });
+        const trips = await Trip.find({ createdBy: req.user._id }).populate(
+            'country category locations'
+        )
+        res.status(200).json(trips)
     } catch (err) {
-        res.status(500).json({ message: 'Failed to approve trip', error: err.message });
+        res.status(500).json({
+            message: 'Failed to fetch your trips',
+            error: err.message,
+        })
     }
+}
+
+
+// Public: Get one trip by ID
+exports.getTripById = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id)
+      .populate('country category createdBy locations');
+    if (!trip) return res.status(404).json({ message: 'Trip not found' });
+    res.json(trip);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch trip', error: err.message });
+  }
 };
 
-// Reject a trip
-exports.rejectTrip = async (req, res) => {
-    try {
-        const trip = await Trip.findByIdAndUpdate(
-            req.params.id,
-            { isApproved: false },
-            { new: true }
-        );
-        if (!trip) return res.status(404).json({ message: 'Trip not found' });
-        res.json({ message: 'Trip rejected', trip });
-    } catch (err) {
-        res.status(500).json({ message: 'Failed to reject trip', error: err.message });
-    }
+// Admin/Agency: Create a new trip (auto-approved)
+exports.createTrip = async (req, res) => {
+  try {
+    const { title, description, country, category, locations } = req.body;
+    const newTrip = new Trip({
+      title,
+      description,
+      country,
+      category,
+      locations: locations || [],
+      isApproved: true,
+    });
+    await newTrip.save();
+    res.status(201).json(newTrip);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to create trip', error: err.message });
+  }
 };
 
-
-// Create a trip by an agency (awaiting approval)
+// Agency: Submit a trip for approval
 exports.agencyCreateTrip = async (req, res) => {
     try {
-        const { title, description, country, category, locations } = req.body;
+        const {
+            title,
+            description,
+            country,
+            category,
+            locations,
+            price,
+            city,
+        } = req.body
+
+        if (!title || !country || !category || !price || !city) {
+            return res.status(400).json({ message: 'Missing required fields' })
+        }
 
         const trip = new Trip({
             title,
@@ -73,24 +107,185 @@ exports.agencyCreateTrip = async (req, res) => {
             country,
             category,
             locations: locations || [],
+            price,
+            city,
             createdBy: req.user._id,
-            isApproved: false, // pending approval
-        });
+            isApproved: false,
+        })
 
-        await trip.save();
-        res.status(201).json({ message: 'Trip submitted for approval', trip });
+        await trip.save()
+        res.status(201).json({ message: 'Trip submitted for approval', trip })
     } catch (err) {
-        console.error('[Trip Error]', err);
-        res.status(500).json({ message: 'Server error', error: err.message });
+        res.status(500).json({ message: 'Server error', error: err.message })
     }
-};
+}
 
-// Get trips created by the logged-in agency
+//  AGENCY: Get agency’s own trips
 exports.getAgencyTrips = async (req, res) => {
     try {
-        const trips = await Trip.find({ createdBy: req.user._id }).populate('country category locations');
-        res.status(200).json(trips);
+        const trips = await Trip.find({ createdBy: req.user._id }).populate(
+            'country category locations'
+        )
+        res.status(200).json(trips)
     } catch (err) {
-        res.status(500).json({ message: 'Failed to fetch your trips', error: err.message });
+        res.status(500).json({
+            message: 'Failed to fetch your trips',
+            error: err.message,
+        })
     }
+}
+
+
+//  PUBLIC: Get trip by ID
+
+exports.getTripById = async (req, res) => {
+    try {
+        const trip = await Trip.findById(req.params.id).populate(
+            'country category createdBy locations'
+        )
+        if (!trip) return res.status(404).json({ message: 'Trip not found' })
+        res.json(trip)
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to fetch trip',
+            error: err.message,
+        })
+    }
+}
+
+//  ADMIN: Create trip directly
+exports.createTrip = async (req, res) => {
+    try {
+        const {
+            title,
+            description,
+            country,
+            category,
+            locations,
+            price,
+            city,
+        } = req.body
+
+        if (!title || !country || !category || !price || !city) {
+            return res.status(400).json({ message: 'Missing required fields' })
+        }
+
+        const newTrip = new Trip({
+            title,
+            description,
+            country,
+            category,
+            locations: locations || [],
+            price,
+            city,
+            isApproved: true,
+        })
+
+        await newTrip.save()
+        res.status(201).json(newTrip)
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to create trip',
+            error: err.message,
+        })
+    }
+}
+
+//  ADMIN: Approve trip
+exports.approveTrip = async (req, res) => {
+    try {
+        const trip = await Trip.findByIdAndUpdate(
+            req.params.id,
+            { isApproved: true },
+            { new: true }
+        )
+        if (!trip) return res.status(404).json({ message: 'Trip not found' })
+        res.json({ message: 'Trip approved', trip })
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to approve trip',
+            error: err.message,
+        })
+    }
+}
+
+
+//  ADMIN: Reject trip
+
+exports.rejectTrip = async (req, res) => {
+    try {
+        const trip = await Trip.findByIdAndUpdate(
+            req.params.id,
+            { isApproved: false },
+            { new: true }
+        )
+        if (!trip) return res.status(404).json({ message: 'Trip not found' })
+        res.json({ message: 'Trip rejected', trip })
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to reject trip',
+            error: err.message,
+        })
+    }
+}
+
+//  ADMIN: Get all trips
+exports.getAllTrips = async (req, res) => {
+    try {
+        const trips = await Trip.find().populate(
+            'country category createdBy locations'
+        )
+        res.json(trips)
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to fetch trips',
+            error: err.message,
+        })
+    }
+}
+const Category = require('../models/category'); // make sure this is at the top
+
+exports.searchTrips = async (req, res) => {
+  const { location, category, priceMin, priceMax } = req.query;
+  const filter = { isApproved: true };
+
+  try {
+    // Look up country by name
+    if (location) {
+      const foundCountry = await Country.findOne({ name: { $regex: location, $options: 'i' } });
+      if (foundCountry) {
+        filter.country = foundCountry._id;
+      }
+    }
+
+    // Category filter
+    if (category) filter.category = category;
+
+    // Price filter
+    if (priceMin || priceMax) {
+      filter.price = {};
+      if (priceMin) filter.price.$gte = parseFloat(priceMin);
+      if (priceMax) filter.price.$lte = parseFloat(priceMax);
+    }
+
+    const trips = await Trip.find(filter).populate('country category');
+    const categories = await Category.find(); // ✅ Fetch categories
+
+    res.render('trips/search', {
+      trips,
+      query: req.query,
+      categories,
+      message: trips.length === 0 ? 'No trips found.' : null,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('trips/search', {
+      trips: [],
+      query: req.query,
+      categories: [],
+      message: 'Server Error',
+    });
+  }
 };
+
