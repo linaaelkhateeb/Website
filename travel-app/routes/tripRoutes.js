@@ -6,6 +6,8 @@ const tripController = require('../controllers/tripController');
 router.get('/search', tripController.searchTrips);
 
 module.exports = router;
+// routes/tripRoutes.js or app.js or wherever your home route is
+
 
 //  SEARCH — must come first
 // GET /trips/search

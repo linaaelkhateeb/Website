@@ -7,6 +7,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
+const Trip = require('./models/trips');
 
 dotenv.config()
 
@@ -84,7 +85,28 @@ app.use('/agency/countries', require('./routes/agencyCountryRequests'))
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
+// routes/tripRoutes.js or app.js or wherever your home route is
 
+
+app.get('/', async (req, res) => {
+  try {
+    const trips = await Trip.find({ isApproved: true }).populate('country');
+
+    res.render('home', {
+      trips,                           // ✅ This makes trips available to home.ejs
+      user: req.user || null,          // (if you need the user in navbar/sidebar)
+      success: req.flash('success'),   // optional
+      error: req.flash('error')        // optional
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+app.get('/', async (req, res) => {
+  const trips = await Trip.find({ isApproved: true }).populate('country');
+  res.render('home', { user: req.user, trips });
+});
 // MongoDB connection
 mongoose
     .connect(process.env.CONNECTION_STRING, {
