@@ -7,6 +7,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
+const Trip = require('./models/trips');
 
 dotenv.config()
 
@@ -67,6 +68,11 @@ const countryRoutes = require('./routes/countryRoutes')
 app.use('/countries', countryRoutes)
 const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
+const bookingRoutes = require('./routes/bookings');
+app.use('/bookings', bookingRoutes); // ✅ This is correct
+
+require('./models/trips');
+
 
 // One for auth and user routes:
 app.use('/', require('./routes/auth'));
@@ -93,7 +99,28 @@ app.use('/admin/countries', require('./routes/admincountries'))
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
 
+// routes/tripRoutes.js or app.js or wherever your home route is
 
+
+app.get('/', async (req, res) => {
+  try {
+    const trips = await Trip.find({ isApproved: true }).populate('country');
+
+    res.render('home', {
+      trips,                           // ✅ This makes trips available to home.ejs
+      user: req.user || null,          // (if you need the user in navbar/sidebar)
+      success: req.flash('success'),   // optional
+      error: req.flash('error')        // optional
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+app.get('/', async (req, res) => {
+  const trips = await Trip.find({ isApproved: true }).populate('country');
+  res.render('home', { user: req.user, trips });
+});
 
 //MongoDB connection
 mongoose
@@ -112,6 +139,8 @@ mongoose
 app.get('/', (req, res) => {
     res.render('home')
 })
+const paymentRoutes = require('./routes/payment');
+app.use('/payment', paymentRoutes);
 
 // Server
 app.listen(3000, () => {
