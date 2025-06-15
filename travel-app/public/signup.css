@@ -152,6 +152,21 @@ body {
     text-decoration: underline;
 }
 
+.input-group select {
+    padding: 12px 15px;
+    border: 2px solid var(--butter);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: rgba(237, 225, 210, 0.3);
+}
+
+.input-group select:focus {
+    outline: none;
+    border-color: var(--organic);
+    box-shadow: 0 0 0 3px rgba(106, 111, 76, 0.2);
+}
+
 @media (max-width: 480px) {
     .signup-container {
         padding: 20px;

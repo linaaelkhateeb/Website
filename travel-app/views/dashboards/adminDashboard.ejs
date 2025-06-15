@@ -1,0 +1,125 @@
+<%- include('../partials/header') %>
+<%- include('../partials/sidebar') %>
+
+<link rel="stylesheet" href="/dashboard.css">
+<link rel="stylesheet" href="/homepage.css">
+
+
+<main class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <!-- Summary Cards -->
+  <section class="summary-cards">
+    <div class="card users">
+      <i class="icon user-icon"></i>
+      <h2>Total Users</h2>
+      <p class="count"><%= totalUsers || 0 %></p>
+      <span class="trend">+0%</span>
+    </div>
+
+    <div class="card agencies">
+      <i class="icon agency-icon"></i>
+      <h2>Trusted Agencies</h2>
+      <p class="count"><%= trustedAgencies || 0 %></p>
+      <span class="trend">+0%</span>
+    </div>
+
+    <div class="card trips">
+      <i class="icon trip-icon"></i>
+      <h2>Trips & Locations</h2>
+      <p class="count"><%= totalTrips || 0 %></p>
+      <span class="trend">+0%</span>
+    </div>
+
+    <div class="card countries">
+      <i class="icon country-icon"></i>
+      <h2>Countries</h2>
+      <p class="count"><%= totalCountries || 0 %></p>
+      <span class="trend">+0%</span>
+    </div>
+  </section>
+
+  <!-- Charts Section -->
+  <section class="charts-section">
+    <div class="chart-container">
+      <h3>Trips per Country</h3>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>Trips & Locations Status</h3>
+      <canvas id="pieChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Recent Users Table -->
+  <section class="recent-table">
+    <h3>Recently Registered Users</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Signup Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% (recentUsers || []).forEach(user => { %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.role %></td>
+            <td><%= user.createdAt ? user.createdAt.toDateString() : 'N/A' %></td>
+            <td><%= user.isTrusted ? 'Trusted' : 'Pending' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Pass backend data safely to JS
+  const tripsPerCountry = <%- JSON.stringify(tripsPerCountry) %>;
+  const approvedTrips = <%- JSON.stringify(approvedTrips) %>;
+  const pendingTrips = <%- JSON.stringify(pendingTrips) %>;
+  const approvedLocations = <%- JSON.stringify(approvedLocations) %>;
+  const pendingLocations = <%- JSON.stringify(pendingLocations) %>;
+
+  // Bar Chart: Trips per Country
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: tripsPerCountry.map(t => t.country),
+      datasets: [{
+        label: 'Trips',
+        data: tripsPerCountry.map(t => t.count),
+        backgroundColor: 'rgba(106, 111, 76, 0.8)'
+      }]
+    }
+  });
+
+  // Pie Chart: Status
+  const pieCtx = document.getElementById('pieChart').getContext('2d');
+  new Chart(pieCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Approved Trips', 'Pending Trips', 'Approved Locations', 'Pending Locations'],
+      datasets: [{
+        data: [approvedTrips, pendingTrips, approvedLocations, pendingLocations],
+        backgroundColor: [
+          'rgba(106, 111, 76, 0.8)',
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(80, 160, 120, 0.8)',
+          'rgba(255, 206, 86, 0.8)'
+        ]
+      }]
+    }
+  });
+</script>
+
+<%- include('../partials/footer') %>

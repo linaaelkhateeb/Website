@@ -1,74 +1,125 @@
-.dashboard-container {
-  max-width: 1200px;
-  margin: 100px auto 40px;
-  padding: 0 20px;
-  background-color: var(--coconut);
-}
+/* dashboard.css */
 
-.dashboard-title {
-  font-family: 'Chewy', cursive;
-  text-align: center;
-  color: var(--palm-oil);
-  font-size: 2.4rem;
-  margin-bottom: 2rem;
-}
-
-.dashboard-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-}
-
-.dashboard-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  font-family: 'Patrick Hand', cursive;
-  transition: var(--transition);
-  border-left: 5px solid var(--organic);
-}
-
-.dashboard-card:hover {
-  transform: translateY(-4px);
-}
-
-.dashboard-card h2 {
-  font-family: 'Chewy', cursive;
-  color: var(--palm-oil);
-  font-size: 1.5rem;
+.card h2 {
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
-.dashboard-card p {
+:root {
+  --organic: #6A6F4C;
+  --butter: #f9d0ddda;
+  --coconut: #EDE1D2;
+  --natural: #806044;
+  --palm-oil: #5D2510;
+  --cocoa: #412F26;
+  --shadow: 0 4px 6px rgba(93, 37, 16, 0.1);
+}
+
+body {
+  font-family: 'Patrick Hand', cursive;
+  background: var(--coconut);
   color: var(--cocoa);
-  font-size: 1.1rem;
 }
 
-.dashboard-btn {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 10px 20px;
-  background-color: var(--organic);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
+.admin-dashboard {
+  padding: 50px 2rem 2rem;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--butter);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px; 
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card .count {
+  font-size: 1.0rem;
   font-weight: bold;
-  transition: var(--transition);
 }
 
-.dashboard-btn:hover {
-  background-color: var(--natural);
+
+.card .trend {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.9rem;
+  color: var(--palm-oil);
 }
 
-.dashboard-btn.danger {
-  background-color: #a94442;
+.charts-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.dashboard-btn.danger:hover {
-  background-color: #7c2c2b;
+.chart-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
 }
 
-.dashboard-card.danger {
-  border-left: 5px solid #a94442;
+.recent-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
+
+.recent-table th, .recent-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--coconut);
+}
+
+.recent-table th {
+  background: var(--organic);
+  color: white;
+}
+
+.recent-table tr:hover {
+  background: var(--butter);
+}
+
+/* Ensure table text aligns nicely */
+.recent-table th,
+.recent-table td {
+  text-align: left;      /* or center if you prefer */
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--coconut);
+}
+
+.recent-table th {
+  background: var(--organic);
+  color: white;
+  text-align: left;     /* keep consistent with td */
+}
+
+.recent-table td {
+  text-align: left;     /* consistent with th */
+}
+
