@@ -14,12 +14,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false, // All new agencies start untrusted
     },
-      businessName: { type: String },
-  phone: { type: String },
-  website: { type: String },
-  description: { type: String },
+    businessName: { type: String },
+    phone: { type: String },
+    website: { type: String },
+    description: { type: String },
+}, { timestamps: true });  // added to add createdAt and updatedAt fields for every documentt
 
-})
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
