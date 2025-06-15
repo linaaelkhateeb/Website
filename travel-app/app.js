@@ -71,6 +71,7 @@ app.use('/trips', tripRoutes)
 // One for auth and user routes:
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/users'));
+app.use('/profile', require('./routes/profile'))
 
 // Admin-specific:
 app.use('/admin', require('./routes/adminusers'));
@@ -92,6 +93,8 @@ app.use('/admin/countries', require('./routes/admincountries'))
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
 
+
+
 //MongoDB connection
 mongoose
     .connect(process.env.CONNECTION_STRING, {
@@ -112,5 +115,5 @@ app.get('/', (req, res) => {
 
 // Server
 app.listen(3000, () => {
-    console.log('Server running on http://localhost:3003')
+    console.log('Server running on http://localhost:3000')
 })
