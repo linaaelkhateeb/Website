@@ -71,11 +71,13 @@
 <script>
   const fileInput = document.getElementById('fileInput');
   const preview = document.getElementById('avatarPreview');
-  const form = document.getElementById('uploadForm');
 
-  fileInput.onchange = function() {
+  fileInput.onchange = async function() {
     if (this.files && this.files[0]) {
+      const file = this.files[0];
       const reader = new FileReader();
+
+      // Show preview immediately
       reader.onload = function(e) {
         if (preview.tagName.toLowerCase() === 'img') {
           preview.src = e.target.result;
@@ -83,13 +85,26 @@
           preview.style.backgroundImage = `url(${e.target.result})`;
           preview.style.backgroundSize = 'cover';
           preview.style.backgroundPosition = 'center';
-          preview.textContent = ''; // remove the letter
+          preview.textContent = '';
         }
       };
-      reader.readAsDataURL(this.files[0]);
+      reader.readAsDataURL(file);
 
-      // Optional auto-submit
-      form.submit();
+      // ✅ Send via AJAX
+      const formData = new FormData();
+      formData.append('profilePic', file);
+
+      try {
+        const response = await fetch('/profile/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        console.log('Uploaded:', result);
+        // Optionally: update preview with final server URL if needed
+      } catch (err) {
+        console.error('Upload failed', err);
+      }
     }
   };
 </script>
