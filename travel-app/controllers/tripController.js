@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 const Trip = require('../models/trips')
 const Country = require('../models/country');
 
@@ -238,19 +240,26 @@ exports.rejectTrip = async (req, res) => {
 }
 
 //  ADMIN: Get all trips
+// Get trips submitted by agencies
 exports.getAllTrips = async (req, res) => {
-    try {
-        const trips = await Trip.find().populate(
-            'country category createdBy locations'
-        )
-        res.json(trips)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch trips',
-            error: err.message,
-        })
-    }
-}
+  try {
+    const agencyUsers = await User.find({ role: 'agency' }).select('_id');
+    const agencyIds = agencyUsers.map(user => user._id);
+
+    const pendingTrips = await Trip.find({ isApproved: false, createdBy: { $in: agencyIds } })
+      .populate('country category createdBy');
+    const approvedTrips = await Trip.find({ isApproved: true, createdBy: { $in: agencyIds } })
+      .populate('country category createdBy');
+
+    res.render('admin/trips/index', {
+      pendingTrips,
+      approvedTrips
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
+  }
+};
+
 const Category = require('../models/category'); // make sure this is at the top
 
 exports.searchTrips = async (req, res) => {

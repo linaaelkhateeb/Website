@@ -1,8 +1,9 @@
+const User = require('../models/user')
 const Location = require('../models/location')
 const Trip = require('../models/trips')
 const Country = require('../models/country')
 const Category = require('../models/category')
-const User = require('../models/user')
+
 
 
 exports.renderNewLocationForm = async (req, res) => {
@@ -103,7 +104,8 @@ exports.createTrip = async (req, res) => {
 
 exports.getApprovedCountries = async (req, res) => {
     try {
-        const countries = await Country.find({ isApproved: true })
+        const countries = await Country.find(); // no filter
+
         res.json(countries)
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message })
@@ -140,4 +142,11 @@ exports.agencyDashboard = async (req, res) => {
   } catch (err) {
     res.status(500).send('Error loading agency dashboard');
   }
+};
+
+
+exports.renderNewTripForm = async (req, res) => {
+  const countries = await Country.find();
+  const categories = await Category.find();
+  res.render('agency/trip/new', { countries, categories });
 };

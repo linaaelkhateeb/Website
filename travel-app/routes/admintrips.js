@@ -86,17 +86,18 @@ const express = require('express')
 const router = express.Router()
 const { ensureAdmin } = require('../middleware/auth')
 const tripController = require('../controllers/tripController')
+const adminController = require('../controllers/adminController');
 
 // GET all trips
 router.get('/', ensureAdmin, tripController.getAllTrips)
 
-// Admin creates a new trip
-router.post('/', ensureAdmin, tripController.createTrip)
+
 
 // Approve a trip
 router.put('/:id/approve', ensureAdmin, tripController.approveTrip)
 
 // Reject a trip
 router.put('/:id/reject', ensureAdmin, tripController.rejectTrip)
+
 
 module.exports = router

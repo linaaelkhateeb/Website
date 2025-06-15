@@ -1,8 +1,9 @@
 const User = require('../models/user');
+const Trip = require('../models/trips');
 const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
-const Trip = require('../models/trips');
+
 
 // Mark agency as trusted
 exports.trustAgency = async (req, res) => {
@@ -188,5 +189,47 @@ exports.getPendingLocations = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch locations', error: err.message });
+  }
+};
+
+
+
+
+exports.approveTrip = async (req, res) => {
+try {
+await Trip.findByIdAndUpdate(req.params.id, { isApproved: true });
+res.redirect('/admin/trips');
+} catch (err) {
+res.status(500).send('Error approving trip');
+}
+};
+
+exports.rejectTrip = async (req, res) => {
+try {
+await Trip.findByIdAndDelete(req.params.id);
+res.redirect('/admin/trips');
+} catch (err) {
+res.status(500).send('Error rejecting trip');
+}
+};
+
+exports.getAllTrips = async (req, res) => {
+  try {
+    const agencyUsers = await User.find({ role: 'agency' }).select('_id');
+    const agencyIds = agencyUsers.map(user => user._id);
+
+    const pendingTrips = await Trip.find({
+      isApproved: false,
+      createdBy: { $in: agencyIds }
+    }).populate('country category createdBy locations');
+
+    const approvedTrips = await Trip.find({
+      isApproved: true,
+      createdBy: { $in: agencyIds }
+    }).populate('country category createdBy locations');
+
+    res.render('admin/trips/index', { pendingTrips, approvedTrips });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
   }
 };

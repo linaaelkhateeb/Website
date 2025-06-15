@@ -135,6 +135,11 @@ mongoose
 app.get('/', (req, res) => {
     res.render('home')
 })
+const agencyTripRoutes = require('./routes/agencytrips');
+app.use('/agency', require('./routes/agencytrips'));
+
+app.use('/agency/trips', agencyTripRoutes);
+
 
 // Server
 app.listen(3000, () => {
