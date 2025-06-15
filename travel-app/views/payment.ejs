@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+    }
+    label, input, select {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .radio-group {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Select a Payment Method</h1>
+    
+    <form action="/payment/confirm" method="POST">
+      <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+
+      <label for="cardNumber">Card Number</label>
+      <input type="text" name="cardNumber" required placeholder="1234 5678 9012 3456" />
+
+      <label for="expiry">Expiry Date</label>
+      <input type="month" name="expiry" required />
+
+      <label for="cvv">CVV</label>
+      <input type="text" name="cvv" required placeholder="123" />
+
+      <label for="password">Payment Password</label>
+      <input type="password" name="password" required placeholder="Enter your password" />
+
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="method" value="credit" checked /> Credit Card
+        </label>
+        <label>
+          <input type="radio" name="method" value="paypal" /> PayPal
+        </label>
+      </div>
+
+      <button type="submit">Confirm Payment</button>
+    </form>
+  </div>
+</body>
+</html>
+

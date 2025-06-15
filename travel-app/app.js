@@ -71,6 +71,7 @@ app.use('/trips', tripRoutes)
 const bookingRoutes = require('./routes/bookings');
 app.use('/bookings', bookingRoutes); // ✅ This is correct
 
+require('./models/trips');
 
 
 // One for auth and user routes:
@@ -135,8 +136,10 @@ mongoose
 app.get('/', (req, res) => {
     res.render('home')
 })
+const paymentRoutes = require('./routes/payment');
+app.use('/payment', paymentRoutes);
 
 // Server
 app.listen(3000, () => {
-    console.log('Server running on http://localhost:3003')
+    console.log('Server running on http://localhost:3000')
 })

@@ -1,9 +1,25 @@
 const mongoose = require('mongoose');
 
+
 const bookingSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  trip: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
-  bookedAt: { type: Date, default: Date.now }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  trip: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Trip',
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
+  
 });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+// ✅ Prevent OverwriteModelError
+const Booking = mongoose.models.Booking || mongoose.model('Booking', bookingSchema);
+
+module.exports = Booking;

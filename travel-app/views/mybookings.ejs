@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Bookings</title>
+  <link rel="stylesheet" href="/homepage.css" />
+</head>
+<body>
+  <h1>My Bookings</h1>
+
+  <% if (success) { %>
+    <div class="alert success"><%= success %></div>
+  <% } %>
+
+  <% if (bookings.length === 0) { %>
+    <p>You have not booked any trips yet.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Trip</th>
+          <th>Price</th>
+          <th>Country</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bookings.forEach(booking => { %>
+          <tr>
+            <td><%= booking.trip?.title || 'N/A' %></td>
+            <td>$<%= booking.trip?.price || 'N/A' %></td>
+            <td><%= booking.trip?.country?.name || 'N/A' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</body>
+</html>
