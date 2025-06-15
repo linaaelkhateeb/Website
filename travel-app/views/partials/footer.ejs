@@ -103,3 +103,20 @@
     }
   });
 </script>
+<script>
+  window.addEventListener('load', function () {
+    const homeLink = document.getElementById('homeLink');
+
+    if (homeLink) {
+      homeLink.addEventListener('click', function (e) {
+        // If we're on the homepage
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+          e.preventDefault(); // Stop normal link
+          window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll
+        }
+        // Else, let the link do its normal work (go to /)
+      });
+    }
+  });
+</script>
+
