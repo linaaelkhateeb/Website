@@ -7,7 +7,7 @@ const User = require('../models/user')
 
 exports.renderNewLocationForm = async (req, res) => {
   try {
-    const countries = await Country.find({ isApproved: true });
+    const countries = await Country.find();
     res.render('agency/locations/new', { countries });
   } catch (err) {
     res.status(500).send('Server error');
