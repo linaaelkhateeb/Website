@@ -15,6 +15,8 @@ const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
 const userController = require('../controllers/userController');
 
-router.get('/', ensureAuth, userController.getUserDashboard);
+
+router.get('/client/dashboard', ensureAuth, userController.clientDashboard);
+
 
 module.exports = router;

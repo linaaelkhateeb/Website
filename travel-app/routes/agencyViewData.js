@@ -40,7 +40,9 @@ const router = express.Router()
 const ensureAgency = require('../middleware/ensureAgency')
 const agencyController = require('../controllers/agencyController')
 
-router.get('/countries', ensureAgency, agencyController.getApprovedCountries)
-router.get('/categories', ensureAgency, agencyController.getAllCategories)
+router.get('/countries', ensureAgency, agencyController.getApprovedCountries);
+router.get('/categories', ensureAgency, agencyController.getAllCategories);
+router.get('/agency/dashboard', ensureAgency, agencyController.agencyDashboard);
+
 
 module.exports = router

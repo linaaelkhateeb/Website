@@ -17,109 +17,22 @@
           <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <link rel="stylesheet" href="/homepage.css?v=3.14159" />
-        <script src="/sidebar.js"></script>
+      
     </head>
     <body>
-        <!-- Header Section -->
-        <header class="site-header">
-            <div class="container">
-                <div class="logo">
-                    <h1>
-                        <i class="fas fa-globe-americas"></i> ExploreMyCountry
-                    </h1>
-                </div>
+        <%- include('partials/header') %>
+<%- include('partials/sidebar') %>
 
-                <div class="mobile-menu-toggle">
-                    <span class="hamburger"></span>
-                </div>
 
-                <nav class="main-nav">
-                    <ul>
-                        <li>
-                            <a href="/index.html"
-                                ><i class="fas fa-home"></i> Home</a
-                            >
-                        </li>
-                        <li>
-                            <a href="/countries.html"
-                                ><i class="fas fa-flag"></i> Countries</a
-                            >
-                        </li>
-                        <li>
-                            <a href="/BudgetPlanner.html"
-                                ><i class="fas fa-map-marked-alt"></i> Budget
-                                Planner</a
-                            >
-                        </li>
-                        <div class="auth-buttons">
-                            <% if (user) { %>
-                            <!-- Profile Link -->
-                            <li class="user-profile">
-                                <a href="#" id="profileToggle"
-                                    ><i class="fas fa-user-circle"></i> <%=
-                                    user.name %></a
-                                >
-                            </li>
+ 
 
-                            <!-- Admin Tools -->
-                            <% if (user.role === 'admin') { %>
-                            <li>
-                                <a href="/admin/categories"
-                                    ><i class="fas fa-cogs"></i> Admin Panel</a
-                                >
-                            </li>
-                            <% } %>
-
-                            <!-- Agency Tools -->
-                            <% if (user.role === 'agency') { %>
-                            <li>
-                                <a href="/agency/countries"
-                                    ><i class="fas fa-briefcase"></i> My
-                                    Countries</a
-                                >
-                            </li>
-                            <% } %>
-
-                            <!-- Logout -->
-                            <li class="logout-btn">
-                                <a href="/logout"
-                                    ><i class="fas fa-sign-out-alt"></i>
-                                    Logout</a
-                                >
-                            </li>
-
-                            <% } else { %>
-                            <!-- Guest View: Login / Register -->
-                            <li class="login-btn">
-                                <a href="/login"
-                                    ><i class="fas fa-sign-in-alt"></i> Login</a
-                                >
-                            </li>
-                            <li class="signup-btn">
-                                <a href="/register"
-                                    ><i class="fas fa-user-plus"></i> Sign Up</a
-                                >
-                            </li>
-                            <% } %>
-                        </div>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <% if (success) { %>
-        <div class="alert success"><%= success %></div>
-        <% } %> <% if (error) { %>
-        <div class="alert error"><%= error %></div>
-        <% } %> <% if (user) { %>
-        <div id="sidebar" class="sidebar">
-            <button class="close-btn" onclick="toggleSidebar()">×</button>
-            <h2><%= user.name %></h2>
-            <p><strong>Email:</strong> <%= user.email %></p>
-            <p><strong>Role:</strong> <%= user.role %></p>
-            <a href="/dashboard">Go to Full Dashboard</a><br />
-            <a href="/logout" class="logout-link">Logout</a>
-        </div>
-        <% } %>
+    <% if (success) { %>
+  <div class="alert success"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  <div class="alert error"><%= error %></div>
+<% } %>
+       
 
         <!-- Homepage Hero Section -->
         <section class="hero">
@@ -422,78 +335,7 @@
 
 
 
-        <!-- Footer Section -->
-        <footer class="site-footer">
-            <div class="container">
-                <div class="footer-columns">
-                    <!-- Column 1: About Us -->
-                    <div class="footer-col">
-                        <h3><i class="fas fa-info-circle"></i> About Us</h3>
-                        <ul>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-chevron-right"></i> Our
-                                    Story</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-chevron-right"></i>
-                                    Mission</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-chevron-right"></i>
-                                    Team</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Column 2: Contact -->
-                    <div class="footer-col">
-                        <h3><i class="fas fa-envelope"></i> Contact</h3>
-                        <ul>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-phone-alt"></i> +1 (123)
-                                    456-7890</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-map-marker-alt"></i> 123
-                                    Travel St, World</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="fas fa-envelope"></i>
-                                    info@exploremycountry.com</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Column 3: Social Media -->
-                    <div class="footer-col">
-                        <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Copyright -->
-                <div class="copyright">
-                    <p>&copy; 2023 ExploreMyCountry. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+        <%- include('partials/footer') %>
         <script>
             var mapp = L.map('mappp').setView([20, 0], 2) // World view
 
@@ -600,22 +442,6 @@
                     )
             })
         </script>
-        <script>
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar')
-                sidebar.classList.toggle('show')
-            }
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const profileLink = document.getElementById('profileToggle')
-                if (profileLink) {
-                    profileLink.addEventListener('click', (e) => {
-                        e.preventDefault()
-                        toggleSidebar()
-                    })
-                }
-            })
-        </script>
-        <script src="homepage.js"></script>
+        
     </body>
 </html>

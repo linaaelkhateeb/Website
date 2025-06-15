@@ -25,6 +25,9 @@ const ensureAdmin = require('../middleware/ensureAdmin');
 const adminController = require('../controllers/adminController');
 
 router.put('/users/:id/trust', ensureAdmin, adminController.trustAgency);
+router.get('/dashboard', ensureAdmin, adminController.adminDashboard);
+
+
 
 module.exports = router;
 

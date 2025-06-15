@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+<%- include('partials/sidebar') %>
+
+<div class="profile-container">
+  <aside class="profile-sidebar">
+    <% if (user.profilePic) { %>
+      <img src="<%= user.profilePic %>" alt="Profile Picture" class="avatar-img">
+    <% } else { %>
+      <div class="avatar-circle">
+        <%= user.name.charAt(0).toUpperCase() %><%= user.name.split(' ')[1] ? user.name.split(' ')[1].charAt(0).toUpperCase() : '' %>
+      </div>
+    <% } %>
+    <form action="/profile/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="profilePic" accept="image/*" required>
+      <button type="submit" class="upload-btn"><%= user.profilePic ? 'Change Picture' : 'Add Picture' %></button>
+    </form>
+    <h2 class="profile-name"><%= user.name %></h2>
+    <p class="profile-email"><%= user.email %></p>
+  </aside>
+
+  <main class="profile-main">
+    <h1>Profile Settings</h1>
+    <form action="/profile" method="POST">
+      <% if (user.role === 'client' || user.role === 'admin') { %>
+        <label>First Name</label>
+        <input type="text" name="firstName" value="<%= user.firstName || '' %>" required>
+
+        <label>Surname</label>
+        <input type="text" name="surname" value="<%= user.surname || '' %>" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="<%= user.email || '' %>" required>
+
+        <label>Phone</label>
+        <input type="tel" name="phone" value="<%= user.phone || '' %>">
+
+      <% } else if (user.role === 'agency') { %>
+        <label>Agency Name</label>
+        <input type="text" name="agencyName" value="<%= user.agencyName || '' %>" required>
+
+        <label>Business Name</label>
+        <input type="text" name="businessName" value="<%= user.businessName || '' %>">
+
+        <label>Email</label>
+        <input type="email" name="email" value="<%= user.email || '' %>" required>
+
+        <label>Phone</label>
+        <input type="tel" name="phone" value="<%= user.phone || '' %>">
+
+        <label>Website or Social Link</label>
+        <input type="url" name="website" value="<%= user.website || '' %>">
+
+        <label>Description</label>
+        <textarea name="description"><%= user.description || '' %></textarea>
+      <% } %>
+
+      <label>Password</label>
+      <div class="password-field">
+        <input type="password" id="passwordField" value="********" readonly>
+        <span onclick="togglePassword()">👁️</span>
+      </div>
+
+      <button type="submit" class="save-btn">Save Profile</button>
+    </form>
+  </main>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+  function togglePassword() {
+    const pw = document.getElementById('passwordField');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+</script>
