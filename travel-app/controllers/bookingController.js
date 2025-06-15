@@ -12,7 +12,8 @@ exports.bookTrip = async (req, res) => {
     });
 
     await booking.save();
-    res.redirect('/trips/search'); // or a success page
+   res.redirect('/mybookings?success=Booking confirmed!');
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Booking failed');
