@@ -680,15 +680,13 @@ html {
   color: var(--palm-oil);     /* darker text on hover */
 }
 
-/* Specific styling for the logout link inside sidebar nav */
-.sidebar-nav a.logout-link {
-  background: var(--palm-oil) !important;  /* strong dark tone */
-  color: #fff !important;
+.logout-link {
+  background:#a94442 ;  /* darker, serious tone */
+  color: #fff;  /* white text for contrast */
 }
 
-.sidebar-nav a.logout-link:hover {
-  background: #a94442 !important;  /* muted red hover */
-  color: #fff !important;
+.logout-link:hover {
+  background: #a94442;  /* muted red on hover */
+  color: #fff;
 }
-
 

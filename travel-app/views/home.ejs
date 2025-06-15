@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExploreMyCountry - Attractions</title>
-   
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<link rel="stylesheet" href="/homepage.css?v=3.14159">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ExploreMyCountry - Attractions</title>
 
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="/homepage.css?v=3.14159" />
+        <script src="/sidebar.js"></script>
+    </head>
+    <body>
 
-</head>
-<body>
-<%- include('partials/header') %>
+        <%- include('partials/header') %>
 <%- include('partials/sidebar') %>
 
     <% if (success) { %>
@@ -21,7 +24,7 @@
 <% if (error) { %>
   <div class="alert error"><%= error %></div>
 <% } %>
-
+       
 
         <!-- Homepage Hero Section -->
         <section class="hero">
@@ -292,7 +295,7 @@
             <div id="map"></div>
         </div>
 
-
+        <%- include('partials/footer') %>
         <script>
             var map = L.map('map').setView([20, 0], 2) // World view
 
@@ -399,7 +402,6 @@
                     )
             })
         </script>
-       
-       
+        
     </body>
 </html>

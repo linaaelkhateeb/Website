@@ -43,7 +43,7 @@
         
     </footer>
  
-<script>
+<!-- <script>
   window.addEventListener('load', function () {
     const sidebar = document.getElementById('sidebar');
     const profileToggle = document.getElementById('profileToggle');
@@ -52,6 +52,34 @@
     console.log("Sidebar:", sidebar);
     console.log("ProfileToggle:", profileToggle);
     console.log("CloseBtn:", closeBtn);
+
+    if (!sidebar) {
+      console.warn("Sidebar element NOT found");
+      return;
+    }
+
+    if (!profileToggle) {
+      console.warn("Profile toggle button NOT found");
+      return;
+    }
+
+    profileToggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      sidebar.classList.toggle('show');
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        sidebar.classList.remove('show');
+      });
+    }
+  });
+</script> -->
+<script>
+  window.addEventListener('load', function () {
+    const sidebar = document.getElementById('sidebar');
+    const profileToggle = document.getElementById('profileToggle');
+    const closeBtn = document.querySelector('.close-btn');
 
     if (!sidebar) {
       console.warn("Sidebar element NOT found");

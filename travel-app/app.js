@@ -88,30 +88,29 @@ app.use('/attractions', require('./routes/attractions'))
 
 // Country management routes
 app.use('/admin/countries', require('./routes/admincountries'))
-app.use('/agency/countries', require('./routes/agencyCountryRequests'))
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
 
-// MongoDB connection
-// mongoose
-//     .connect(process.env.CONNECTION_STRING, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         dbName: 'proj-database',
-//     })
-//     .then(() => {
-//         console.log('Database Connection is ready...')
-//     })
-//     .catch((err) => {
-//         console.log(err)
-//     })
+//MongoDB connection
+mongoose
+    .connect(process.env.CONNECTION_STRING, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: 'proj-database',
+    })
+    .then(() => {
+        console.log('Database Connection is ready...')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 
 app.get('/', (req, res) => {
     res.render('home')
 })
 
 // Server
-app.listen(3003, () => {
+app.listen(3000, () => {
     console.log('Server running on http://localhost:3003')
 })
