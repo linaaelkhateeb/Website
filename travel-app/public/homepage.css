@@ -542,6 +542,15 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         width: 100%;
     }
 }
+.styled-map {
+  height: 400px;
+  width: 1000px;
+  margin: 20px auto; /* centers the map */
+  border: 2px solid #8B4513; /* matching brown tone */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Footer Styles */
 .site-footer {
