@@ -140,3 +140,7 @@
 .save-btn:hover {
   background: var(--palm-oil);
 }
+.profile-main textarea {
+  resize: vertical;
+  min-height: 100px;
+}

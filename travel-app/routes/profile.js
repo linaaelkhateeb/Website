@@ -33,28 +33,30 @@ router.post('/', isAuthenticated, async (req, res) => {
     const updates = req.body;
     const user = await User.findById(req.user._id);
 
-    user.name = updates.name;
-    user.email = updates.email;
-    user.phone = updates.phone;
+    user.name = updates.name || user.name;
+    user.email = updates.email || user.email;
+    user.phone = updates.phone || user.phone;
 
     if (user.role === 'agency') {
-      user.businessName = updates.businessName;
-      user.website = updates.website;
-      user.description = updates.description;
+      user.businessName = updates.businessName || user.businessName;
+      user.website = updates.website || user.website;
+      user.description = updates.description || user.description;
     }
 
     if (updates.newPassword && updates.newPassword.trim() !== '') {
-      const hash = await bcrypt.hash(updates.newPassword, 10);
-      user.password = hash;
+      const hashed = await bcrypt.hash(updates.newPassword, 10);
+      user.password = hashed;
     }
 
     await user.save();
-    res.redirect('/profile');
+    //res.redirect('/profile');
+    res.json({ success: true });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error updating profile');
+    res.status(500).json({ error: 'Update failed' });
   }
 });
+
 
 router.post('/upload', isAuthenticated, upload.single('profilePic'), async (req, res) => {
   try {
