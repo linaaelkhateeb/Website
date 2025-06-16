@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const methodOverride = require('method-override');
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
@@ -42,6 +43,9 @@ app.use(passport.session())
 
 // Flash messages
 app.use(flash())
+//method-override
+
+app.use(methodOverride('_method'));
 
 // // Middleware to pass flash messages to all views
 // app.use((req, res, next) => {
@@ -117,10 +121,7 @@ app.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-app.get('/', async (req, res) => {
-  const trips = await Trip.find({ isApproved: true }).populate('country');
-  res.render('home', { user: req.user, trips });
-});
+
 
 //MongoDB connection
 mongoose
@@ -136,11 +137,17 @@ mongoose
         console.log(err)
     })
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
+
+
+
+
+
+
+
+
 const paymentRoutes = require('./routes/payment');
 app.use('/payment', paymentRoutes);
+
 
 // Server
 app.listen(3000, () => {

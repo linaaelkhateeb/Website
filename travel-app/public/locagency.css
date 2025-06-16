@@ -1,0 +1,73 @@
+:root {
+    --organic: #6A6F4C;    /* Primary buttons, accents */
+    --butter: #f9d0ddda;   /* Light overlays */
+    --coconut: #EDE1D2;    /* Card backgrounds */
+    --natural: #806044;    /* Secondary elements */
+      /* Headings, strong text */
+    --cocoa: #412F26;      /* Body text */
+    --shadow: 0 4px 6px rgba(93, 37, 16, 0.1);
+    --transition: all 0.3s ease;
+}
+
+form {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: var(--butter); /* Soft warm background */
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+form h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--palm-oil); /* Dark brown */
+  margin-bottom: 1.5rem;
+}
+
+form div {
+  margin-bottom: 1.2rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--cocoa);
+}
+
+form input[type="text"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccccccbd;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--coconut);
+  color: var(--cocoa);
+}
+
+form textarea {
+  resize: vertical;
+}
+
+form button {
+  display: block;
+  width: 100%;
+  background: linear-gradient(to right, var(--organic), var(--natural));
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px 0;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
+
+form button:hover {
+  background: linear-gradient(to right, var(--natural), var(--palm-oil));
+  cursor: pointer;
+}

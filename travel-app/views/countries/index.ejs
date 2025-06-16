@@ -1,17 +1,30 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <title>Explore Countries</title> 
-  <link rel="stylesheet" href="/homepage.css" /> </head> <body> <main> <h1> Explore Countries</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explore Countries</title>
+  <link rel="stylesheet" href="/homepage.css" />
+</head>
+<body>
+  <main>
+    <h1>Explore Countries</h1>
 
-<section class="countries-container">
-  <% if (countries.length === 0) { %>
-    <p>No countries available yet.</p>
-  <% } else { %>
-    <% countries.forEach(country => { %>
-      <article class="country-card">
-        <h2><%= country.name %></h2>
-        <p><%= country.description %></p>
-        <a href="/countries/<%= country._id %>/attractions" class="btn">View Attractions</a>
-      </article>
-    <% }) %>
-  <% } %>
-</section>
-</main> </body> </html>
+    <section class="countries-container">
+      <% if (countries.length === 0) { %>
+        <p>No countries available yet.</p>
+      <% } else { %>
+        <% countries.forEach(country => { %>
+          <article class="country-card">
+            <h2><%= country.name %></h2>
+            <p><%= country.description %></p>
+            
+            <!-- Only View Locations button -->
+           <!---- <a href="/countries/<%= country._id %>/locations" class="btn" >!</a>>View Locations</a>-->
+          </article>
+        <% }) %>
+      <% } %>
+    </section>
+    
+  </main>
+</body>
+</html>

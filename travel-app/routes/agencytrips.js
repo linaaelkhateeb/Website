@@ -47,9 +47,14 @@ const express = require('express');
 const router = express.Router();
 const ensureAgency = require('../middleware/ensureAgency');
 const tripController = require('../controllers/tripController');
+const agencyController = require('../controllers/agencyController');
 
-router.post('/', ensureAgency, tripController.agencyCreateTrip);
+
 router.get('/mine', ensureAgency, tripController.getAgencyTrips);
+// Show new trip form
+router.get('/new', ensureAgency, agencyController.renderNewTripForm);
+// Handle trip creation
+router.post('/', ensureAgency, agencyController.createTrip);
 
 module.exports = router;
 
