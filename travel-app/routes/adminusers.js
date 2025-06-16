@@ -34,6 +34,8 @@ router.get('/dashboard', ensureAdmin, adminController.adminDashboard);
 router.get('/', adminController.listUsers); // for /admin/users
 router.get('/agencies', adminController.listAgencies); // for /admin/agencies
 router.patch('/agencies/:id/trust', adminController.markAgencyTrusted);
+router.delete('/agencies/:id', adminController.deleteAgency);
+
 
 
 
