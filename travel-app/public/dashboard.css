@@ -123,3 +123,78 @@ body {
   text-align: left;     /* consistent with th */
 }
 
+/* Clean spacing for the entire collapsibles section */
+.recent-tables {
+  margin-top: 40px;
+}
+
+.collapsible {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.collapsible summary {
+  font-family: 'Patrick Hand', cursive; /* your site font */
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: var(--coconut); /* use your palette */
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.collapsible summary:hover {
+  background: var(--butter); /* hover accent */
+}
+
+.collapsible .table-wrapper {
+  padding: 0 20px 20px 20px;
+}
+
+.collapsible table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.collapsible th, .collapsible td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.collapsible th {
+  background: var(--coconut);
+  font-weight: bold;
+}
+
+.collapsible table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;               /* same as .recent-table */
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.collapsible th,
+.collapsible td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--coconut);
+}
+
+.collapsible th {
+  background: var(--organic);
+  color: white;
+  text-align: left;
+}
+
+.collapsible tr:hover {
+  background: var(--butter);
+}
+
+.collapsible th,
+.collapsible td {
+  text-align: left;
+}

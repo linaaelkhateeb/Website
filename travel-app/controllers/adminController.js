@@ -128,6 +128,11 @@ exports.adminDashboard = async (req, res) => {
       createdAt: { $gte: startOfToday, $lte: endOfToday }
     }).sort({ createdAt: -1 });
 
+    const recentTrips = await Trip.find()
+  .sort({ createdAt: -1 })
+  .limit(5)
+  .populate('country'); 
+
     const tripsPerCountry = await Trip.aggregate([
       { $group: { _id: "$country", count: { $sum: 1 } } },
       {
@@ -148,18 +153,20 @@ exports.adminDashboard = async (req, res) => {
     const pendingLocations = await Location.countDocuments({ isApproved: false });
 
     res.render('dashboards/adminDashboard', {
-      user: req.user,
-      totalUsers,
-      trustedAgencies,
-      totalTrips: totalTrips + totalLocations,
-      totalCountries,
-      recentUsers,
-      tripsPerCountry,
-      approvedTrips,
-      pendingTrips,
-      approvedLocations,
-      pendingLocations
-    });
+  user: req.user,
+  totalUsers,
+  trustedAgencies, // rename later
+  totalTrips,      // Trips only
+  totalLocations,  // Locations only
+  totalCountries,
+  recentUsers,
+  recentTrips,
+  tripsPerCountry,
+  approvedTrips,
+  pendingTrips,
+  approvedLocations,
+  pendingLocations
+});
 
   } catch (err) {
     console.error(err);
