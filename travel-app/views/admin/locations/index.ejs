@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pending & Approved Locations</title>
+  <link rel="stylesheet" href="/homepage.css" />
+</head>
+<body>
+  <main>
+    <h1>Pending Locations</h1>
+
+    <% if (pendingLocations.length === 0) { %>
+      <p>No pending locations at the moment.</p>
+    <% } else { %>
+      <ul>
+        <% pendingLocations.forEach(location => { %>
+          <li>
+            <strong><%= location.name %></strong> —
+            <%= location.city %> —
+            <%= location.country?.name %> —
+            submitted by <%= location.createdBy?.email || 'Unknown' %>
+
+            <form action="/admin/locations/<%= location._id %>/approve" method="POST" style="display:inline;">
+              <button type="submit">Approve</button>
+            </form>
+
+            <form action="/admin/locations/<%= location._id %>/reject" method="POST" style="display:inline;">
+              <button type="submit">Reject</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <hr>
+    <h2>Approved Locations</h2>
+
+    <% if (approvedLocations.length === 0) { %>
+      <p>No approved locations submitted by agencies yet.</p>
+    <% } else { %>
+      <ul>
+        <% approvedLocations.forEach(location => { %>
+          <li>
+            <strong><%= location.name %></strong> —
+            <%= location.city %> —
+            <%= location.country?.name %> —
+            submitted by <%= location.createdBy?.email || 'Unknown' %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </main>
+</body>
+</html>

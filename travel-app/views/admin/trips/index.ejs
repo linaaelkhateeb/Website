@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pending & Approved Trips</title>
+  <link rel="stylesheet" href="/homepage.css" />
+</head>
+<body>
+<main>
+  <h1>Pending Trips</h1>
+
+  <% if (pendingTrips.length === 0) { %>
+    <p>No pending trips at the moment.</p>
+  <% } else { %>
+    <ul>
+      <% pendingTrips.forEach(trip => { %>
+        <li>
+          <strong><%= trip.title %></strong> — 
+          <%= trip.city %> — 
+          <%= trip.country?.name %> — 
+          submitted by <%= trip.createdBy?.email || 'Unknown' %><br>
+          <em><%= trip.description %></em><br>
+          Category: <%= trip.category?.name %> | Price: $<%= trip.price %>
+
+          <form action="/admin/trips/<%= trip._id %>/approve" method="POST" style="display:inline;">
+            <button type="submit">Approve</button>
+          </form>
+
+          <form action="/admin/trips/<%= trip._id %>/reject" method="POST" style="display:inline;">
+            <button type="submit">Reject</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <hr>
+
+  <h2>Approved Trips</h2>
+
+  <% if (approvedTrips.length === 0) { %>
+    <p>No approved trips yet.</p>
+  <% } else { %>
+    <ul>
+      <% approvedTrips.forEach(trip => { %>
+        <li>
+          <strong><%= trip.title %></strong> — 
+          <%= trip.city %> — 
+          <%= trip.country?.name %> — 
+          submitted by <%= trip.createdBy?.email || 'Unknown' %><br>
+          <em><%= trip.description %></em><br>
+          Category: <%= trip.category?.name %> | Price: $<%= trip.price %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</main>
+</body>
+</html>
