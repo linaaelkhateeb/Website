@@ -36,15 +36,36 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuth, ensureAdmin } = require('../middleware/auth');
 const adminController = require('../controllers/adminController');
+const { upload } = require('../middleware/upload');
 
 router.post('/', ensureAdmin, adminController.createCountry);
 router.get('/', ensureAdmin, adminController.getAllCountries);
 router.patch('/:id', ensureAdmin, adminController.updateCountry);
+router.post('/countries', ensureAdmin, upload.array('images', 10), adminController.createCountry);
 
 
-router.get('/new', ensureAuth, ensureAdmin, (req, res) => {
-  res.render('countries/new'); // Make sure it matches the folder name
+
+router.delete('/countries/:id', ensureAdmin, async (req, res) => {
+  try {
+    await Country.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.json({ success: false, error: err.message });
+  }
 });
+const Country = require('../models/country');
+
+router.get('/countries/new', ensureAdmin, async (req, res) => {
+  try {
+    const countries = await Country.find();
+    res.render('countries/new', { countries }); // <- THIS passes countries to EJS
+  } catch (err) {
+    res.status(500).send('Error loading country form');
+  }
+});
+
+
+
 
 
 module.exports = router

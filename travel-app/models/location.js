@@ -5,9 +5,22 @@ const locationSchema = new mongoose.Schema(
     name: { type: String, required: true },
     description: String,
     city: { type: String, required: true },
-    country: { type: String, required: true }, // ✅ clean and flat
+
+    // 🔁 Link to Country document
+    country: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Country',
+      required: true
+    },
+
     isApproved: { type: Boolean, default: false },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
+    // 👤 Link to agency user who created it
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }
   },
   { timestamps: true }
 );

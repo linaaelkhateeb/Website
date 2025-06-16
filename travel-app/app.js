@@ -11,6 +11,7 @@ const dotenv = require('dotenv')
 
 // Removed explicit require for Trip at the top
 // const Trip = require('./models/trips');
+const agencyTripRoutes = require('./routes/agencytrips');
 
 dotenv.config()
 
@@ -37,7 +38,7 @@ require('./models/user');    // User might be referenced by other models/reviews
 require('./models/location');
 require('./models/booking');
 require('./models/category');
-require('./models/Attraction'); // Attraction references the above, so require it last
+require('./models/attraction'); // Attraction references the above, so require it last
 
 // Removed redundant require for database connection
 // require('./config/db')
@@ -128,12 +129,14 @@ app.use('/agency', require('./routes/agencyCountryRequests'));
 app.use('/agency/trips', require('./routes/agencytrips'));
 app.use('/agency/view', require('./routes/agencyViewData'));
 app.use('/agency/locations', require('./routes/agencyLocations'));
+app.use('/agency/trips', agencyTripRoutes);
+
 
 
 app.use('/attractions', require('./routes/attractions'))
 
 // Country management routes
-app.use('/admin/countries', require('./routes/admincountries'))
+app.use('/admin', require('./routes/admincountries'));
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))

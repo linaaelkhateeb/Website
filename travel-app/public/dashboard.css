@@ -6,19 +6,19 @@
 }
 
 :root {
-  --organic: #6A6F4C;
-  --butter: #f9d0ddda;
-  --coconut: #EDE1D2;
-  --natural: #806044;
-  --palm-oil: #5D2510;
-  --cocoa: #412F26;
-  --shadow: 0 4px 6px rgba(93, 37, 16, 0.1);
+  --burgundy: #390517;
+  --gold: #A38560;
+  --green: #16302B;
+  --forest: #03110D;
+  --silver: #E0E0E0;
+  --shadow: 0 4px 6px rgba(3, 17, 13, 0.2);
+  --transition: all 0.3s ease;
 }
 
 body {
   font-family: 'Patrick Hand', cursive;
-  background: var(--coconut);
-  color: var(--cocoa);
+  background: var(--silver);
+  color: var(--forest);
 }
 
 .admin-dashboard {
@@ -33,17 +33,15 @@ body {
 }
 
 .card {
-  background: var(--butter);
+  background: var(--gold);
   background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   background-size: 30px 30px; 
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: var(--shadow);
   position: relative;
-  transition: transform 0.2s ease;
+  transition: var(--transition);
 }
-
-
 
 .card:hover {
   transform: translateY(-5px);
@@ -59,13 +57,12 @@ body {
   font-weight: bold;
 }
 
-
 .card .trend {
   position: absolute;
   top: 1rem;
   right: 1rem;
   font-size: 0.9rem;
-  color: var(--palm-oil);
+  color: var(--burgundy);
 }
 
 .charts-section {
@@ -93,16 +90,16 @@ body {
 
 .recent-table th, .recent-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--coconut);
+  border-bottom: 1px solid var(--silver);
 }
 
 .recent-table th {
-  background: var(--organic);
-  color: white;
+  background: var(--green);
+  color: var(--silver);
 }
 
 .recent-table tr:hover {
-  background: var(--butter);
+  background: var(--gold);
 }
 
 /* Ensure table text aligns nicely */
@@ -110,16 +107,15 @@ body {
 .recent-table td {
   text-align: left;      /* or center if you prefer */
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--coconut);
+  border-bottom: 1px solid var(--silver);
 }
 
 .recent-table th {
-  background: var(--organic);
-  color: white;
+  background: var(--green);
+  color: var(--silver);
   text-align: left;     /* keep consistent with td */
 }
 
 .recent-table td {
   text-align: left;     /* consistent with th */
 }
-
