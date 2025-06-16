@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Attraction</title>
+    <link rel="stylesheet" href="/form.css">
+    <link rel="stylesheet" href="/homepage.css">
+</head>
+<body>
+    <%- include('../../partials/header') %>
+    <%- include('../../partials/sidebar') %>
+
+    <div class="form-container">
+        <h1>Add New Attraction</h1>
+
+        <% if (success) { %>
+            <div class="alert success"><%= success %></div>
+        <% } %>
+        <% if (error) { %>
+            <div class="alert error"><%= error %></div>
+        <% } %>
+
+        <form action="/admin/attractions" method="POST" enctype="multipart/form-data">
+            <label for="name">Attraction Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="5"></textarea>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" value="0" required>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <% countries.forEach(country => { %>
+                    <option value="<%= country._id %>"><%= country.name %></option>
+                <% }); %>
+            </select>
+
+            <label for="image">Attraction Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button type="submit">Add Attraction</button>
+        </form>
+    </div>
+
+    <%- include('../../partials/footer') %>
+</body>
+</html> 

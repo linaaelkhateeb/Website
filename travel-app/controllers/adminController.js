@@ -3,6 +3,7 @@ const Trip = require('../models/trips');
 const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
+const Attraction = require('../models/attraction');
 
 
 // Mark agency as trusted
@@ -312,4 +313,47 @@ exports.deleteAgency = async (req, res) => {
   }
 };
 
+
+// Render form for adding a new attraction
+exports.renderNewAttractionForm = async (req, res) => {
+  try {
+    const countries = await Country.find(); // Fetch all countries
+    res.render('admin/attractions/new', {
+      countries,
+      user: req.user,
+      success: req.flash('success'),
+      error: req.flash('error')
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to load form.');
+    res.redirect('/admin/dashboard'); // Redirect to admin dashboard on error
+  }
+};
+
+// Create a new attraction from the admin panel
+exports.createAttraction = async (req, res) => {
+  try {
+    const { name, description, price, country } = req.body;
+
+    const newAttraction = new Attraction({
+      name,
+      description,
+      price: parseFloat(price),
+      country,
+    });
+
+    if (req.file) {
+      newAttraction.image = '/uploads/' + req.file.filename; // Correct path for uploads
+    }
+
+    await newAttraction.save();
+    req.flash('success', 'Attraction added successfully!');
+    res.redirect('/admin/attractions/new'); // Redirect back to the form or a list
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to add attraction: ' + err.message);
+    res.redirect('/admin/attractions/new');
+  }
+};
 

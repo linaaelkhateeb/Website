@@ -13,8 +13,13 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
+/* Apply border-box to all elements to prevent layout issues from padding/borders */
+* {
+  box-sizing: border-box;
+}
+
 .attraction-detail-container {
-  max-width: 800px; /* Further reduced width for a more normal size */
+  max-width: 1200px; /* Increased max-width for better two-column layout */
   margin: 0 auto; 
   padding: 1.5rem; /* Reduced padding */
   font-family: 'Source Sans Pro', sans-serif; 
@@ -83,19 +88,20 @@
 /* Content Grid */
 .content-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 300px; /* Main content flexible, sidebar fixed 300px */
   gap: 2rem;
   margin-bottom: 2.5rem;
-  position: relative;
 }
 
 /* Main Content */
 .main-content {
+  /* Removed grid-column: 1 / 3; from here as it's better defined in media queries */
   background: var(--background-white);
   border-radius: 10px; 
-  padding: 2rem; /* Reduced padding */
+  padding: 2rem; 
   box-shadow: var(--shadow-md);
   border: 1px solid rgba(var(--tertiary-color), 0.1); 
+  width: 100%; /* Ensure it fills its grid area */
 }
 
 .section-title {
@@ -122,12 +128,14 @@
 }
 
 /* Sidebar */
-.sidebar {
+.attraction-detail-container .sidebar {
+  /* Removed grid-column: 1 / 3; from here as it's better defined in media queries */
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
   height: fit-content;
+  width: 100%; /* Ensure it fills its grid area */
 }
 
 .info-card {
@@ -344,9 +352,24 @@ button[type="submit"]:hover {
 }
 
 /* Responsive Design */
+@media (min-width: 769px) { /* Apply grid layout for larger screens */
+  .content-grid {
+    grid-template-columns: 1fr 300px; /* Main content flexible, sidebar fixed 300px */
+  }
+  .main-content {
+    grid-column: 1 / 2; /* Main content takes the first column */
+  }
+  .attraction-detail-container .sidebar {
+    grid-column: 2 / 3; /* Sidebar takes the second column */
+  }
+}
+
 @media (max-width: 1024px) {
   .content-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on smaller tablets */
+  }
+  .main-content, .attraction-detail-container .sidebar {
+    grid-column: auto; /* Reset grid column for stacking */
   }
   
   .hero-section {
@@ -361,131 +384,104 @@ button[type="submit"]:hover {
 
 @media (max-width: 768px) {
   .attraction-detail-container {
-    padding: 1rem;
+    padding: 1rem; 
   }
-  
   .hero-section {
     height: 25vh; 
-    min-height: 180px;
-    border-radius: 10px;
+    min-height: 200px;
   }
-  
   .hero-overlay {
-    padding: 1.2rem;
+    padding: 1rem;
   }
-  
   .hero-overlay h1 {
     font-size: 2rem;
   }
-  
   .hero-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.8rem;
-    font-size: 0.9rem;
   }
-  
   .main-content,
-  .sidebar > * {
-    padding: 1.2rem;
-    border-radius: 8px;
+  .attraction-detail-container .sidebar,
+  .reviews-section,
+  .info-card,
+  .booking-card {
+    padding: 1.5rem;
   }
-  
   .section-title {
     font-size: 1.4rem;
-    margin-bottom: 1rem;
   }
-  
   .description {
     font-size: 0.9rem;
-    margin-bottom: 1.2rem;
   }
-  
   .info-card h3 {
     font-size: 1.1rem;
-    margin-bottom: 1rem;
   }
-  
   .rating {
-    gap: 0.7rem;
-    margin-bottom: 1rem;
+    gap: 0.5rem;
   }
-  
   .star {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
-  
   .average-rating {
     font-size: 1rem;
   }
-  
   .booking-card .price {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
   }
-  
   .booking-button {
-    padding: 0.7rem 1.8rem;
-    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
-  
   .reviews-section {
-    padding: 1.8rem;
-    margin-top: 2rem;
-    border-radius: 8px;
+    padding: 1.5rem;
   }
-  
   .reviews-header {
-    margin-bottom: 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
-  
   .reviews-toggle {
     padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-    border-radius: 50px;
-  }
-  
-  .reviews-content {
-    margin-top: 1.5rem;
-  }
-  
-  .review-card {
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 0.6rem;
-  }
-  
-  .reviewer-name {
     font-size: 0.9rem;
   }
-  
+  .reviews-content {
+    padding: 1.5rem;
+  }
+  .review-card {
+    padding: 1rem;
+  }
+  .reviewer-name {
+    font-size: 1rem;
+  }
   .review-comment {
-    line-height: 1.4;
+    font-size: 0.85rem;
   }
-  
   .add-review-section {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
+    padding: 1.5rem;
   }
-  
   .rating-input,
   .comment-input {
     margin-bottom: 1rem;
   }
-  
   .rating-input label,
   .comment-input label {
-    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
   }
-  
   .rating-input select,
   .comment-input textarea {
-    padding: 0.8rem;
-    border-radius: 8px;
+    font-size: 0.9rem;
   }
-  
   button[type="submit"] {
-    padding: 0.8rem 1.5rem;
-    border-radius: 50px;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+  .content-grid {
+    grid-template-columns: 1fr; /* Stack columns on smaller tablets and mobile */
+  }
+  .main-content,
+  .attraction-detail-container .sidebar {
+    grid-column: auto; /* Reset grid column for stacking */
+    width: auto; /* Ensure auto width when stacked */
   }
 } 
