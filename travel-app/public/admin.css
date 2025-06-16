@@ -138,3 +138,17 @@
   background: var(--gold);
   color: #000;
 }
+
+.remove-agency-btn {
+  padding: 6px 14px;
+  background: #a94442;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.remove-agency-btn:hover {
+  background: #8b3a39;
+}

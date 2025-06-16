@@ -273,4 +273,15 @@ exports.markAgencyTrusted = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+//admin deleting agencies
+exports.deleteAgency = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+};
+
 
