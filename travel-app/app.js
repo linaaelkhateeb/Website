@@ -126,6 +126,7 @@ app.use('/admin', require('./routes/adminusers'))
 app.use('/admin/users', require('./routes/adminusers'));
 app.use('/admin/trips', require('./routes/admintrips'))
 app.use('/admin/locations', require('./routes/adminLocations'))
+app.use('/admin/attractions', require('./routes/adminAttractions'))
 
 // Agency-specific:
 app.use('/agency', require('./routes/agencyCountryRequests'))

@@ -212,6 +212,10 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     text-decoration: none !important;
 }
 
+.attraction-card .attraction-link {
+    text-decoration: none;
+}
+
 .card-image {
     height: 180px;
     background-size: cover;
@@ -257,6 +261,10 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 .star {
     color: var(--gold);
     margin-right: 2px;
+}
+
+.star.filled {
+    color: #FFD700; /* A brighter, more distinct yellow for filled stars */
 }
 
 .price-badge {
@@ -738,4 +746,74 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 .logout-link:hover {
     background: linear-gradient(135deg, #8b3a39 0%, #6d2d2c 100%) !important;
     color: #fff !important;
+}
+
+.booking-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(22, 48, 43, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.booking-note {
+  margin-top: 1rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* Reviews Section */
+.reviews-section {
+  background: var(--background-white);
+  padding: 2rem;
+}
+
+/* Associated Trips Section Styles */
+.trips-section {
+    background: var(--background-white);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(var(--tertiary-color), 0.1);
+}
+
+.trips-section .section-title {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--burgundy);
+}
+
+.trips-section .section-title i {
+    color: var(--primary-color);
+}
+
+.trips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.trips-list li {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.trips-list li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.trips-list a {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: 500;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.trips-list a:hover {
+    color: var(--gold);
+    text-decoration: underline;
 }

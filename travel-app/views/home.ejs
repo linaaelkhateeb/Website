@@ -96,6 +96,7 @@
 
         <!-- Attractions Section -->
         <section id="main-content"></section>
+        <h2 class="section-title">Top Attractions</h2>
         <div class="carousel">
             <% if (attractions && attractions.length > 0) { %>
                 <% attractions.forEach(attraction => {
@@ -107,7 +108,7 @@
                             <span class="price-badge"><%= attraction.price === 0 ? 'Free' : '$' + attraction.price %></span>
                             <div class="card-content">
                                 <h3 class="card-title"><%= attraction.name %></h3>
-                                <p class="card-location"><%= attraction.location %>, <%= attraction.country ? attraction.country.name : 'N/A' %></p>
+                                <p class="card-location"><%= attraction.country ? attraction.country.name : 'N/A' %></p>
                                 
                                 <div class="rating star-rating">
                                     <% for (let i = 1; i <= 5; i++) { %>
@@ -115,26 +116,26 @@
                                     <% } %>
                                     <span class="average-rating">(<%= attraction.averageRating || '0' %>/5)</span>
                                 </div>
-                                <div class="read-more" onclick="toggleReadMore(this)">
-                                    Read more
-                                    <svg
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </div>
-                                <div class="read-more-content">
-                                    <p><%= attraction.description %></p>
-                                </div>
                             </div>
                         </a>
+                        <div class="read-more" onclick="toggleReadMore(this, event)">
+                            Read more
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="read-more-content">
+                            <p><%= attraction.description %></p>
+                        </div>
                     </div>
                 <% }); %>
             <% } else { %>
@@ -144,6 +145,16 @@
         </section>
 
         <link rel="stylesheet" />
+        <script>
+            // Log image URLs for debugging
+            document.addEventListener('DOMContentLoaded', () => {
+                const attractionCards = document.querySelectorAll('.attraction-card');
+                attractionCards.forEach(card => {
+                    const imageUrl = card.querySelector('.card-image').style.backgroundImage;
+                    console.log('Image URL for attraction card:', imageUrl);
+                });
+            });
+        </script>
         <script
             src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-vA3D3G3LyrFzN24f9KRzEwUpKUBuX3MZ2CRGPrZMTjU="

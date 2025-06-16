@@ -32,7 +32,6 @@
         <div class="hero-meta">
           <div class="location">
             <i class="fas fa-map-marker-alt"></i>
-            <%= attraction.location %>, 
             <%= attraction.country ? attraction.country.name : 'N/A' %>
           </div>
           <div class="price">
@@ -53,6 +52,21 @@
         <div class="description">
           <%= attraction.description %>
         </div>
+
+        <!-- Associated Trips Section -->
+        <% if (attraction.trips && attraction.trips.length > 0) { %>
+          <div class="trips-section">
+            <div class="section-title">
+              <i class="fas fa-suitcase"></i>
+              Trips Featuring This Attraction
+            </div>
+            <ul class="trips-list">
+              <% attraction.trips.forEach(trip => { %>
+                <li><a href="/trips/<%= trip._id %>"><%= trip.title %></a></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
 
         <!-- Reviews Section -->
         <div class="reviews-section">
@@ -116,23 +130,6 @@
               </p>
             <% } %>
           </div>
-        </div>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Rating Card -->
-        <div class="info-card">
-          <h3>Overall Rating</h3>
-          <div class="rating">
-            <div class="star-rating">
-              <% for (let i = 1; i <= 5; i++) { %>
-                <span class="star <%= i <= averageRating ? 'filled' : '' %>">★</span>
-              <% } %>
-            </div>
-            <span class="average-rating">(<%= averageRating || 0 %>/5)</span>
-          </div>
-          <p><%= attraction.reviews.length %> reviews</p>
         </div>
 
         <!-- Booking Card -->
