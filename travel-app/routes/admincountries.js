@@ -36,14 +36,17 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuth, ensureAdmin } = require('../middleware/auth');
 const adminController = require('../controllers/adminController');
-const { upload } = require('../middleware/upload');
+const upload = require('../middleware/upload');
 
 router.post('/', ensureAdmin, adminController.createCountry);
 router.get('/', ensureAdmin, adminController.getAllCountries);
 router.patch('/:id', ensureAdmin, adminController.updateCountry);
-router.post('/countries', ensureAdmin, upload.array('images', 10), adminController.createCountry);
-
-
+router.post(
+  '/countries',
+  ensureAdmin,
+  upload.array('images', 10), 
+  adminController.createCountry
+);
 
 router.delete('/countries/:id', ensureAdmin, async (req, res) => {
   try {
