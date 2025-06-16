@@ -1,10 +1,11 @@
 :root {
-    --organic: #6a6f4c;
-    --butter: #f9d0ddda;
-    --coconut: #ede1d2;
-    --natural: #806044;
-    --palm-oil: #5d2510;
-    --cocoa: #412f26;
+    --burgundy: #390517;
+    --gold: #A38560;
+    --green: #16302B;
+    --forest: #03110D;
+    --silver: #E0E0E0;
+    --shadow: 0 4px 6px rgba(3, 17, 13, 0.2);
+    --transition: all 0.3s ease;
 }
 
 /* Slider container */
@@ -15,14 +16,14 @@
     justify-content: center;
 
     padding: 60px 20px;
-    background: var(--coconut);
+    background: var(--silver);
     text-align: center;
 }
 
 .explainer-slider h2 {
     font-size: 2.5rem;
-    color: var(--palm-oil);
-    font-family: 'Chewy', cursive;
+    color: var(--burgundy);
+    font-family: 'Playfair Display', serif;
     margin-bottom: 40px;
 }
 
@@ -35,11 +36,11 @@
 
 /* Slides */
 .swiper-slide {
-    background: var(--coconut);
+    background: var(--green);
     border-radius: 40px;
     padding: 50px 40px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    border: 2px solid var(--butter);
+    box-shadow: var(--shadow);
+    border: 2px solid var(--gold);
     box-sizing: border-box;
 
     display: flex;
@@ -54,23 +55,23 @@
 }
 
 .swiper-slide h3 {
-    font-family: 'Chewy', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    color: var(--palm-oil);
+    color: var(--gold);
     margin-bottom: 15px;
 }
 
 .swiper-slide p {
     font-family: 'Patrick Hand', cursive;
     font-size: 1.1rem;
-    color: var(--cocoa);
+    color: var(--silver);
     line-height: 1.6;
 }
 
 /* Arrows */
 .swiper-button-next,
 .swiper-button-prev {
-    color: var(--organic);
+    color: var(--gold);
     top: 50%;
     transform: translateY(-50%);
 }
@@ -96,14 +97,14 @@
 .swiper-pagination-bullet {
     width: 10px;
     height: 10px;
-    background-color: var(--organic);
+    background-color: var(--green);
     opacity: 0.5;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .swiper-pagination-bullet-active {
-    background-color: var(--natural);
+    background-color: var(--burgundy);
     opacity: 1;
     transform: scale(1.2);
 }
@@ -116,8 +117,8 @@
 }
 
 .get-started-btn {
-    background-color: var(--organic);
-    color: var(--coconut);
+    background-color: var(--gold);
+    color: var(--forest);
     padding: 12px 30px;
     font-size: 1rem;
     font-family: 'Patrick Hand', cursive;
@@ -125,12 +126,13 @@
     border-radius: 25px;
     text-decoration: none;
     display: inline-block;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(106, 111, 76, 0.3);
+    transition: var(--transition);
+    box-shadow: var(--shadow);
 }
 
 .get-started-btn:hover {
-    background-color: var(--natural);
+    background-color: var(--burgundy);
+    color: var(--silver);
     transform: translateY(-2px);
 }
 

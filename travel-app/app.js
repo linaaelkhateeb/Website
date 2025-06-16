@@ -22,7 +22,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 // Body parser
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Static files
@@ -76,6 +76,9 @@ const bookingRoutes = require('./routes/bookings');
 app.use('/bookings', bookingRoutes); // ✅ This is correct
 
 require('./models/trips');
+const agencyRoutes = require('./routes/agencyLocations');
+app.use('/agency', agencyRoutes);
+
 
 
 // One for auth and user routes:
@@ -149,7 +152,11 @@ const paymentRoutes = require('./routes/payment');
 app.use('/payment', paymentRoutes);
 
 
+
+ // Optional, safe to have
+
 // Server
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000')
 })
+
