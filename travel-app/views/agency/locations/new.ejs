@@ -1,41 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Add New Location</title>
+<form id="locationForm">
+  <h1>Add New Location</h1>
+<link rel="stylesheet" href="/form.css" /> 
+  <div>
+    <label for="name">Location Name:</label>
+    <input type="text" name="name" id="name" required />
+  </div>
 
-  <link rel="stylesheet" href="/locagency.css" />
+  <div>
+    <label for="city">City:</label>
+    <input type="text" name="city" id="city" required />
+  </div>
 
-</head>
-<body>
-  <form id="locationForm" action="/agency/locations" method="POST">
-    <h1>Add New Location</h1>
+  <div>
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" rows="4"></textarea>
+  </div>
 
-    <div>
-      <label for="name">Location Name:</label>
-      <input type="text" name="name" id="name" required />
-    </div>
+  <div>
+    <label for="country">Country:</label>
+    <select name="country" id="country" required>
+      <% countries.forEach(country => { %>
+        <option value="<%= country.name %>"><%= country.name %></option>
 
-    <div>
-      <label for="city">City:</label>
-      <input type="text" name="city" id="city" required />
-    </div>
+      <% }) %>
+    </select>
+  </div>
 
-    <div>
-      <label for="description">Description:</label>
-      <textarea name="description" id="description" rows="4"></textarea>
-    </div>
+  <button type="submit">Add Location</button>
+</form>
 
-    <div>
-      <label for="country">Country:</label>
-      <select name="country" id="country" required>
-        <% countries.forEach(country => { %>
-          <option value="<%= country._id %>"><%= country.name %></option>
-        <% }) %>
-      </select>
-    </div>
 
-    <button type="submit">Add Location</button>
-  </form>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('locationForm');
 
-  
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new URLSearchParams(new FormData(form));
+
+      try {
+        const res = await fetch('/agency/locations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(data.message || '✅ Location submitted!');
+          window.location.href = '/agency/dashboard';
+        } else {
+          alert('❌ Submission failed: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('❌ Network error: ' + err.message);
+      }
+    });
+  });
+</script>

@@ -13,13 +13,11 @@
     --transition: all 0.3s ease;
 }
 
-
 html{
     height: 100%;
     margin: 0;
     padding: 0;
 }
-
 
 body {
     margin: 0;
@@ -150,8 +148,7 @@ p {
 
 .search-bar button:hover {
     transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 0 6px 20px rgba(22, 48, 43, 0.4);
 }
 
 /* Attractions System */
@@ -301,13 +298,8 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     transform: rotate(180deg);
 }
 
-
-
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-
-
     .hero {
         height: 50vh;
     }
@@ -317,13 +309,11 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 }
 
-
 /* Header Styles */
 .site-header {
     background: linear-gradient(135deg, var(--deep-burgundy) 0%, var(--burgundy) 100%);
     color: var(--cream);
     box-shadow: 0 4px 20px rgba(57, 5, 23, 0.3);
-
     position: fixed;
     top: 0;
     left: 0;

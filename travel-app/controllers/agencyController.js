@@ -18,38 +18,39 @@ exports.renderNewLocationForm = async (req, res) => {
 //  CREATE LOCATION (with city + isTrusted check)
 
 exports.createLocation = async (req, res) => {
-    try {
-        const { name, description, country, city } = req.body
+  try {
+    console.log('Form submitted:', req.body);
+    const { name, description, country, city } = req.body;
 
-        if (!name || !country || !city) {
-            return res.status(400).json({
-                message: 'Name, country, and city are required',
-            })
-        }
-
-        const user = await User.findById(req.user._id)
-
-        const location = new Location({
-            name,
-            description,
-            country,
-            city,
-            createdBy: user._id,
-            isApproved: user.isTrusted === true,
-        })
-
-        await location.save()
-
-        res.status(201).json({
-            message: user.isTrusted
-                ? 'Location added and approved'
-                : 'Location suggested, awaiting approval',
-            location,
-        })
-    } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.message })
+    if (!name || !country || !city) {
+      return res.status(400).json({
+        message: 'Name, country, and city are required',
+      });
     }
-}
+
+    const user = await User.findById(req.user._id);
+
+    const location = new Location({
+      name,
+      description,
+      country, // ← used to be the country ID
+      city,
+      createdBy: user._id,
+      isApproved: user.isTrusted === true,
+    });
+
+    await location.save();
+
+    res.status(201).json({
+      message: user.isTrusted
+        ? 'Location added and approved'
+        : 'Location suggested, awaiting approval',
+      location,
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
 
 
 //  CREATE TRIP (with price and city)
