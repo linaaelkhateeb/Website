@@ -1,31 +1,37 @@
-const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
-// Set up multer storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadPath = path.join(
-            __dirname,
-            '..',
-            'public',
-            'uploads',
-            req.user._id.toString()
-        )
+// For country uploads (static folder)
+const countryStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/countries');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'));
+  }
+});
 
-        // Create the user's upload folder if it doesn't exist
-        fs.mkdirSync(uploadPath, { recursive: true })
+// For user uploads (user-specific folder)
+const userStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadPath = path.join(
+      __dirname,
+      '..',
+      'public',
+      'uploads',
+      req.user._id.toString()
+    );
+    fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + '-' + file.originalname.replace(/\s+/g, '-');
+    cb(null, uniqueName);
+  }
+});
 
-        cb(null, uploadPath)
-    },
-
-    filename: function (req, file, cb) {
-        const uniqueName =
-            Date.now() + '-' + file.originalname.replace(/\s+/g, '-')
-        cb(null, uniqueName)
-    },
-})
-
-const upload = multer({ storage })
-
-module.exports = upload
+module.exports = {
+  uploadCountry: multer({ storage: countryStorage }),
+  uploadUser: multer({ storage: userStorage })
+};

@@ -82,7 +82,7 @@ form button {
   display: block;
   width: 100%;
   background-color: var(--gold);
-  color: white;
+  color: rgb(44, 6, 6);
   font-size: 1.1rem;
   font-weight: 700;
   padding: 14px 0;

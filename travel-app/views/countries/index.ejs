@@ -1,30 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Explore Countries</title>
-  <link rel="stylesheet" href="/form.css" />
-</head>
-<body>
-  <main>
-    <h1>Explore Countries</h1>
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/country.css">
 
-    <section class="countries-container">
-      <% if (countries.length === 0) { %>
-        <p>No countries available yet.</p>
-      <% } else { %>
-        <% countries.forEach(country => { %>
-          <article class="country-card">
-            <h2><%= country.name %></h2>
-            <p><%= country.description %></p>
-            
-            <!-- Only View Locations button -->
-           <!---- <a href="/countries/<%= country._id %>/locations" class="btn" >!</a>>View Locations</a>-->
-          </article>
-        <% }) %>
-      <% } %>
-    </section>
-    
-  </main>
-</body>
-</html>
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<div class="country-wrapper">
+  <h1>Explore Countries</h1>
+
+  <div class="country-list">
+    <% countries.forEach(country => { %>
+      <div class="country-card">
+        <% if (country.images && country.images.length > 0) { %>
+          <!-- Swiper container -->
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <% country.images.forEach(img => { %>
+                <div class="swiper-slide">
+                  <img src="<%= img %>" alt="Country Image" class="country-image" />
+                </div>
+              <% }) %>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        <% } else { %>
+          <div class="country-placeholder">No image</div>
+        <% } %>
+
+        <h2 class="country-name"><%= country.name %></h2>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Swiper init -->
+<script>
+  // Initialize all carousels
+  document.querySelectorAll('.mySwiper').forEach(swiperEl => {
+    new Swiper(swiperEl, {
+      loop: true,
+      pagination: {
+        el: swiperEl.querySelector('.swiper-pagination'),
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

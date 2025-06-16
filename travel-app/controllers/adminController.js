@@ -59,14 +59,27 @@ exports.rejectLocation = async (req, res) => {
 // Create a new country
 exports.createCountry = async (req, res) => {
   try {
-    const { name, description } = req.body;
-    const country = new Country({ name, description, isApproved: true });
-    await country.save();
-    res.status(201).json(country);
+    const { name } = req.body;
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, message: 'No images uploaded.' });
+    }
+
+    const imagePaths = req.files.map(file => '/uploads/countries/' + file.filename);
+
+    const country = await Country.create({
+      name,
+      images: imagePaths,
+      isApproved: true
+    });
+
+    res.json({ success: true, country });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('createCountry error:', err);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
+
 
 // Get all countries
 exports.getAllCountries = async (req, res) => {

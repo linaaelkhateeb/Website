@@ -4,42 +4,58 @@ const Trip = require('../models/trips')
 const Country = require('../models/country');
 
 //  AGENCY: Create a trip
+// AGENCY: Create a trip
 exports.agencyCreateTrip = async (req, res) => {
-    try {
-        const {
-            title,
-            description,
-            country,
-            category,
-            locations,
-            price,
-            city,
-            imageURL
-        } = req.body
 
-        if (!title || !country || !category || !price || !city) {
-            return res.status(400).json({ message: 'Missing required fields' })
-        }
-        const trips = await Trip.find(filter).populate('country');
-        const trip = new Trip({
-            title,
-            description,
-            country,
-            category,
-            locations: locations || [],
-            price,
-            city,
-            imageURL,
-            createdBy: req.user._id,
-            isApproved: false,
-        })
+  console.log("🧾 SUBMISSION BODY:", req.body);
+  try {
+    const {
+      title,
+      description,
+      country,
+      category,
+      locations,
+      price,
+      city,
+      startDate,
+      endDate
+    } = req.body;
 
-        await trip.save()
-        res.status(201).json({ message: 'Trip submitted for approval', trip })
-    } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.message })
+    if (!title || !country || !category || !price || !city || !startDate || !endDate) {
+      return res.status(400).json({ message: 'Missing required fields' });
     }
-}
+
+    const now = new Date().setHours(0, 0, 0, 0);
+    if (new Date(startDate) < now) {
+      return res.status(400).json({ message: 'Start date must be today or later' });
+    }
+
+    
+
+    if (new Date(endDate) <= new Date(startDate)) {
+      return res.status(400).json({ message: 'End date must be after start date' });
+    }
+
+    const trip = new Trip({
+      title,
+      description,
+      country,
+      category,
+      locations: Array.isArray(locations) ? locations : [locations],
+      price,
+      city,
+      startDate,
+      endDate,
+      createdBy: req.user._id,
+      isApproved: false
+    });
+
+    await trip.save();
+    res.status(201).json({ message: 'Trip submitted for approval', trip });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
 
 //  AGENCY: Get agency’s own trips
 exports.getAgencyTrips = async (req, res) => {
@@ -70,6 +86,8 @@ exports.getTripById = async (req, res) => {
 };
 
 // Admin/Agency: Create a new trip (auto-approved)
+
+
 exports.createTrip = async (req, res) => {
   try {
     const { title, description, country, category, locations } = req.body;
@@ -89,125 +107,18 @@ exports.createTrip = async (req, res) => {
   }
 };
 
+
 // Agency: Submit a trip for approval
-exports.agencyCreateTrip = async (req, res) => {
-    try {
-        const {
-            title,
-            description,
-            country,
-            category,
-            locations,
-            price,
-            city,
-            imageURL
-        } = req.body
-
-        if (!title || !country || !category || !price || !city) {
-            return res.status(400).json({ message: 'Missing required fields' })
-        }
-
-        const trip = new Trip({
-            title,
-            description,
-            country,
-            category,
-            locations: locations || [],
-            price,
-            city,
-            createdBy: req.user._id,
-            isApproved: false,
-            imageURL
-        })
-
-        await trip.save()
-        res.status(201).json({ message: 'Trip submitted for approval', trip })
-    } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.message })
-    }
-}
 
 //  AGENCY: Get agency’s own trips
-exports.getAgencyTrips = async (req, res) => {
-    try {
-        const trips = await Trip.find({ createdBy: req.user._id }).populate(
-            'country category locations'
-        )
-        res.status(200).json(trips)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch your trips',
-            error: err.message,
-        })
-    }
-}
+
 
 
 //  PUBLIC: Get trip by ID
 
-exports.getTripById = async (req, res) => {
-    try {
-        const trip = await Trip.findById(req.params.id).populate(
-            'country category createdBy locations'
-        )
-        if (!trip) return res.status(404).json({ message: 'Trip not found' })
-        res.json(trip)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch trip',
-            error: err.message,
-        })
-    }
-}
+
 
 //  ADMIN: Create trip directly
-exports.createTrip = async (req, res) => {
-    try {
-        const {
-            title,
-            description,
-            country,
-            category,
-            locations,
-            price,
-            city,
-            imageURL,
-            lat, 
-            lng,
-    
-            
-        } = req.body
-
-        if (!title || !country || !category || !price || !city|| !lat || !lng) {
-            return res.status(400).json({ message: 'Missing required fields' })
-        }
-
-        const newTrip = new Trip({
-            title,
-            description,
-            country,
-            category,
-            locations: locations || [],
-            price,
-            city,
-            isApproved: true,
-             coordinates: {
-            lat: parseFloat(lat),
-            lng: parseFloat(lng)
-  
-             },
-             imageURL
-        })
-
-        await newTrip.save()
-        res.status(201).json(newTrip)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to create trip',
-            error: err.message,
-        })
-    }
-}
 
 //  ADMIN: Approve trip
 exports.approveTrip = async (req, res) => {
@@ -313,4 +224,23 @@ exports.searchTrips = async (req, res) => {
     });
   }
 };
+
+
+const Location = require('../models/location');
+
+exports.getLocationsByCountry = async (req, res) => {
+  try {
+    const locations = await Location.find({
+      country: req.params.countryId,
+      createdBy: req.user._id,
+      isApproved: true
+    });
+
+    res.json(locations);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load locations', error: err.message });
+  }
+};
+
+
 

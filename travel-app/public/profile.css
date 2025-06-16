@@ -1,146 +1,173 @@
-.profile-wrapper {
-  display: flex;
-  gap: 40px;
-  margin-top: 100px;
-  margin-left: 40px;
-  margin-right: auto;
-  margin-bottom: 40px;
-  max-width: 1200px;
-  font-family: 'Patrick Hand', cursive;
-}
+:root {
+            --burgundy: #390517;
+            --gold: #A38560;
+            --green: #16302B;
+            --forest: #03110D;
+            --silver: #E0E0E0;
+            --shadow: 0 4px 6px rgba(3, 17, 13, 0.2);
+            --transition: all 0.3s ease;
+        }
 
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--silver);
+            font-family: 'Patrick Hand', cursive;
+        }
 
-.profile-sidebar-wrapper {
-  flex: 1 1 250px;
-   margin-top: 50px;
-   margin-right: 70px;
-   margin-left: 20px;
-}
+        .profile-wrapper {
+            display: flex;
+            gap: 40px;
+            margin-top: 100px;
+            margin-left: 40px;
+            margin-right: auto;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            font-family: 'Patrick Hand', cursive;
+        }
 
-.profile-main-wrapper {
-  flex: 2 1 auto;
-  display: flex;
-  justify-content: flex-start;  /* align left first */
-  padding-left: 60px;           /* push form right inside wrapper */
-}
+        .profile-sidebar-wrapper {
+            flex: 1 1 250px;
+            margin-top: 50px;
+            margin-right: 70px;
+            margin-left: 20px;
+        }
 
+        .profile-main-wrapper {
+            flex: 2 1 auto;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 60px;
+        }
 
+        .profile-sidebar {
+            flex: 1 1 250px;
+            text-align: center;
+            background: var(--gold);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
 
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            background: var(--green);
+            color: var(--silver);
+            border-radius: 50%;
+            font-size: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-family: 'Chewy', cursive;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
 
+        .avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+        }
 
-.profile-sidebar {
-  flex: 1 1 250px;
-  text-align: center;
-  background: var(--coconut);
-  padding: 20px;
-  border-radius: 12px;
-}
+        .upload-btn {
+            margin-top: 10px;
+            background: var(--burgundy);
+            color: var(--silver);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-.avatar-circle {
-  width: 120px;
-  height: 120px;
-  background: var(--natural);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px;
-  font-family: 'Chewy', cursive;
+        .upload-btn:hover {
+            background: var(--forest);
+        }
 
-  background-size: cover;    /* ✅ new */
-  background-position: center; /* ✅ new */
-  overflow: hidden;           /* ✅ safe */
-}
+        .profile-name {
+            color: var(--forest);
+            font-weight: bold;
+        }
 
+        .profile-main {
+            width: 100%;
+            max-width: 600px;
+            background: var(--gold);
+            padding: 30px;
+            border-radius: 12px;
+            margin-left: 60px;
+            box-shadow: var(--shadow);
+        }
 
-.avatar-img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 10px;
-}
+        .profile-main h1 {
+            color: var(--forest);
+            margin-top: 0;
+        }
 
-.upload-btn {
-  margin-top: 10px;
-  background: var(--palm-oil);
-  color: #fff;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+        .profile-main label {
+            display: block;
+            margin-top: 15px;
+            color: var(--green);
+            font-weight: bold;
+        }
 
-.upload-btn:hover {
-  background: #a94442;
-}
+        .profile-main input,
+        .profile-main textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--green);
+            border-radius: 6px;
+            font-family: 'Patrick Hand', cursive;
+            background: var(--silver);
+            color: var(--forest);
+            transition: var(--transition);
+            box-sizing: border-box;
+        }
 
-.profile-name {
-  color: var(--palm-oil);
-}
+        .profile-main input:focus,
+        .profile-main textarea:focus {
+            outline: none;
+            border-color: var(--burgundy);
+            box-shadow: 0 0 5px rgba(57, 5, 23, 0.3);
+        }
 
-.profile-main {
-  width: 100%;
-  max-width: 600px;
-  background: var(--butter);
-  padding: 30px;
-  border-radius: 12px;
-  margin-left: 60px;   /* clean push to the right */
-}
+        .password-field {
+            display: flex;
+            align-items: center;
+        }
 
+        .password-field input {
+            flex: 1;
+        }
 
+        .password-field span {
+            margin-left: 10px;
+            cursor: pointer;
+            color: var(--green);
+        }
 
+        .save-btn {
+            margin-top: 20px;
+            background: var(--green);
+            color: var(--silver);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-.profile-main h1 {
-  color: var(--palm-oil);
-}
+        .save-btn:hover {
+            background: var(--burgundy);
+        }
 
-.profile-main label {
-  display: block;
-  margin-top: 15px;
-  color: var(--cocoa);
-}
-
-.profile-main input,
-.profile-main textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: 'Patrick Hand', cursive;
-}
-
-.password-field {
-  display: flex;
-  align-items: center;
-}
-
-.password-field input {
-  flex: 1;
-}
-
-.password-field span {
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.save-btn {
-  margin-top: 20px;
-  background: var(--organic);
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.save-btn:hover {
-  background: var(--palm-oil);
-}
-.profile-main textarea {
-  resize: vertical;
-  min-height: 100px;
-}
+        .profile-main textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
