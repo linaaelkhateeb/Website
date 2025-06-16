@@ -240,3 +240,37 @@ exports.getAllTrips = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
   }
 };
+
+// List all users
+exports.listUsers = async (req, res) => {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    res.render('admin/users/index', { users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
+// List all agencies
+exports.listAgencies = async (req, res) => {
+  try {
+    const agencies = await User.find({ role: 'agency' });
+    res.render('admin/agencies/index', { agencies });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
+// Mark as Trusted (API for AJAX)
+exports.markAgencyTrusted = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { isTrusted: true });
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+

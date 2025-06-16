@@ -1,0 +1,57 @@
+<%- include('../../partials/header') %>
+<link rel="stylesheet" href="/dashboard.css">
+<link rel="stylesheet" href="/admin.css">
+<link rel="stylesheet" href="/homepage.css">
+<main class="admin-users">
+  <h1>All Users</h1>
+
+  <label for="sort">Sort by:</label>
+  <select id="sort-users">
+    <option value="recent">Most Recent</option>
+    <option value="alpha">A-Z</option>
+  </select>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Trusted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
+          <td><%= user.isTrusted ? 'Yes' : 'No' %></td>
+          <td>
+            <button class="edit-user-btn" data-id="<%= user._id %>">Edit</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- TODO: Add pagination buttons -->
+
+</main>
+
+<%- include('../../partials/footer') %>
+
+<script>
+  document.getElementById('sort-users').addEventListener('change', function() {
+    const value = this.value;
+    const rows = Array.from(document.querySelectorAll('tbody tr'));
+    if (value === 'alpha') {
+      rows.sort((a, b) => a.cells[0].innerText.localeCompare(b.cells[0].innerText));
+    } else {
+      rows.reverse(); // fallback for recent
+    }
+    const tbody = document.querySelector('tbody');
+    rows.forEach(r => tbody.appendChild(r));
+  });
+</script>

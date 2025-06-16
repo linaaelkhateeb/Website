@@ -14,6 +14,7 @@ exports.agencyCreateTrip = async (req, res) => {
             locations,
             price,
             city,
+            imageURL
         } = req.body
 
         if (!title || !country || !category || !price || !city) {
@@ -28,6 +29,7 @@ exports.agencyCreateTrip = async (req, res) => {
             locations: locations || [],
             price,
             city,
+            imageURL,
             createdBy: req.user._id,
             isApproved: false,
         })
@@ -78,6 +80,7 @@ exports.createTrip = async (req, res) => {
       category,
       locations: locations || [],
       isApproved: true,
+      imageURL
     });
     await newTrip.save();
     res.status(201).json(newTrip);
@@ -97,6 +100,7 @@ exports.agencyCreateTrip = async (req, res) => {
             locations,
             price,
             city,
+            imageURL
         } = req.body
 
         if (!title || !country || !category || !price || !city) {
@@ -113,6 +117,7 @@ exports.agencyCreateTrip = async (req, res) => {
             city,
             createdBy: req.user._id,
             isApproved: false,
+            imageURL
         })
 
         await trip.save()
@@ -166,8 +171,10 @@ exports.createTrip = async (req, res) => {
             locations,
             price,
             city,
+            imageURL,
             lat, 
             lng,
+    
             
         } = req.body
 
@@ -188,7 +195,8 @@ exports.createTrip = async (req, res) => {
             lat: parseFloat(lat),
             lng: parseFloat(lng)
   
-             }
+             },
+             imageURL
         })
 
         await newTrip.save()
