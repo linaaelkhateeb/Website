@@ -78,7 +78,6 @@
 <script>
   window.addEventListener('load', function () {
     const sidebar = document.getElementById('sidebar');
-    const profileToggle = document.getElementById('profileToggle');
     const closeBtn = document.querySelector('.close-btn');
 
     if (!sidebar) {
@@ -86,14 +85,12 @@
       return;
     }
 
-    if (!profileToggle) {
-      console.warn("Profile toggle button NOT found");
-      return;
-    }
-
-    profileToggle.addEventListener('click', function (e) {
-      e.preventDefault();
-      sidebar.classList.toggle('show');
+    // ✅ Toggle sidebar for ALL elements with .profileToggle class
+    document.querySelectorAll('.profileToggle').forEach(toggle => {
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        sidebar.classList.toggle('show');
+      });
     });
 
     if (closeBtn) {
@@ -103,6 +100,7 @@
     }
   });
 </script>
+
 <script>
   window.addEventListener('load', function () {
     const homeLink = document.getElementById('homeLink');
