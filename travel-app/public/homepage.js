@@ -1,4 +1,8 @@
-function toggleReadMore(button) {
+function toggleReadMore(button, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
     const card = button.closest('.attraction-card');
     const content = card.querySelector('.read-more-content');
 
