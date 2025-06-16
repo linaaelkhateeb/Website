@@ -1,32 +1,55 @@
 <%- include('partials/header') %>
 <%- include('partials/sidebar') %>
+<link rel="stylesheet" href="/homepage.css">
+<link rel="stylesheet" href="/profile.css">
 
-<div class="profile-container">
-  <aside class="profile-sidebar">
-    <% if (user.profilePic) { %>
-      <img src="<%= user.profilePic %>" alt="Profile Picture" class="avatar-img">
-    <% } else { %>
-      <div class="avatar-circle">
-        <%= user.name.charAt(0).toUpperCase() %><%= user.name.split(' ')[1] ? user.name.split(' ')[1].charAt(0).toUpperCase() : '' %>
-      </div>
-    <% } %>
-    <form action="/profile/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="profilePic" accept="image/*" required>
-      <button type="submit" class="upload-btn"><%= user.profilePic ? 'Change Picture' : 'Add Picture' %></button>
-    </form>
-    <h2 class="profile-name"><%= user.name %></h2>
-    <p class="profile-email"><%= user.email %></p>
-  </aside>
+<!-- ✅ WRAP BOTH SECTIONS -->
+<div class="profile-wrapper">
+  <div class="profile-sidebar-wrapper">
+    <aside class="profile-sidebar">
+      <% if (user.profilePic) { %>
+  <!-- ✅ Add id so JS can find it -->
+  <img id="avatarPreview" src="<%= user.profilePic %>" alt="Profile Picture" class="avatar-img">
+<% } else { %>
+  <!-- ✅ Add id so JS can find it -->
+  <div id="avatarPreview" class="avatar-circle">
+    <%= user.name.charAt(0).toUpperCase() %>
+  </div>
+<% } %>
 
-  <main class="profile-main">
-    <h1>Profile Settings</h1>
-    <form action="/profile" method="POST">
-      <% if (user.role === 'client' || user.role === 'admin') { %>
-        <label>First Name</label>
-        <input type="text" name="firstName" value="<%= user.firstName || '' %>" required>
+<form id="uploadForm" action="/profile/upload" method="POST" enctype="multipart/form-data">
+  <!-- Hidden file input -->
+  <input type="file" id="fileInput" name="profilePic" accept="image/*" style="display: none;">
+  <!-- Button to trigger file input -->
+  <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click()">
+    <%= user.profilePic ? 'Change Picture' : 'Add Picture' %>
+  </button>
+</form>
 
-        <label>Surname</label>
-        <input type="text" name="surname" value="<%= user.surname || '' %>" required>
+
+
+<h2 class="profile-name"><%= user.name %></h2>
+
+    </aside>
+  </div>
+
+  <div class="profile-main-wrapper">
+    <main class="profile-main">
+      <h1>Profile Settings</h1>
+      <form action="/profile" method="POST">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= user.name || '' %>" required>
+
+        <% if (user.role === 'agency') { %>
+          <label>Business Name</label>
+          <input type="text" name="businessName" value="<%= user.businessName || '' %>">
+
+          <label>Website or Social Link</label>
+          <input type="url" name="website" value="<%= user.website || '' %>">
+
+          <label>Description</label>
+          <textarea name="description"><%= user.description || '' %></textarea>
+        <% } %>
 
         <label>Email</label>
         <input type="email" name="email" value="<%= user.email || '' %>" required>
@@ -34,42 +57,59 @@
         <label>Phone</label>
         <input type="tel" name="phone" value="<%= user.phone || '' %>">
 
-      <% } else if (user.role === 'agency') { %>
-        <label>Agency Name</label>
-        <input type="text" name="agencyName" value="<%= user.agencyName || '' %>" required>
+        <label>New Password</label>
+        <input type="password" name="newPassword" placeholder="Leave blank to keep current">
 
-        <label>Business Name</label>
-        <input type="text" name="businessName" value="<%= user.businessName || '' %>">
-
-        <label>Email</label>
-        <input type="email" name="email" value="<%= user.email || '' %>" required>
-
-        <label>Phone</label>
-        <input type="tel" name="phone" value="<%= user.phone || '' %>">
-
-        <label>Website or Social Link</label>
-        <input type="url" name="website" value="<%= user.website || '' %>">
-
-        <label>Description</label>
-        <textarea name="description"><%= user.description || '' %></textarea>
-      <% } %>
-
-      <label>Password</label>
-      <div class="password-field">
-        <input type="password" id="passwordField" value="********" readonly>
-        <span onclick="togglePassword()">👁️</span>
-      </div>
-
-      <button type="submit" class="save-btn">Save Profile</button>
-    </form>
-  </main>
+        <button type="submit" class="save-btn">Save Profile</button>
+      </form>
+    </main>
+  </div>
 </div>
+
+<!-- ✅ OUTSIDE the wrapper, just before the footer include -->
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const preview = document.getElementById('avatarPreview');
+
+  fileInput.onchange = async function() {
+    if (this.files && this.files[0]) {
+      const file = this.files[0];
+      const reader = new FileReader();
+
+      // Show preview immediately
+      reader.onload = function(e) {
+        if (preview.tagName.toLowerCase() === 'img') {
+          preview.src = e.target.result;
+        } else {
+          preview.style.backgroundImage = `url(${e.target.result})`;
+          preview.style.backgroundSize = 'cover';
+          preview.style.backgroundPosition = 'center';
+          preview.textContent = '';
+        }
+      };
+      reader.readAsDataURL(file);
+
+      // ✅ Send via AJAX
+      const formData = new FormData();
+      formData.append('profilePic', file);
+
+      try {
+        const response = await fetch('/profile/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        console.log('Uploaded:', result);
+        // Optionally: update preview with final server URL if needed
+      } catch (err) {
+        console.error('Upload failed', err);
+      }
+    }
+  };
+</script>
 
 <%- include('partials/footer') %>
 
-<script>
-  function togglePassword() {
-    const pw = document.getElementById('passwordField');
-    pw.type = pw.type === 'password' ? 'text' : 'password';
-  }
-</script>
+
+<%- include('partials/footer') %>

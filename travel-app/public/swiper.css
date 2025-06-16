@@ -1,0 +1,145 @@
+:root {
+    --organic: #6a6f4c;
+    --butter: #f9d0ddda;
+    --coconut: #ede1d2;
+    --natural: #806044;
+    --palm-oil: #5d2510;
+    --cocoa: #412f26;
+}
+
+/* Slider container */
+.explainer-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 20px;
+    background: var(--coconut);
+    text-align: center;
+}
+
+.explainer-slider h2 {
+    font-size: 2.5rem;
+    color: var(--palm-oil);
+    font-family: 'Chewy', cursive;
+    margin-bottom: 40px;
+}
+
+.swiper.explainerSwiper {
+    width: 100%;
+    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Slides */
+.swiper-slide {
+    background: var(--coconut);
+    border-radius: 40px;
+    padding: 50px 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid var(--butter);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    width: 100% !important; /* Fix: slide takes full width */
+    max-width: 100% !important; /* Remove inherited constraints */
+    flex-shrink: 0 !important; /* Prevent shrinking */
+}
+
+.swiper-slide h3 {
+    font-family: 'Chewy', cursive;
+    font-size: 1.5rem;
+    color: var(--palm-oil);
+    margin-bottom: 15px;
+}
+
+.swiper-slide p {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+    color: var(--cocoa);
+    line-height: 1.6;
+}
+
+/* Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--organic);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    transform: translateY(-50%) scale(1.2);
+}
+
+/* Pagination dots */
+.swiper-pagination {
+    bottom: 20px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: var(--organic);
+    opacity: 0.5;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--natural);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Get Started Button centered */
+.get-started-wrapper {
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.get-started-btn {
+    background-color: var(--organic);
+    color: var(--coconut);
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-family: 'Patrick Hand', cursive;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(106, 111, 76, 0.3);
+}
+
+.get-started-btn:hover {
+    background-color: var(--natural);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        padding: 30px 20px;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
