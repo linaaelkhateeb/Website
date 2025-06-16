@@ -1,7 +1,6 @@
 const Country = require('../models/country');
 
 const mongoose = require('mongoose');
-const Attraction = mongoose.model('Attraction');
 
 
 const Attraction = require('../models/attraction');
