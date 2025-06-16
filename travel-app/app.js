@@ -37,7 +37,7 @@ require('./models/user') // User might be referenced by other models/reviews
 require('./models/location')
 require('./models/booking')
 require('./models/category')
-require('./models/Attraction') // Attraction references the above, so require it last
+require('./models/attraction') // Attraction references the above, so require it last
 
 // Removed redundant require for database connection
 // require('./config/db')
@@ -123,6 +123,7 @@ app.use('/profile', require('./routes/profile'))
 
 // Admin-specific:
 app.use('/admin', require('./routes/adminusers'))
+app.use('/admin/users', require('./routes/adminusers'));
 app.use('/admin/trips', require('./routes/admintrips'))
 app.use('/admin/locations', require('./routes/adminLocations'))
 

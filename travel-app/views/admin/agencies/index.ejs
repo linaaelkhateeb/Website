@@ -1,0 +1,58 @@
+<%- include('../../partials/header') %>
+<link rel="stylesheet" href="/dashboard.css">
+<link rel="stylesheet" href="/admin.css">
+<link rel="stylesheet" href="/homepage.css">
+
+
+
+<main class="admin-agencies">
+  <h1>All Agencies</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Trusted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% agencies.forEach(agency => { %>
+        <tr>
+          <td><%= agency.name %></td>
+          <td><%= agency.email %></td>
+          <td><%= agency.isTrusted ? 'Yes' : 'No' %></td>
+          <td>
+            <button onclick="toggleDetails('<%= agency._id %>')">View Info</button>
+            <button onclick="markTrusted('<%= agency._id %>')">Mark as Trusted</button>
+          </td>
+        </tr>
+        <tr id="details-<%= agency._id %>" style="display: none;">
+          <td colspan="4">
+            <strong>Business Name:</strong> <%= agency.businessName %><br>
+            <strong>Phone:</strong> <%= agency.phone %><br>
+            <strong>Website:</strong> <%= agency.website %><br>
+            <strong>Description:</strong> <%= agency.description %><br>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+</main>
+
+<%- include('../../partials/footer') %>
+
+<script>
+  function toggleDetails(id) {
+    const row = document.getElementById(`details-${id}`);
+    row.style.display = row.style.display === 'none' ? '' : 'none';
+  }
+
+  function markTrusted(id) {
+    fetch(`/admin/agencies/${id}/trust`, {
+      method: 'PATCH'
+    }).then(() => location.reload());
+  }
+</script>
