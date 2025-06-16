@@ -1,16 +1,13 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const ensureAgency = require('../middleware/ensureAgency');
+const upload = require('../middleware/upload');
 const controller = require('../controllers/restaurantController')
-const ensureAgency = require('../middleware/ensureAgency')
-const upload = require('../middleware/upload')
 
-router.get('/', controller.getAllRestaurants)
-router.get('/add', ensureAgency, controller.getAddRestaurantForm)
-router.post(
-    '/add',
-    ensureAgency,
-    upload.single('image'),
-    controller.postAddRestaurant
-)
 
-module.exports = router
+router.get('/', controller.getAllRestaurants);
+router.get('/add', ensureAgency, controller.getAddRestaurantForm);
+// This handles the form submission (POST request)
+router.post('/add', upload.single('image'), ensureAgency, controller.postAddRestaurant);
+
+module.exports = router;

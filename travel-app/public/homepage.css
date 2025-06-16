@@ -29,7 +29,6 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 0;
     padding-bottom: 150px;
     color: var(--forest);
     background: linear-gradient(135deg, var(--cream) 0%, var(--champagne) 50%, var(--silver) 100%);

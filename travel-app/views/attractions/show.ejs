@@ -6,6 +6,8 @@
   <title><%= attraction.name %> – ExploreMyCountry</title>
   <link rel="stylesheet" href="/homepage.css?v=<%= Date.now() %>">
   <link rel="stylesheet" href="/css/attraction-detail.css?v=<%= Date.now() %>">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <%- include('../partials/header') %>
@@ -19,91 +21,155 @@
   <% } %>
 
   <div class="attraction-detail-container">
-    <!-- Hero Image -->
-    <div
-      class="attraction-image"
-      style="background-image: url('<%= attraction.image || "https://via.placeholder.com/800x400?text=No+Image" %>');">
-    ></div>
+<
+    <div class="hero-section">
+      <div
+        class="attraction-image"
+        style="background-image: url('<%= attraction.image || "https://via.placeholder.com/800x400?text=No+Image" %>');">
+      </div>
+      <div class="hero-overlay">
+        <h1><%= attraction.name %></h1>
+        <div class="hero-meta">
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            <%= attraction.country ? attraction.country.name : 'N/A' %>
+          </div>
+          <div class="price">
+            <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %>
+          </div>
+        </div>
 
-    <!-- Info -->
-    <div class="attraction-info">
-      <h1><%= attraction.name %></h1>
-      <p><%= attraction.description %></p>
-      <p class="attraction-meta">
-        <i class="fas fa-map-marker-alt"></i>
-        <%= attraction.location %>, 
-        <%= attraction.country ? attraction.country.name : 'N/A' %>
-        <span class="price-badge">
-          <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %>
-        </span>
-      </p>
-
-      <!-- Average Rating -->
-      <div class="rating star-rating">
-        <% for (let i = 1; i <= 5; i++) { %>
-          <span class="star <%= i <= averageRating ? 'filled' : '' %>">★</span>
-        <% } %>
-        <span class="average-rating">(<%= averageRating || 0 %>/5)</span>
-        <span>(<%= attraction.reviews.length %> reviews)</span>
       </div>
     </div>
 
-    <!-- Reviews -->
-    <div class="reviews-section">
-      <h2>Reviews</h2>
-
-      <% if (attraction.reviews && attraction.reviews.length > 0) { %>
-        <% attraction.reviews.forEach(review => {
-             const reviewerName = review.user ? review.user.name : 'Anonymous';
-        %>
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name"><%= reviewerName %></span>
-              <div class="review-rating">
-                <% for (let i = 1; i <= 5; i++) { %>
-                  <span class="star <%= i <= review.rating ? 'filled' : '' %>">★</span>
-                <% } %>
-              </div>
-            </div>
-            <p class="review-comment"><%= review.comment %></p>
-          </div>
-        <% }); %>
-      <% } else { %>
-        <p>No reviews yet.</p>
-      <% } %>
-
-      <!-- Add Review Form -->
-      <% if (user) { %>
-        <div class="add-review-section">
-          <h3>Add a Review</h3>
-          <form action="/attractions/<%= attraction._id %>/reviews" method="POST">
-            <div class="rating-input">
-              <label for="rating">Rating:</label>
-              <select name="rating" id="rating" required>
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
-              </select>
-            </div>
-            <div class="comment-input">
-              <label for="comment">Comment:</label>
-              <textarea name="comment" id="comment" rows="4" required></textarea>
-            </div>
-            <button type="submit">Submit Review</button>
-          </form>
+    <!-- Main Content Grid -->
+    <div class="content-grid">
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="section-title">
+          <i class="fas fa-info-circle"></i>
+          About this place
         </div>
-      <% } else { %>
-        <p class="login-to-review">
-          Please <a href="/auth/login">log in</a> to add a review.
-        </p>
-      <% } %>
+        <div class="description">
+          <%= attraction.description %>
+        </div>
+
+        <!-- Associated Trips Section -->
+        <% if (attraction.trips && attraction.trips.length > 0) { %>
+          <div class="trips-section">
+            <div class="section-title">
+              <i class="fas fa-suitcase"></i>
+              Trips Featuring This Attraction
+            </div>
+            <ul class="trips-list">
+              <% attraction.trips.forEach(trip => { %>
+                <li><a href="/trips/<%= trip._id %>"><%= trip.title %></a></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+          <div class="reviews-header">
+            <div class="section-title">
+              <i class="fas fa-comments"></i>
+              Reviews
+            </div>
+            <button class="reviews-toggle" onclick="toggleReviews()">
+              <i class="fas fa-chevron-down"></i>
+              View Reviews
+            </button>
+          </div>
+
+          <div class="reviews-content" id="reviewsContent">
+            <% if (attraction.reviews && attraction.reviews.length > 0) { %>
+              <% attraction.reviews.forEach(review => {
+                   const reviewerName = review.user ? review.user.name : 'Anonymous';
+              %>
+                <div class="review-card">
+                  <div class="review-header">
+                    <span class="reviewer-name"><%= reviewerName %></span>
+                    <div class="review-rating">
+                      <% for (let i = 1; i <= 5; i++) { %>
+                        <span class="star <%= i <= review.rating ? 'filled' : '' %>">★</span>
+                      <% } %>
+                    </div>
+                  </div>
+                  <p class="review-comment"><%= review.comment %></p>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <p>No reviews yet.</p>
+            <% } %>
+
+            <!-- Add Review Form -->
+            <% if (user) { %>
+              <div class="add-review-section">
+                <h3>Add a Review</h3>
+                <form action="/attractions/<%= attraction._id %>/reviews" method="POST">
+                  <div class="rating-input">
+                    <label for="rating">Rating:</label>
+                    <select name="rating" id="rating" required>
+                      <option value="5">5 Stars</option>
+                      <option value="4">4 Stars</option>
+                      <option value="3">3 Stars</option>
+                      <option value="2">2 Stars</option>
+                      <option value="1">1 Star</option>
+                    </select>
+                  </div>
+                  <div class="comment-input">
+                    <label for="comment">Comment:</label>
+                    <textarea name="comment" id="comment" rows="4" required></textarea>
+                  </div>
+                  <button type="submit">Submit Review</button>
+                </form>
+              </div>
+            <% } else { %>
+              <p class="login-to-review">
+                Please <a href="/auth/login">log in</a> to add a review.
+              </p>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="booking-card">
+          <div class="price">
+            <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %>
+          </div>
+          <a href="/booking/new?attractionId=<%= attraction._id %>" class="booking-button">
+            <i class="fas fa-calendar-check"></i> Book Now
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // any page-specific JS can go here
+    document.addEventListener('DOMContentLoaded', function() {
+      const reviewsContent = document.getElementById('reviewsContent');
+      // Ensure reviews are hidden initially, in case CSS is not applied immediately or overridden
+      if (reviewsContent) {
+        reviewsContent.style.display = 'none'; 
+      }
+    });
+
+    function toggleReviews() {
+      const reviewsContent = document.getElementById('reviewsContent');
+      const toggleButton = document.querySelector('.reviews-toggle i');
+      
+      // Toggle display property directly
+      if (reviewsContent.style.display === 'none') {
+        reviewsContent.style.display = 'block';
+        toggleButton.classList.remove('fa-chevron-down');
+        toggleButton.classList.add('fa-chevron-up');
+      } else {
+        reviewsContent.style.display = 'none';
+        toggleButton.classList.remove('fa-chevron-up');
+        toggleButton.classList.add('fa-chevron-down');
+      }
+    }
   </script>
 
   <%- include('../partials/footer') %>

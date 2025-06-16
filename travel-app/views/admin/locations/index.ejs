@@ -36,19 +36,27 @@
     <h2>Approved Locations</h2>
 
     <% if (approvedLocations.length === 0) { %>
-      <p>No approved locations submitted by agencies yet.</p>
-    <% } else { %>
-      <ul>
-        <% approvedLocations.forEach(location => { %>
-          <li>
-            <strong><%= location.name %></strong> —
-            <%= location.city %> —
-            <%= location.country?.name %> —
-            submitted by <%= location.createdBy?.email || 'Unknown' %>
-          </li>
-        <% }) %>
-      </ul>
-    <% } %>
+  <p>No approved locations submitted by agencies yet.</p>
+<% } else { %>
+  <ul>
+    <% approvedLocations.forEach(location => { %>
+        <li class="location-item">
+    <span>
+      <strong><%= location.name %></strong> —
+      <%= location.city %> —
+      <%= location.country?.name %> —
+      submitted by <%= location.createdBy?.email || 'Unknown' %>
+    </span>
+    
+    <form class="inline-delete-form" action="/admin/locations/<%= location._id %>/delete?_method=DELETE" method="POST">
+      <button type="submit" class="delete-button" onclick="return confirm('Are you sure?')">🗑</button>
+    </form>
+  </li>
+
+    <% }) %>
+  </ul>
+<% } %>
+
   </main>
 </body>
 </html>

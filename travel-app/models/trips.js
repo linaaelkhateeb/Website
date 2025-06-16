@@ -10,13 +10,17 @@ const tripSchema = new mongoose.Schema({
   city: String,
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   isApproved: Boolean,
-  
+  startDate: {
+  type: Date,
+  required: true,
+},
+endDate: {
+  type: Date,
+  required: true,
+},
   // 👇 Add this
-  coordinates: {
-    lat: { type: Number, required: true },
-    lng: { type: Number, required: true }
-  },
-  imageUrl: String
+
 });
+
 
 module.exports = mongoose.model('Trip', tripSchema)

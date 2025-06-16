@@ -1,6 +1,7 @@
 <form id="locationForm">
   <h1>Add New Location</h1>
-<link rel="stylesheet" href="/form.css" /> 
+  <link rel="stylesheet" href="/form.css" />
+
   <div>
     <label for="name">Location Name:</label>
     <input type="text" name="name" id="name" required />
@@ -20,15 +21,18 @@
     <label for="country">Country:</label>
     <select name="country" id="country" required>
       <% countries.forEach(country => { %>
-        <option value="<%= country.name %>"><%= country.name %></option>
-
+        <option value="<%= country._id %>"><%= country.name %></option>
       <% }) %>
     </select>
   </div>
 
+  <div>
+    <label for="imageURL">Image URL (optional):</label>
+    <input type="url" name="imageURL" id="imageURL" />
+  </div>
+
   <button type="submit">Add Location</button>
 </form>
-
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -51,13 +55,13 @@
         const data = await res.json();
 
         if (res.ok) {
-          alert(data.message || '✅ Location submitted!');
+          alert(data.message || ' Location submitted for approval!');
           window.location.href = '/agency/dashboard';
         } else {
-          alert('❌ Submission failed: ' + (data.message || 'Unknown error'));
+          alert('Submission failed: ' + (data.message || 'Unknown error'));
         }
       } catch (err) {
-        alert('❌ Network error: ' + err.message);
+        alert('Network error: ' + err.message);
       }
     });
   });
