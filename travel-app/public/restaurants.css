@@ -1,76 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+/* Root colors and font */
+:root {
+    --burgundy: #390517;
+    --green: #16302b;
+    --gold: #a38560;
+    --text-light: #f8f8f8;
+    --input-bg: #2b2b2b;
+    --border-color: #444;
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    --transition: all 0.3s ease;
+    --font: 'Playfair Display', serif;
+}
+
+/* Page background and text */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f9fc;
+    font-family: var(--font);
+    background-color: var(--burgundy);
     margin: 0;
-    padding: 0;
+    padding: 2rem;
+    color: var(--text-light);
 }
 
+/* Form container */
 .form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    max-width: 640px;
+    margin: 80px auto 120px; /* add bottom margin for footer */
+    padding: 2.5rem 3rem;
+    background-color: var(--green);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
 }
 
+/* Title */
 .form-container h1 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
 }
 
-form label {
+/* Labels */
+.form-container label {
     display: block;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #444;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 1.05rem;
 }
 
-form input,
-form textarea,
-form select {
+/* Inputs & Textareas */
+.form-container input,
+.form-container textarea,
+.form-container select {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
     font-size: 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-light);
+    font-family: var(--font);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-form button {
+/* Focus effect */
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(163, 133, 96, 0.4);
+}
+
+/* Textarea resizing */
+.form-container textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Submit Button */
+.form-container button[type='submit'] {
     display: block;
     width: 100%;
-    padding: 12px;
-    margin-top: 25px;
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1rem;
+    background-color: var(--gold);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 14px 0;
     border: none;
-    border-radius: 6px;
+    border-radius: 16px;
+    transition: var(--transition);
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-container button[type='submit']:hover {
+    background-color: #8a6c4f;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-form button:hover {
-    background-color: #0056b3;
+/* Feedback messages */
+.form-container .error,
+.form-container .success {
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
-.error {
-    color: #e74c3c;
-    background-color: #fceaea;
-    padding: 10px;
-    border: 1px solid #e0b4b4;
-    border-radius: 5px;
-    margin-bottom: 15px;
+.form-container .error {
+    background-color: #fcebea;
+    border: 1px solid #e3342f;
+    color: #cc1f1a;
 }
 
-.success {
-    color: #2ecc71;
-    background-color: #eafaf1;
-    padding: 10px;
-    border: 1px solid #b7e4c7;
-    border-radius: 5px;
-    margin-bottom: 15px;
+.form-container .success {
+    background-color: #e6ffed;
+    border: 1px solid #38c172;
+    color: #1f9d55;
+}
+
+.restaurant-list-container {
+    max-width: 900px;
+    margin: 60px auto 120px;
+    padding: 20px;
+    color: var(--text-light);
+}
+
+.restaurant-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: 30px;
+}
+
+.restaurant-card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: var(--green);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.restaurant-image {
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.restaurant-info h2 {
+    margin-top: 0;
+    color: var(--gold);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #666;
+    margin: 20px 0;
 }

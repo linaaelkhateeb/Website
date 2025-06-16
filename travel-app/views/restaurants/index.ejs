@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/restaurants.css" />
+
+<div class="restaurant-list-container">
+    <h1 class="restaurant-title">Explore My Restaurants</h1>
+
+    <% if (success) { %>
+    <div class="success"><%= success %></div>
+    <% } %> <% if (error) { %>
+    <div class="error"><%= error %></div>
+    <% } %> <% if (restaurants.length === 0) { %>
+    <p>No restaurants available.</p>
+    <% } else { %> <% restaurants.forEach(restaurant => { %>
+    <div class="restaurant-card">
+        <img
+            src="<%= restaurant.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png' %>"
+            alt="<%= restaurant.name %>"
+            class="restaurant-image"
+        />
+        <div class="restaurant-info">
+            <h2><%= restaurant.name %></h2>
+            <p><strong>Description:</strong> <%= restaurant.description %></p>
+            <p><strong>Cuisine:</strong> <%= restaurant.cuisine %></p>
+            <p><strong>Price Range:</strong> <%= restaurant.priceRange %></p>
+            <p><strong>Rating:</strong> <%= restaurant.rating %></p>
+            <p>
+                <strong>Created By:</strong> <%= restaurant.createdBy?.name ||
+                'Unknown' %>
+            </p>
+        </div>
+    </div>
+    <hr class="divider" />
+    <% }) %> <% } %>
+</div>
+
+<%- include('../partials/footer') %>
