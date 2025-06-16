@@ -11,6 +11,12 @@
     margin: 0;
     padding: 0;
   }
+    .main-content {
+    flex: 1;
+    padding-top: 100px;
+    padding-bottom: 180px; /* 🧱 Enough space for the footer */
+  }
+
 
   .delay-0 { animation-delay: 0s; }
   .delay-1 { animation-delay: 0.1s; }
@@ -155,7 +161,7 @@
     <div class="trip-grid">
       <% trips.forEach((trip, i) => { %>
         <div class="trip-card delay-<%= i %>">
-          <img src="<%= trip.imageUrl || '/images/default-trip.jpg' %>" alt="Trip image">
+          <img src="<%= trip.imageURL || '/images/default-trip.jpg' %>" alt="Trip image">
           <h3><%= trip.title %></h3>
           <p><strong>Price:</strong> $<%= trip.price %></p>
           <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>

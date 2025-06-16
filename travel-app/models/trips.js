@@ -16,7 +16,7 @@ const tripSchema = new mongoose.Schema({
     lat: { type: Number, required: true },
     lng: { type: Number, required: true }
   },
-  imageUrl: String
+  imageURL: String
 });
 
 module.exports = mongoose.model('Trip', tripSchema)
