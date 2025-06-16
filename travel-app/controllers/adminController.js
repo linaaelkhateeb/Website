@@ -4,6 +4,9 @@ const Location = require('../models/location');
 const Country = require('../models/country');
 const Category = require('../models/category');
 const Attraction = require('../models/attraction');
+const Booking = require('../models/booking');
+
+
 
 
 // Mark agency as trusted
@@ -258,19 +261,17 @@ exports.getAllTrips = async (req, res) => {
 // List all users
 exports.listUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ createdAt: -1 });
-    res.render('admin/users/index', { users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-};
+    // ✅ Only clients
+    const users = await User.find({ role: 'client' }).sort({ createdAt: -1 });
 
-// List all agencies
-exports.listAgencies = async (req, res) => {
-  try {
-    const agencies = await User.find({ role: 'agency' });
-    res.render('admin/agencies/index', { agencies });
+    // ✅ Preload each user's bookings with trip populated
+    const userBookings = {};
+    for (const user of users) {
+      const bookings = await Booking.find({ user: user._id }).populate('trip');
+      userBookings[user._id] = bookings;
+    }
+
+    res.render('admin/users/index', { users, userBookings });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -312,6 +313,26 @@ exports.deleteAgency = async (req, res) => {
     res.status(500).json({ success: false });
   }
 };
+exports.deleteBooking = async (req, res) => {
+  try {
+    await Booking.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Booking deleted successfully!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Failed to delete booking' });
+  }
+};
+
+exports.listAgencies = async (req, res) => {
+  try {
+    const agencies = await User.find({ role: 'agency' }).sort({ createdAt: -1 });
+    res.render('admin/agencies/index', { agencies });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
 
 
 // Render form for adding a new attraction

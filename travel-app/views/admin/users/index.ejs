@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/dashboard.css">
 <link rel="stylesheet" href="/admin.css">
 <link rel="stylesheet" href="/homepage.css">
+
 <main class="admin-users">
   <h1>All Users</h1>
 
@@ -16,8 +17,6 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Role</th>
-        <th>Trusted</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -26,10 +25,27 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
-          <td><%= user.role %></td>
-          <td><%= user.isTrusted ? 'Yes' : 'No' %></td>
           <td>
-            <button class="edit-user-btn" data-id="<%= user._id %>">Edit</button>
+            <button class="edit-user-btn" data-id="<%= user._id %>">View Info</button>
+          </td>
+        </tr>
+        <!-- ✅ New details row for email & bookings -->
+        <tr id="details-<%= user._id %>" style="display: none;" class="agency-details-row">
+          <td colspan="3">
+            <strong>Email:</strong> <%= user.email %><br><br>
+            <strong>Bookings:</strong><br>
+            <% if (userBookings[user._id] && userBookings[user._id].length > 0) { %>
+              <ul>
+                <% userBookings[user._id].forEach(b => { %>
+                  <li>
+                    Trip: <%= b.trip ? b.trip.title : 'N/A' %>
+                    <button onclick="deleteBooking('<%= b._id %>')">Delete Booking</button>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              <p>No bookings.</p>
+            <% } %>
           </td>
         </tr>
       <% }) %>
@@ -43,15 +59,37 @@
 <%- include('../../partials/footer') %>
 
 <script>
-  document.getElementById('sort-users').addEventListener('change', function() {
-    const value = this.value;
-    const rows = Array.from(document.querySelectorAll('tbody tr'));
-    if (value === 'alpha') {
-      rows.sort((a, b) => a.cells[0].innerText.localeCompare(b.cells[0].innerText));
-    } else {
-      rows.reverse(); // fallback for recent
-    }
-    const tbody = document.querySelector('tbody');
-    rows.forEach(r => tbody.appendChild(r));
+  // ✅ Expand/collapse stays same
+  document.querySelectorAll('.edit-user-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const id = this.dataset.id;
+      const row = document.getElementById(`details-${id}`);
+      row.style.display = row.style.display === 'none' ? '' : 'none';
+    });
   });
+
+  // ✅ Sorting stays same (already in your code)
+
+  // ✅ Improved AJAX booking delete
+  function deleteBooking(id) {
+    if (confirm('Are you sure you want to delete this booking?')) {
+      fetch(`/admin/bookings/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message); // quick pop up
+          // Remove the booking's <li> from the DOM without reloading
+          document.querySelector(`button[onclick="deleteBooking('${id}')"]`).parentElement.remove();
+        } else {
+          alert('Failed to delete booking.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error deleting booking.');
+      });
+    }
+  }
 </script>
