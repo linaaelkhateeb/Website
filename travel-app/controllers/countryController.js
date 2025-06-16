@@ -1,5 +1,6 @@
 const Country = require('../models/country');
-const Attraction = require('../models/attraction');
+const mongoose = require('mongoose');
+const Attraction = mongoose.model('Attraction');
 
 exports.listCountries = async (req, res) => {
   const countries = await Country.find();

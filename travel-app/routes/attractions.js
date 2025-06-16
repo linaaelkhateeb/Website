@@ -1,34 +1,24 @@
-
 const express = require('express')
 const router = express.Router()
-const Attraction = require('../models/attraction')
+const attractionController = require('../controllers/attractionController')
+const { ensureAuth } = require('../middleware/auth')
 
-// Create attraction
-router.post('/', async (req, res) => {
-    try {
-        const attraction = new Attraction(req.body)
-        await attraction.save()
-        res.status(201).json(attraction)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to create attraction',
-            error: err.message,
-        })
-    }
-})
+// NOTE: The /attractions POST route below is for creating attractions, likely by an admin.
+// If you intend for users to create attractions via a UI form, you'll need a separate EJS view and route for that.
+// For now, I'm keeping it as a direct API endpoint.
 
-// Get all attractions
-router.get('/', async (req, res) => {
-    try {
-        const attractions = await Attraction.find().populate('country category')
-        res.json(attractions)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch attractions',
-            error: err.message,
-        })
-    }
-})
+// Route to create a new attraction (typically for admin use)
+router.post('/', attractionController.createAttraction)
+
+// Get all attractions with average rating
+router.get('/', attractionController.getAllAttractions)
+
+// Route to display a single attraction with its reviews and average rating
+router.get('/:id', attractionController.getAttractionById)
+
+// Add a review to an attraction
+// console.log('attractionController.addReview:', attractionController.addReview)
+router.post('/:id/reviews', ensureAuth, attractionController.addReview)
 
 module.exports = router
 

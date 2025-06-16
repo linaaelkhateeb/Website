@@ -27,7 +27,7 @@
             href="https://unpkg.com/leaflet/dist/leaflet.css"
         />
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <link rel="stylesheet" href="/homepage.css?v=3.14159" />
+        <link rel="stylesheet" href="/homepage.css" />
     </head>
     <body>
         <%- include('partials/header') %> <%- include('partials/sidebar') %> <%
@@ -96,253 +96,50 @@
 
         <!-- Attractions Section -->
         <section id="main-content"></section>
-        <h2 class="section-title">Top Attractions</h2>
-        <div class="carousel-container">
-            <div class="carousel">
-                <!-- Attraction Card 1: Colosseum -->
-                <div class="attraction-card">
-                    <div
-                        class="card-image"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140');
-                        "
-                    ></div>
-                    <span class="price-badge">$25</span>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="italy.html">Italy</a>
-                        </h3>
-                        <p class="card-location">Rome, Italy</p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="read-more" onclick="toggleReadMore(this)">
-                            Read more
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="read-more-content">
-                            <p>
-                                Italy is famous for its rich history, art, and
-                                architecture. Home to iconic landmarks like the
-                                Colosseum, Venice's canals, and Florence's
-                                Renaissance art, Italy offers a perfect blend of
-                                culture, cuisine, and breathtaking landscapes.
-                            </p>
-                        </div>
+        <div class="carousel">
+            <% if (attractions && attractions.length > 0) { %>
+                <% attractions.forEach(attraction => {
+                    const imageUrl = attraction.image || 'https://via.placeholder.com/400x250?text=No+Image';
+                %>
+                    <div class="attraction-card">
+                        <a href="/attractions/<%= attraction._id %>" class="attraction-link">
+                            <div class="card-image" style="background-image: url('<%= imageUrl %>');"></div>
+                            <span class="price-badge"><%= attraction.price === 0 ? 'Free' : '$' + attraction.price %></span>
+                            <div class="card-content">
+                                <h3 class="card-title"><%= attraction.name %></h3>
+                                <p class="card-location"><%= attraction.location %>, <%= attraction.country ? attraction.country.name : 'N/A' %></p>
+                                
+                                <div class="rating star-rating">
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <span class="star <%= i <= attraction.averageRating ? 'filled' : '' %>">&#9733;</span>
+                                    <% } %>
+                                    <span class="average-rating">(<%= attraction.averageRating || '0' %>/5)</span>
+                                </div>
+                                <div class="read-more" onclick="toggleReadMore(this)">
+                                    Read more
+                                    <svg
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="read-more-content">
+                                    <p><%= attraction.description %></p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-
-                <!-- Attraction Card 2: Leaning Tower -->
-                <div class="attraction-card">
-                    <div
-                        class="card-image"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216');
-                        "
-                    ></div>
-                    <span class="price-badge">$18</span>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="spain.html">Spain</a>
-                        </h3>
-                        <p class="card-location">Madrid, Spain</p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">☆</span>
-                        </div>
-                        <div class="read-more" onclick="toggleReadMore(this)">
-                            Read more
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="read-more-content">
-                            <p>
-                                Spain is known for its vibrant culture, stunning
-                                architecture like Gaudí's Sagrada Familia,
-                                beautiful beaches, and delicious cuisine. From
-                                flamenco dancing in Seville to the running of
-                                the bulls in Pamplona, Spain offers
-                                unforgettable experiences.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attraction Card 3: Trevi Fountain -->
-                <div class="attraction-card">
-                    <div
-                        class="card-image"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1492571350019-22de08371fd3');
-                        "
-                    ></div>
-                    <span class="price-badge">Free</span>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="japan.html">Japan</a>
-                        </h3>
-                        <p class="card-location">Tokyo, Japan</p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="read-more" onclick="toggleReadMore(this)">
-                            Read more
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="read-more-content">
-                            <p>
-                                Japan blends ancient traditions with
-                                cutting-edge modernity. From the cherry blossoms
-                                of Kyoto's temples to Tokyo's neon-lit streets,
-                                Japan offers unique experiences including sushi,
-                                onsens, bullet trains, and beautiful landscapes
-                                like Mount Fuji.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attraction Card 4: Vatican Museums -->
-                <div class="attraction-card">
-                    <div
-                        class="card-image"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325');
-                        "
-                    ></div>
-                    <span class="price-badge">$22</span>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="brazil.html">Brazil</a>
-                        </h3>
-                        <p class="card-location">Brazilia, Brazil</p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="read-more" onclick="toggleReadMore(this)">
-                            Read more
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="read-more-content">
-                            <p>
-                                Brazil is home to the Amazon rainforest, vibrant
-                                cities like Rio de Janeiro with its iconic
-                                Christ the Redeemer statue, stunning beaches,
-                                and the world-famous Carnival festival. The
-                                country offers incredible biodiversity and rich
-                                cultural heritage.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attraction Card 5: Pantheon -->
-                <div class="attraction-card">
-                    <div
-                        class="card-image"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1431274172761-fca41d930114');
-                        "
-                    ></div>
-                    <span class="price-badge">Free</span>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="webproject.html">France</a>
-                        </h3>
-                        <p class="card-location">Paris, France</p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">☆</span>
-                        </div>
-                        <div class="read-more" onclick="toggleReadMore(this)">
-                            Read more
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="read-more-content">
-                            <p>
-                                France is renowned for its art, fashion,
-                                cuisine, and architecture. From the Eiffel Tower
-                                in Paris to the lavender fields of Provence and
-                                the French Riviera's beaches, France offers
-                                world-class museums, wine regions, and
-                                picturesque countryside.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <% }); %>
+            <% } else { %>
+                <p>No attractions available.</p>
+            <% } %>
         </div>
         </section>
 
@@ -367,7 +164,7 @@
             }).addTo(map)
 
             trips.forEach((trip) => {
-                if (trip.coordinates?.lat && trip.coordinates?.lng) {
+                if (trip.coordinates?.lat && trip.coordinates.lng) {
                     L.marker([trip.coordinates.lat, trip.coordinates.lng])
                         .addTo(map)
                         .bindPopup(
@@ -449,46 +246,24 @@
                     page: 'brazil.html',
                 },
                 {
-                    name: 'India',
-                    lat: 28.6139,
-                    lon: 77.209,
-                    page: 'india.html',
-                },
-                {
-                    name: 'China',
-                    lat: 39.9042,
-                    lon: 116.4074,
-                    page: 'china.html',
-                },
-                {
-                    name: 'South Africa',
-                    lat: -25.7479,
-                    lon: 28.2293,
-                    page: 'southafrica.html',
-                },
-                {
                     name: 'Egypt',
-                    lat: 30.0444,
-                    lon: 31.2357,
+                    lat: 26.8206,
+                    lon: 30.8025,
                     page: 'egypt.html',
                 },
             ]
 
             countries.forEach(function (country) {
                 L.marker([country.lat, country.lon])
-                    .addTo(map)
-                    .bindPopup(
-                        '<a href="' +
-                            country.page +
-                            '">' +
-                            country.name +
-                            '</a>'
-                    )
+                    .addTo(mapp)
+                    .bindPopup(country.name)
+                    .on('click', function () {
+                        window.location.href = country.page
+                    })
             })
         </script>
-        <!-- Swiper core JS -->
+        <script src="/js/script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <!-- Your custom Swiper JS -->
         <script src="/swiper.js"></script>
     </body>
 </html>

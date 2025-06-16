@@ -7,11 +7,39 @@ const passport = require('passport')
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
-const Trip = require('./models/trips');
+
+// Removed explicit require for Trip at the top
+// const Trip = require('./models/trips');
 
 dotenv.config()
 
-require('./config/db') // MongoDB connection
+// MongoDB connection - MOVED UP
+mongoose
+    .connect(process.env.CONNECTION_STRING, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: 'proj-database',
+    })
+    .then(() => {
+        console.log('Database Connection is ready...')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+// Explicitly require all models here after DB connection to ensure they are registered once.
+// Ordering by dependencies where possible
+require('./models/country'); // Country is referenced by Attraction
+require('./models/Review');  // Review is referenced by Attraction
+require('./models/trips');   // Trip is referenced by Attraction
+require('./models/user');    // User might be referenced by other models/reviews
+require('./models/location');
+require('./models/booking');
+require('./models/category');
+require('./models/Attraction'); // Attraction references the above, so require it last
+
+// Removed redundant require for database connection
+// require('./config/db')
 require('./config/passport')(passport) // initialize Passport strategy
 
 const app = express()
@@ -63,6 +91,9 @@ app.use((req, res, next) => {
     next()
 })
 
+// Require controllers and set up routes AFTER database connection and app setup
+const attractionController = require('./controllers/attractionController');
+
 // Routes
 const countryRoutes = require('./routes/countryRoutes')
 app.use('/countries', countryRoutes)
@@ -70,9 +101,6 @@ const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
 const bookingRoutes = require('./routes/bookings');
 app.use('/bookings', bookingRoutes); // ✅ This is correct
-
-require('./models/trips');
-
 
 // One for auth and user routes:
 app.use('/', require('./routes/auth'));
@@ -99,46 +127,37 @@ app.use('/admin/countries', require('./routes/admincountries'))
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
 
-// routes/tripRoutes.js or app.js or wherever your home route is
-
-
+// Home route (kept the most comprehensive one)
 app.get('/', async (req, res) => {
   try {
-    const trips = await Trip.find({ isApproved: true }).populate('country');
+    const trips = await mongoose.model('Trip').find({ isApproved: true }).populate('country');
+    
+    // Use controller function to get top attractions
+    const attractionsWithAvgRating = await attractionController.getTopAttractionsForHomepage();
 
     res.render('home', {
-      trips,                           // ✅ This makes trips available to home.ejs
-      user: req.user || null,          // (if you need the user in navbar/sidebar)
-      success: req.flash('success'),   // optional
-      error: req.flash('error')        // optional
+      trips,
+      attractions: attractionsWithAvgRating, // Pass attractions to home.ejs
+      user: req.user || null,
+      success: req.flash('success'),
+      error: req.flash('error')
     });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 });
-app.get('/', async (req, res) => {
-  const trips = await Trip.find({ isApproved: true }).populate('country');
-  res.render('home', { user: req.user, trips });
-});
 
-//MongoDB connection
-mongoose
-    .connect(process.env.CONNECTION_STRING, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: 'proj-database',
-    })
-    .then(() => {
-        console.log('Database Connection is ready...')
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+// Removed duplicate home routes
+// app.get('/', async (req, res) => {
+//   const trips = await Trip.find({ isApproved: true }).populate('country');
+//   res.render('home', { user: req.user, trips });
+// });
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
+// app.get('/', (req, res) => {
+//     res.render('home')
+// })
+
 const paymentRoutes = require('./routes/payment');
 app.use('/payment', paymentRoutes);
 

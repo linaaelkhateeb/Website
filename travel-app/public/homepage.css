@@ -9,11 +9,7 @@
     --shadow: 0 4px 6px rgba(93, 37, 16, 0.1);
     --transition: all 0.3s ease;
 }
-html{
-    height: 100%; /* Ensures full page height */
-    margin: 0;
-    padding: 0;
-}
+
 
 body {
     margin: 0;
@@ -282,8 +278,13 @@ p{
     transform: rotate(180deg);
 }
 
+
+
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+
+
     .hero {
         height: 50vh;
     }
@@ -294,11 +295,8 @@ p{
 }
 
 
-
 /* Base Styles */
-html {
-    height: 100%;
-  }
+
   
   
   

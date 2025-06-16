@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= attraction.name %> – ExploreMyCountry</title>
+  <link rel="stylesheet" href="/homepage.css?v=<%= Date.now() %>">
+  <link rel="stylesheet" href="/css/attraction-detail.css?v=<%= Date.now() %>">
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <%- include('../partials/sidebar') %>
+
+  <% if (success) { %>
+    <div class="alert success"><%= success %></div>
+  <% } %>
+  <% if (error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <div class="attraction-detail-container">
+    <!-- Hero Image -->
+    <div
+      class="attraction-image"
+      style="background-image: url('<%= attraction.image || "https://via.placeholder.com/800x400?text=No+Image" %>');">
+    ></div>
+
+    <!-- Info -->
+    <div class="attraction-info">
+      <h1><%= attraction.name %></h1>
+      <p><%= attraction.description %></p>
+      <p class="attraction-meta">
+        <i class="fas fa-map-marker-alt"></i>
+        <%= attraction.location %>, 
+        <%= attraction.country ? attraction.country.name : 'N/A' %>
+        <span class="price-badge">
+          <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %>
+        </span>
+      </p>
+
+      <!-- Average Rating -->
+      <div class="rating star-rating">
+        <% for (let i = 1; i <= 5; i++) { %>
+          <span class="star <%= i <= averageRating ? 'filled' : '' %>">★</span>
+        <% } %>
+        <span class="average-rating">(<%= averageRating || 0 %>/5)</span>
+        <span>(<%= attraction.reviews.length %> reviews)</span>
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews-section">
+      <h2>Reviews</h2>
+
+      <% if (attraction.reviews && attraction.reviews.length > 0) { %>
+        <% attraction.reviews.forEach(review => {
+             const reviewerName = review.user ? review.user.name : 'Anonymous';
+        %>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name"><%= reviewerName %></span>
+              <div class="review-rating">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <span class="star <%= i <= review.rating ? 'filled' : '' %>">★</span>
+                <% } %>
+              </div>
+            </div>
+            <p class="review-comment"><%= review.comment %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No reviews yet.</p>
+      <% } %>
+
+      <!-- Add Review Form -->
+      <% if (user) { %>
+        <div class="add-review-section">
+          <h3>Add a Review</h3>
+          <form action="/attractions/<%= attraction._id %>/reviews" method="POST">
+            <div class="rating-input">
+              <label for="rating">Rating:</label>
+              <select name="rating" id="rating" required>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+              </select>
+            </div>
+            <div class="comment-input">
+              <label for="comment">Comment:</label>
+              <textarea name="comment" id="comment" rows="4" required></textarea>
+            </div>
+            <button type="submit">Submit Review</button>
+          </form>
+        </div>
+      <% } else { %>
+        <p class="login-to-review">
+          Please <a href="/auth/login">log in</a> to add a review.
+        </p>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    // any page-specific JS can go here
+  </script>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
