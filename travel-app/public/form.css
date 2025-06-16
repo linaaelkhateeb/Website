@@ -82,7 +82,7 @@ form button {
   display: block;
   width: 100%;
   background-color: var(--gold);
-  color: white;
+  color: rgb(44, 6, 6);
   font-size: 1.1rem;
   font-weight: 700;
   padding: 14px 0;
@@ -98,3 +98,53 @@ form button:hover {
   background-color: #8a6c4f;
   cursor: pointer;
 }
+.inline-delete-form {
+  display: inline;
+  background: none;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+.inline-delete-form .delete-button {
+  background-color: #a38560; /* gold */
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.inline-delete-form .delete-button:hover {
+  background-color: #8a6c4c;
+}
+.location-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.inline-delete-form {
+  margin: 0;
+}
+
+.inline-delete-form .delete-button {
+  background-color: #a38560; /* soft gold */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.inline-delete-form .delete-button:hover {
+  background-color: #8a6c4c;
+}
+

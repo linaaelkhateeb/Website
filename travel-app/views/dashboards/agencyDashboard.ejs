@@ -1,39 +1,36 @@
 <%- include('../partials/header') %>
-<%- include('../partials/sidebar') %>
-<link rel="stylesheet" href="/homepage.css?v=3.14159">
-<% if (success) { %>
-  <div class="alert success"><%= success %></div>
-<% } %>
-<% if (error) { %>
-  <div class="alert error"><%= error %></div>
-<% } %>
+<link rel="stylesheet" href="/agencydashboard.css" />
 
+<div class="agency-account">
+    <h1>Hello!, <%= user.name %>!</h1>
+    <p>You are logged in as <strong>Agency</strong>.</p>
 
-<link rel="stylesheet" href="/dashboard.css">
+    <div class="cards-grid">
+        <section class="profile-section">
+            <h2>Agency Info</h2>
+            <p><strong>Name:</strong> <%= user.name %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <a href="/agency/profile" class="btn">Edit Info</a>
+        </section>
 
-<div class="dashboard-wrapper">
- 
+        <section class="bookings-section">
+            <h2>Our Trips</h2>
+            <p>View and manage all trips your agency has created.</p>
+            <a href="/agency/trips" class="btn">View Trips</a>
+        </section>
 
+        <section class="favorites-section">
+            <h2>Add Trip</h2>
+            <p>Create a new trip listing for your agency.</p>
+            <a href="/agency/trips/add" class="btn">Add Trip</a>
+        </section>
 
-  <main class="dashboard-main">
-    <h1>Welcome, <%= user.name %></h1>
-    <p>You are logged in as <strong><%= user.role %></strong></p>
-
-    <section class="dashboard-overview">
-      <div class="card">
-        <h3>Trips Listed</h3>
-        <p>--</p>
-      </div>
-      <div class="card">
-        <h3>Locations Added</h3>
-        <p>--</p>
-      </div>
-      <div class="card">
-        <h3>Countries Managed</h3>
-        <p>--</p>
-      </div>
-    </section>
-  </main>
+        <section class="favorites-section">
+            <h2>Our Restaurants</h2>
+            <p>Manage your agency’s listed restaurants.</p>
+            <a href="/agency/restaurants/add" class="btn">Add Restaurant</a>
+        </section>
+    </div>
 </div>
 
 <%- include('../partials/footer') %>

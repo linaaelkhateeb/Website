@@ -56,5 +56,11 @@ router.get('/new', ensureAgency, agencyController.renderNewTripForm);
 // Handle trip creation
 router.post('/', ensureAgency, agencyController.createTrip);
 
+router.post('/', ensureAgency, tripController.agencyCreateTrip);
+
+router.get('/locations/by-country/:countryId', ensureAgency, tripController.getLocationsByCountry);
+
+
+
 module.exports = router;
 

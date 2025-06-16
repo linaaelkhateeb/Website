@@ -11,19 +11,6 @@ module.exports = router;
 
 //  SEARCH — must come first
 // GET /trips/search
-router.get('/search', async (req, res) => {
-  try {
-    const { q } = req.query;
-    const trips = await Trip.find({ 
-      title: new RegExp(q, 'i') 
-    });
-    // render the template, passing trips
-    res.render('trips/search', { trips, query: q });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
 
 
 // FETCH ONE BY ID

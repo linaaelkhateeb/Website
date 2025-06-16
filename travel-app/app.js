@@ -11,6 +11,7 @@ const dotenv = require('dotenv')
 
 // Removed explicit require for Trip at the top
 // const Trip = require('./models/trips');
+const agencyTripRoutes = require('./routes/agencytrips');
 
 dotenv.config()
 
@@ -30,6 +31,7 @@ mongoose
 
 // Explicitly require all models here after DB connection to ensure they are registered once.
 // Ordering by dependencies where possible
+
 require('./models/country') // Country is referenced by Attraction
 require('./models/Review') // Review is referenced by Attraction
 require('./models/trips') // Trip is referenced by Attraction
@@ -38,6 +40,7 @@ require('./models/location')
 require('./models/booking')
 require('./models/category')
 require('./models/attraction') // Attraction references the above, so require it last
+
 
 // Removed redundant require for database connection
 // require('./config/db')
@@ -129,15 +132,20 @@ app.use('/admin/locations', require('./routes/adminLocations'))
 app.use('/admin/attractions', require('./routes/adminAttractions'))
 
 // Agency-specific:
-app.use('/agency', require('./routes/agencyCountryRequests'))
-app.use('/agency/trips', require('./routes/agencytrips'))
-app.use('/agency/view', require('./routes/agencyViewData'))
-app.use('/agency/locations', require('./routes/agencyLocations'))
+
+app.use('/agency', require('./routes/agencyCountryRequests'));
+app.use('/agency/trips', require('./routes/agencytrips'));
+app.use('/agency/view', require('./routes/agencyViewData'));
+app.use('/agency/locations', require('./routes/agencyLocations'));
+app.use('/agency/trips', agencyTripRoutes);
+
+
+
 
 app.use('/attractions', require('./routes/attractions'))
 
 // Country management routes
-app.use('/admin/countries', require('./routes/admincountries'))
+app.use('/admin', require('./routes/admincountries'));
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))

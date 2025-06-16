@@ -6,25 +6,89 @@
 </head>
 <body>
   <h1>Add New Trip</h1>
-   <form action="/agency" method="POST">
+
+  <form action="/agency/trips" method="POST">
     <input type="text" name="title" placeholder="Trip Title" required /><br />
+
     <input type="text" name="city" placeholder="City" required /><br />
+
     <textarea name="description" placeholder="Description"></textarea><br />
+
     <input type="number" name="price" placeholder="Price" required /><br />
 
-    <select name="country" required>
+    <select name="country" id="country" required>
+
+      <option disabled selected>Select Country</option>
       <% countries.forEach(country => { %>
         <option value="<%= country._id %>"><%= country.name %></option>
       <% }) %>
     </select><br />
+    <label for="locations">Available Locations:</label>
+<select name="locations" id="locations" multiple required>
+  <!-- will be filled dynamically -->
+</select><br />
+
 
     <select name="category" required>
+      <option disabled selected>Select Category</option>
       <% categories.forEach(cat => { %>
         <option value="<%= cat._id %>"><%= cat.name %></option>
       <% }) %>
     </select><br />
 
+    <label for="startDate">Start Date:</label><br />
+<input
+  type="date"
+  name="startDate"
+  id="startDate"
+  required
+  min="<%= new Date().toISOString().split('T')[0] %>"
+  value="<%= new Date().toISOString().split('T')[0] %>"
+/><br />
+
+
+    <label for="endDate">End Date:</label><br />
+  <input
+  type="date"
+  name="endDate"
+  id="endDate"
+  required
+  /><br />
+
     <button type="submit">Submit Trip</button>
   </form>
+
+
+  <script>
+  async function loadLocations(countryId) {
+    const res = await fetch(`/agency/trips/locations/by-country/${countryId}`);
+    const data = await res.json();
+
+    const select = document.getElementById('locations');
+    select.innerHTML = '';
+
+    if (!data.length) {
+      const option = document.createElement('option');
+      option.textContent = 'No approved locations';
+      option.disabled = true;
+      select.appendChild(option);
+    } else {
+      data.forEach(loc => {
+        const option = document.createElement('option');
+        option.value = loc._id;
+        option.textContent = loc.name + ' - ' + loc.city;
+        select.appendChild(option);
+      });
+    }
+  }
+
+  // attach event listener to country dropdown
+  document.getElementById('country').addEventListener('change', function () {
+    loadLocations(this.value);
+  });
+</script>
+
 </body>
 </html>
+
+

@@ -14,6 +14,7 @@
 }
 
 
+
 html{
     height: 100%;
     margin: 0;
@@ -28,6 +29,11 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    
+    padding: 0;
+    
+
     position: relative;
     padding-bottom: 150px;
     color: var(--forest);
@@ -380,6 +386,10 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
+.page-content {
+  flex: 1;
+}
+
 .main-nav a {
     color: var(--cream);
     text-decoration: none;
@@ -561,16 +571,16 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 
 /* Footer Styles */
 .site-footer {
-    background: linear-gradient(135deg, var(--deep-burgundy) 0%, var(--burgundy) 100%);
-    color: var(--cream);
-    padding: 50px 0 25px;
-    border-top: 3px solid var(--gold);
-    font-family: 'Source Sans Pro', sans-serif;
-    margin-top: auto;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  background: linear-gradient(135deg, var(--deep-burgundy) 0%, var(--burgundy) 100%);
+  color: var(--cream);
+  padding: 50px 0 25px;
+  border-top: 3px solid var(--gold);
+  font-family: 'Source Sans Pro', sans-serif;
+  width: 100%;
+  position: relative; /* NOT fixed or absolute */
+  margin-top: auto;   /* PUSH footer to the bottom if page is short */
 }
+
 
 .footer-columns {
     display: grid;

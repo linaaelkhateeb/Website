@@ -60,14 +60,27 @@ exports.rejectLocation = async (req, res) => {
 // Create a new country
 exports.createCountry = async (req, res) => {
   try {
-    const { name, description } = req.body;
-    const country = new Country({ name, description, isApproved: true });
-    await country.save();
-    res.status(201).json(country);
+    const { name } = req.body;
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, message: 'No images uploaded.' });
+    }
+
+    const imagePaths = req.files.map(file => '/uploads/countries/' + file.filename);
+
+    const country = await Country.create({
+      name,
+      images: imagePaths,
+      isApproved: true
+    });
+
+    res.json({ success: true, country });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('createCountry error:', err);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
+
 
 // Get all countries
 exports.getAllCountries = async (req, res) => {
@@ -264,6 +277,21 @@ exports.listAgencies = async (req, res) => {
   }
 };
 
+
+exports.deleteLocation = async (req, res) => {
+  try {
+    const locationId = req.params.id;
+    await Location.findByIdAndDelete(locationId);
+    req.flash('success_msg', 'Location removed successfully');
+    res.redirect('/admin/locations');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Error deleting location');
+    res.redirect('/admin/locations');
+  }
+};
+
+
 // Mark as Trusted (API for AJAX)
 exports.markAgencyTrusted = async (req, res) => {
   try {
@@ -274,6 +302,17 @@ exports.markAgencyTrusted = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+//admin deleting agencies
+exports.deleteAgency = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+};
+
 
 // Render form for adding a new attraction
 exports.renderNewAttractionForm = async (req, res) => {

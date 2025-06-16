@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Pending & Approved Trips</title>
-  <link rel="stylesheet" href="/form.css" />
+  <link rel="stylesheet" href="/homepage.css" />
+  
 </head>
 <body>
 <main>
@@ -22,12 +23,12 @@
           <em><%= trip.description %></em><br>
           Category: <%= trip.category?.name %> | Price: $<%= trip.price %>
 
-          <form action="/admin/trips/<%= trip._id %>/approve" method="POST" style="display:inline;">
+          <form action="/admin/trips/<%= trip._id %>/approve" method="POST">
             <button type="submit">Approve</button>
           </form>
 
-          <form action="/admin/trips/<%= trip._id %>/reject" method="POST" style="display:inline;">
-            <button type="submit">Reject</button>
+          <form action="/admin/trips/<%= trip._id %>/reject" method="POST" onsubmit="return confirm('Reject this trip?');">
+            <button type="submit"> Reject</button>
           </form>
         </li>
       <% }) %>
@@ -50,6 +51,11 @@
           submitted by <%= trip.createdBy?.email || 'Unknown' %><br>
           <em><%= trip.description %></em><br>
           Category: <%= trip.category?.name %> | Price: $<%= trip.price %>
+
+          <!-- ✅ Allow delete even if approved -->
+          <form action="/admin/trips/<%= trip._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this approved trip?');">
+            <button type="submit"> Delete</button>
+          </form>
         </li>
       <% }) %>
     </ul>

@@ -38,6 +38,8 @@ router.get('/', ensureAdmin, adminController.getPendingLocations);
 // Approve or reject locations
 router.post('/:id/approve', ensureAdmin, adminController.approveLocation);
 router.post('/:id/reject', ensureAdmin, adminController.rejectLocation);
+router.delete('/:id/delete', ensureAdmin, adminController.deleteLocation);
+
 
 router.get('/all', ensureAdmin, adminController.getAllLocations);
 
