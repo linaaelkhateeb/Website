@@ -141,6 +141,11 @@ exports.adminDashboard = async (req, res) => {
       createdAt: { $gte: startOfToday, $lte: endOfToday }
     }).sort({ createdAt: -1 });
 
+    const recentTrips = await Trip.find()
+  .sort({ createdAt: -1 })
+  .limit(5)
+  .populate('country'); 
+
     const tripsPerCountry = await Trip.aggregate([
       { $group: { _id: "$country", count: { $sum: 1 } } },
       {
@@ -161,18 +166,20 @@ exports.adminDashboard = async (req, res) => {
     const pendingLocations = await Location.countDocuments({ isApproved: false });
 
     res.render('dashboards/adminDashboard', {
-      user: req.user,
-      totalUsers,
-      trustedAgencies,
-      totalTrips: totalTrips + totalLocations,
-      totalCountries,
-      recentUsers,
-      tripsPerCountry,
-      approvedTrips,
-      pendingTrips,
-      approvedLocations,
-      pendingLocations
-    });
+  user: req.user,
+  totalUsers,
+  trustedAgencies, // rename later
+  totalTrips,      // Trips only
+  totalLocations,  // Locations only
+  totalCountries,
+  recentUsers,
+  recentTrips,
+  tripsPerCountry,
+  approvedTrips,
+  pendingTrips,
+  approvedLocations,
+  pendingLocations
+});
 
   } catch (err) {
     console.error(err);
@@ -246,3 +253,63 @@ exports.getAllTrips = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
   }
 };
+
+// List all users
+exports.listUsers = async (req, res) => {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    res.render('admin/users/index', { users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
+// List all agencies
+exports.listAgencies = async (req, res) => {
+  try {
+    const agencies = await User.find({ role: 'agency' });
+    res.render('admin/agencies/index', { agencies });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
+
+exports.deleteLocation = async (req, res) => {
+  try {
+    const locationId = req.params.id;
+    await Location.findByIdAndDelete(locationId);
+    req.flash('success_msg', 'Location removed successfully');
+    res.redirect('/admin/locations');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Error deleting location');
+    res.redirect('/admin/locations');
+  }
+};
+
+
+// Mark as Trusted (API for AJAX)
+exports.markAgencyTrusted = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { isTrusted: true });
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+//admin deleting agencies
+exports.deleteAgency = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+};
+
+

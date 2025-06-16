@@ -1,0 +1,115 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/sidebar') %>
+<link rel="stylesheet" href="/dashboard.css">
+<link rel="stylesheet" href="/admin.css">
+<link rel="stylesheet" href="/homepage.css">
+
+<main class="admin-agencies">
+  <h1>All Agencies</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Trusted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% agencies.forEach(agency => { %>
+        <tr id="row-<%= agency._id %>">
+          <td><%= agency.name %></td>
+          <td><%= agency.email %></td>
+          <!-- ✅ give trusted cell an ID -->
+          <td id="trusted-cell-<%= agency._id %>">
+            <%= agency.isTrusted ? 'Yes' : 'No' %>
+          </td>
+          <td>
+            <button onclick="toggleDetails('<%= agency._id %>')">View Info</button>
+            <!-- ✅ button with unique ID -->
+            <button 
+              id="trust-btn-<%= agency._id %>"
+              onclick="markTrusted('<%= agency._id %>')"
+              <%= agency.isTrusted ? 'disabled' : '' %>
+            >
+              <%= agency.isTrusted ? 'Marked as Trusted' : 'Mark as Trusted' %>
+            </button>
+            <button onclick="removeAgency('<%= agency._id %>')" class="remove-agency-btn">
+    Remove Agency
+  </button>
+</td>
+          </td>
+        </tr>
+        <tr id="details-<%= agency._id %>" style="display: none;">
+          <td colspan="4">
+            <strong>Business Name:</strong> <%= agency.businessName %><br>
+            <strong>Phone:</strong> <%= agency.phone %><br>
+            <strong>Website:</strong> <%= agency.website %><br>
+            <strong>Description:</strong> <%= agency.description %><br>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</main>
+
+<%- include('../../partials/footer') %>
+
+<script>
+  function toggleDetails(id) {
+    const row = document.getElementById(`details-${id}`);
+    row.style.display = row.style.display === 'none' ? '' : 'none';
+  }
+
+  function markTrusted(id) {
+    fetch(`/admin/agencies/${id}/trust`, {
+      method: 'PATCH'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Marked as Trusted successfully!');
+        const btn = document.getElementById(`trust-btn-${id}`);
+        btn.innerText = 'Marked as Trusted';
+        btn.disabled = true;
+
+        // ✅ Also update the Trusted cell text to 'Yes'
+        const trustedCell = document.getElementById(`trusted-cell-${id}`);
+        trustedCell.innerText = 'Yes';
+      } else {
+        alert('Failed to mark as trusted.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error marking as trusted.');
+    });
+  }
+  function removeAgency(id) {
+  if (confirm('Are you sure you want to remove this agency?')) {
+    fetch(`/admin/agencies/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Agency removed successfully!');
+        // ✅ Remove the table rows: main row + details row
+        const row = document.getElementById(`row-${id}`);
+        const detailsRow = document.getElementById(`details-${id}`);
+        if (row) row.remove();
+        if (detailsRow) detailsRow.remove();
+      } else {
+        alert('Failed to remove agency.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error removing agency.');
+    });
+  }
+}
+</script>
+
+

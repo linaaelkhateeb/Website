@@ -1,121 +1,57 @@
-/* dashboard.css */
+.recent-table td {
+  text-align: left;     /* consistent with th */
+}
 
-.card h2 {
+/* Clean spacing for the entire collapsibles section */
+.recent-tables {
+  margin-top: 40px;
+}
+
+.collapsible {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.collapsible summary {
+  font-family: 'Patrick Hand', cursive; /* your site font */
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-:root {
-  --burgundy: #390517;
-  --gold: #A38560;
-  --green: #16302B;
-  --forest: #03110D;
-  --silver: #E0E0E0;
-  --shadow: 0 4px 6px rgba(3, 17, 13, 0.2);
-  --transition: all 0.3s ease;
-}
-
-body {
-  font-family: 'Patrick Hand', cursive;
-  background: var(--silver);
-  color: var(--forest);
-}
-
-.admin-dashboard {
-  padding: 50px 2rem 2rem;
-}
-
-.summary-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.card {
-  background: var(--gold);
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 30px 30px; 
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: var(--shadow);
-  position: relative;
-  transition: var(--transition);
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card .icon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.card .count {
-  font-size: 1.0rem;
   font-weight: bold;
+  background: var(--coconut); /* use your palette */
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-.card .trend {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 0.9rem;
-  color: var(--burgundy);
+.collapsible summary:hover {
+  background: var(--butter); /* hover accent */
 }
 
-.charts-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
+.collapsible .table-wrapper {
+  padding: 0 20px 20px 20px;
 }
 
-.chart-container {
-  background: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: var(--shadow);
-}
-
-.recent-table table {
+.collapsible table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
   background: white;
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: var(--shadow);
 }
 
-.recent-table th, .recent-table td {
+.collapsible th,
+.collapsible td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--silver);
+  border-bottom: 1px solid var(--coconut);
+  text-align: left;
 }
 
-.recent-table th {
-  background: var(--green);
-  color: var(--silver);
+.collapsible th {
+  background: var(--organic);
+  color: white;
 }
-
-.recent-table tr:hover {
-  background: var(--gold);
-}
-
-/* Ensure table text aligns nicely */
-.recent-table th,
-.recent-table td {
-  text-align: left;      /* or center if you prefer */
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--silver);
-}
-
-.recent-table th {
-  background: var(--green);
-  color: var(--silver);
-  text-align: left;     /* keep consistent with td */
-}
-
-.recent-table td {
-  text-align: left;     /* consistent with th */
+.collapsible tr:hover {
+  background: var(--butter);
 }

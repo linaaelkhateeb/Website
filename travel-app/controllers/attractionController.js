@@ -7,6 +7,9 @@ const Review = mongoose.model('Review');
 exports.createAttraction = async (req, res) => {
     try {
         const attraction = new Attraction(req.body);
+        if (req.file) {
+            attraction.image = '/uploads/attractions/' + req.file.filename;
+        }
         await attraction.save();
         res.status(201).json(attraction);
     } catch (err) {

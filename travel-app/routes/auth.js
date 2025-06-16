@@ -80,11 +80,24 @@ router.post('/register', async (req, res) => {
 
 
 // LOGIN
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect('/login');
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+
+      if (user.role === 'admin') {
+        return res.redirect('/admin/dashboard');
+      } else if (user.role === 'agency') {
+        return res.redirect('/agency/dashboard');
+      } else {
+        return res.redirect('/');
+      }
+    });
+  })(req, res, next);
+});
 
 //logoutt
 router.get('/logout', (req, res) => {

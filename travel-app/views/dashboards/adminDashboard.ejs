@@ -10,33 +10,29 @@
 
   <!-- Summary Cards -->
   <section class="summary-cards">
-    <div class="card users">
+    <a href="/admin/users" class="card users">
       <i class="icon user-icon"></i>
       <h2>Total Users</h2>
-      <p class="count"><%= totalUsers || 0 %></p>
-      <span class="trend">+0%</span>
-    </div>
+    </a>
 
-    <div class="card agencies">
+    <a href="/admin/agencies" class="card agencies">
       <i class="icon agency-icon"></i>
-      <h2>Trusted Agencies</h2>
-      <p class="count"><%= trustedAgencies || 0 %></p>
-      <span class="trend">+0%</span>
-    </div>
+      <h2>Agencies</h2>
+    </a>
 
-    <div class="card trips">
-      <i class="icon trip-icon"></i>
-      <h2>Trips & Locations</h2>
-      <p class="count"><%= totalTrips || 0 %></p>
-      <span class="trend">+0%</span>
-    </div>
+    <a href="/admin/trips" class="card trips">
+  <i class="icon trip-icon"></i>
+  <h2>Trips</h2>
+</a>
 
-    <div class="card countries">
+<a href="/admin/locations" class="card locations">
+  <i class="icon location-icon"></i>
+  <h2>Locations</h2>
+</a>
+    <a href="/admin/countries" class="card countries">
       <i class="icon country-icon"></i>
       <h2>Countries</h2>
-      <p class="count"><%= totalCountries || 0 %></p>
-      <span class="trend">+0%</span>
-    </div>
+    </a>
   </section>
 
   <!-- Charts Section -->
@@ -52,31 +48,63 @@
     </div>
   </section>
 
-  <!-- Recent Users Table -->
-  <section class="recent-table">
-    <h3>Recently Registered Users</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Signup Date</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% (recentUsers || []).forEach(user => { %>
+  <section class="recent-tables">
+
+  <details open class="collapsible">
+    <summary>Recently Registered Users</summary>
+    <div class="table-wrapper">
+      <table>
+        <thead>
           <tr>
-            <td><%= user.name %></td>
-            <td><%= user.role %></td>
-            <td><%= user.createdAt ? user.createdAt.toDateString() : 'N/A' %></td>
-            <td><%= user.isTrusted ? 'Trusted' : 'Pending' %></td>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Signup Date</th>
+            <th>Status</th>
           </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </section>
-</main>
+        </thead>
+        <tbody>
+          <% (recentUsers || []).forEach(user => { %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.role %></td>
+              <td><%= user.createdAt ? user.createdAt.toDateString() : 'N/A' %></td>
+              <td><%= user.isTrusted ? 'Trusted' : 'Pending' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details open class="collapsible">
+    <summary>Recently Added Trips</summary>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Country</th>
+            <th>Added Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (recentTrips || []).forEach(trip => { %>
+            <tr>
+              <td><%= trip.title %></td>
+              <td><%= trip.country ? trip.country.name : 'N/A' %></td>
+              <td><%= trip.createdAt ? trip.createdAt.toDateString() : 'N/A' %></td>
+              <td><%= trip.isApproved ? 'Approved' : 'Pending' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+
 
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

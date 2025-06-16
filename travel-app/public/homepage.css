@@ -29,9 +29,13 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
     
     padding: 0;
     
+
+    position: relative;
+    padding-bottom: 150px;
     color: var(--forest);
     background: linear-gradient(135deg, var(--cream) 0%, var(--champagne) 50%, var(--silver) 100%);
     background-attachment: fixed;
@@ -547,6 +551,15 @@ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         width: 100%;
     }
 }
+.styled-map {
+  height: 400px;
+  width: 1000px;
+  margin: 20px auto; /* centers the map */
+  border: 2px solid #8B4513; /* matching brown tone */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Footer Styles */
 .site-footer {
