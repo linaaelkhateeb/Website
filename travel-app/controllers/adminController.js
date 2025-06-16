@@ -263,6 +263,21 @@ exports.listAgencies = async (req, res) => {
   }
 };
 
+
+exports.deleteLocation = async (req, res) => {
+  try {
+    const locationId = req.params.id;
+    await Location.findByIdAndDelete(locationId);
+    req.flash('success_msg', 'Location removed successfully');
+    res.redirect('/admin/locations');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Error deleting location');
+    res.redirect('/admin/locations');
+  }
+};
+
+
 // Mark as Trusted (API for AJAX)
 exports.markAgencyTrusted = async (req, res) => {
   try {
