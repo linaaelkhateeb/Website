@@ -2,27 +2,11 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// For country uploads (static folder)
-const countryStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/countries');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'));
-  }
-});
-
-// For user uploads (user-specific folder)
-const userStorage = multer.diskStorage({
+// Configure multer storage
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadPath = path.join(
-      __dirname,
-      '..',
-      'public',
-      'uploads',
-      req.user._id.toString()
-    );
-    fs.mkdirSync(uploadPath, { recursive: true });
+    const uploadPath = path.join(__dirname, '..', 'public', 'uploads', 'restaurants');
+    fs.mkdirSync(uploadPath, { recursive: true }); // Ensure the folder exists
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
@@ -31,7 +15,7 @@ const userStorage = multer.diskStorage({
   }
 });
 
-module.exports = {
-  uploadCountry: multer({ storage: countryStorage }),
-  uploadUser: multer({ storage: userStorage })
-};
+const upload = multer({ storage });
+
+
+module.exports = upload;
