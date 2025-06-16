@@ -1,11 +1,32 @@
-.profile-container {
+.profile-wrapper {
   display: flex;
-  flex-wrap: wrap;
   gap: 40px;
-  margin: 40px auto;
-  max-width: 1000px;
+  margin-top: 100px;
+  margin-left: 40px;
+  margin-right: auto;
+  margin-bottom: 40px;
+  max-width: 1200px;
   font-family: 'Patrick Hand', cursive;
 }
+
+
+.profile-sidebar-wrapper {
+  flex: 1 1 250px;
+   margin-top: 50px;
+   margin-right: 70px;
+   margin-left: 20px;
+}
+
+.profile-main-wrapper {
+  flex: 2 1 auto;
+  display: flex;
+  justify-content: flex-start;  /* align left first */
+  padding-left: 60px;           /* push form right inside wrapper */
+}
+
+
+
+
 
 .profile-sidebar {
   flex: 1 1 250px;
@@ -27,7 +48,12 @@
   justify-content: center;
   margin: 0 auto 10px;
   font-family: 'Chewy', cursive;
+
+  background-size: cover;    /* ✅ new */
+  background-position: center; /* ✅ new */
+  overflow: hidden;           /* ✅ safe */
 }
+
 
 .avatar-img {
   width: 120px;
@@ -55,17 +81,17 @@
   color: var(--palm-oil);
 }
 
-.profile-email {
-  color: var(--cocoa);
-  font-size: 14px;
-}
-
 .profile-main {
-  flex: 2 1 500px;
+  width: 100%;
+  max-width: 600px;
   background: var(--butter);
   padding: 30px;
   border-radius: 12px;
+  margin-left: 60px;   /* clean push to the right */
 }
+
+
+
 
 .profile-main h1 {
   color: var(--palm-oil);

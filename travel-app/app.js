@@ -72,10 +72,16 @@ const countryRoutes = require('./routes/countryRoutes')
 app.use('/countries', countryRoutes)
 const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
+const bookingRoutes = require('./routes/bookings');
+app.use('/bookings', bookingRoutes); // ✅ This is correct
+
+require('./models/trips');
+
 
 // One for auth and user routes:
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/users'));
+app.use('/profile', require('./routes/profile'))
 
 // Admin-specific:
 app.use('/admin', require('./routes/adminusers'));
@@ -96,6 +102,7 @@ app.use('/admin/countries', require('./routes/admincountries'))
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
+
 // routes/tripRoutes.js or app.js or wherever your home route is
 
 
@@ -114,10 +121,8 @@ app.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-app.get('/', async (req, res) => {
-  const trips = await Trip.find({ isApproved: true }).populate('country');
-  res.render('home', { user: req.user, trips });
-});
+
+
 //MongoDB connection
 mongoose
     .connect(process.env.CONNECTION_STRING, {
@@ -135,10 +140,14 @@ mongoose
 app.get('/', (req, res) => {
     res.render('home')
 })
+
 const agencyTripRoutes = require('./routes/agencytrips');
 app.use('/agency', require('./routes/agencytrips'));
 
-app.use('/agency/trips', agencyTripRoutes);
+
+
+const paymentRoutes = require('./routes/payment');
+app.use('/payment', paymentRoutes);
 
 
 // Server
