@@ -1,6 +1,12 @@
 const Country = require('../models/country');
+
+const mongoose = require('mongoose');
+const Attraction = mongoose.model('Attraction');
+
+
 const Attraction = require('../models/attraction');
 const Location = require('../models/location');
+
 exports.listCountries = async (req, res) => {
   const countries = await Country.find();
   res.render('countries/index', { countries });
