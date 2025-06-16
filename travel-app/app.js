@@ -137,12 +137,11 @@ mongoose
         console.log(err)
     })
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
 
-const agencyTripRoutes = require('./routes/agencytrips');
-app.use('/agency', require('./routes/agencytrips'));
+
+
+
+
 
 
 
