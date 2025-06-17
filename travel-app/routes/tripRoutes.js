@@ -2,8 +2,9 @@ const express = require('express');
 const router  = express.Router();
 const Trip    = require('../models/trips');
 const tripController = require('../controllers/tripController');
-
 router.get('/search', tripController.searchTrips);
+const ensureAgency = require('../middleware/ensureAgency');
+const upload = require('../middleware/upload');
 
 module.exports = router;
 // routes/tripRoutes.js or app.js or wherever your home route is
@@ -23,5 +24,7 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch trip', error: err });
   }
 });
+
+router.post('/new', ensureAgency, upload.single('image'), tripController.agencyCreateTrip);
 
 module.exports = router;
