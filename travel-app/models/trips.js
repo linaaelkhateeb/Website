@@ -24,8 +24,7 @@ endDate: {
 },
 
 },
-  // 👇 Add this
-
+  imageURL: String,
 });
 
 

@@ -95,22 +95,60 @@
       <thead>
         <tr>
           <th>Image</th>
-          <th>Trip</th>
+          <th>Item</th>
           <th>Description</th>
           <th>Price</th>
-          <th>Country</th>
+          <th>Location/Country</th>
         </tr>
       </thead>
       <tbody>
         <% bookings.forEach(booking => { %>
           <tr>
             <td>
-              <img class="trip-image" src="<%= booking.trip?.imageURL || '/images/default-trip.jpg' %>" alt="Trip Image">
+              <% if (booking.trip) { %>
+                <img class="trip-image" src="<%= booking.trip?.imageURL || '/images/default-trip.jpg' %>" alt="Trip Image">
+              <% } else if (booking.attraction) { %>
+                <img class="trip-image" src="<%= booking.attraction.image || '/images/default-attraction.jpg' %>" alt="Attraction Image">
+              <% } else { %>
+                <img class="trip-image" src="/images/default.jpg" alt="Default Image">
+              <% } %>
             </td>
-            <td><%= booking.trip?.title || 'N/A' %></td>
-            <td class="description-cell"><%= booking.trip?.description || 'No description provided.' %></td>
-            <td>$<%= booking.trip?.price || 'N/A' %></td>
-            <td><%= booking.trip?.country?.name || 'N/A' %></td>
+            <td>
+              <% if (booking.trip) { %>
+                <%= booking.trip?.title || 'N/A' %>
+              <% } else if (booking.attraction) { %>
+                <%= booking.attraction.name %>
+              <% } else { %>
+                N/A
+              <% } %>
+            </td>
+            <td class="description-cell">
+              <% if (booking.trip) { %>
+                <%= booking.trip?.description || 'No description provided.' %>
+              <% } else if (booking.attraction) { %>
+                <%= booking.attraction.description || 'No description provided.' %>
+              <% } else { %>
+                No description provided.
+              <% } %>
+            </td>
+            <td>
+              <% if (booking.trip) { %>
+                $<%= booking.trip?.price || 'N/A' %>
+              <% } else if (booking.attraction) { %>
+                <%= booking.attraction.price === 0 ? 'Free' : '$' + booking.attraction.price %>
+              <% } else { %>
+                N/A
+              <% } %>
+            </td>
+            <td>
+              <% if (booking.trip) { %>
+                <%= booking.trip?.country?.name || 'N/A' %>
+              <% } else if (booking.attraction && booking.attraction.country) { %>
+                <%= booking.attraction.country.name || 'N/A' %>
+              <% } else { %>
+                N/A
+              <% } %>
+            </td>
           </tr>
         <% }) %>
       </tbody>

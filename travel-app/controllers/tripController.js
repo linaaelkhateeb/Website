@@ -37,7 +37,8 @@ exports.agencyCreateTrip = async (req, res) => {
       price,
       city,
       startDate,
-      endDate
+      endDate,
+      imageURL
     } = req.body;
 
     if (!title || !country || !category || !price || !city || !startDate || !endDate) {
@@ -69,8 +70,8 @@ exports.agencyCreateTrip = async (req, res) => {
       startDate,
       endDate,
       createdBy: req.user._id,
-      imageURL: imagePath,
-      isApproved: false
+      isApproved: false,
+      imageURL
     });
 
    await trip.save();
@@ -100,6 +101,20 @@ exports.agencyCreateTrip = async (req, res) => {
     if (!title || !country || !category || !price || !city || !startDate || !endDate) {
       req.flash('error', 'Missing required fields');
       return res.redirect('/trips/new');
+
+//  AGENCY: Get agency's own trips
+exports.getAgencyTrips = async (req, res) => {
+    try {
+        const trips = await Trip.find({ createdBy: req.user._id }).populate(
+            'country category locations'
+        )
+        res.status(200).json(trips)
+    } catch (err) {
+        res.status(500).json({
+            message: 'Failed to fetch your trips',
+            error: err.message,
+        })
+
     }
 
     const now = new Date().setHours(0, 0, 0, 0);
@@ -161,7 +176,7 @@ exports.getTripById = async (req, res) => {
 
 exports.createTrip = async (req, res) => {
   try {
-    const { title, description, country, category, locations } = req.body;
+    const { title, description, country, category, locations, price, city, startDate, endDate, imageURL } = req.body;
     const newTrip = new Trip({
       title,
       description,
@@ -169,7 +184,11 @@ exports.createTrip = async (req, res) => {
       category,
       locations: locations || [],
       isApproved: true,
-      
+      price,
+      city,
+      startDate,
+      endDate,
+      imageURL
     });
     await newTrip.save();
     res.status(201).json(newTrip);
@@ -181,7 +200,7 @@ exports.createTrip = async (req, res) => {
 
 // Agency: Submit a trip for approval
 
-//  AGENCY: Get agency’s own trips
+//  AGENCY: Get agency's own trips
 
 
 

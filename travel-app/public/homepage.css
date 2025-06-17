@@ -236,6 +236,11 @@ p {
     text-decoration: none !important;
 }
 
+.attraction-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .card-image {
     height: 180px;
     background-size: cover;
@@ -275,12 +280,24 @@ p {
 
 .rating {
     display: flex;
-    margin-bottom: 15px;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .star {
-    color: var(--gold);
+    color: #ccc; /* Default color for empty stars */
+    font-size: 1.2em;
     margin-right: 2px;
+}
+
+.star.filled {
+    color: #FFD700; /* Gold/Yellow color for filled stars */
+}
+
+.average-rating {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: var(--burgundy);
 }
 
 .price-badge {

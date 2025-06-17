@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2>Book <%= attraction.name %></h2>
+        </div>
+        <div class="card-body">
+          <div class="attraction-details mb-4">
+            <img src="<%= attraction.image || 'https://via.placeholder.com/400x300?text=No+Image' %>" 
+                 alt="<%= attraction.name %>" 
+                 class="img-fluid rounded mb-3">
+            <p class="lead"><%= attraction.description %></p>
+            <div class="price-tag">
+              <h3>Price: <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %></h3>
+            </div>
+          </div>
+
+          <form action="/bookings" method="POST">
+            <input type="hidden" name="attractionId" value="<%= attraction._id %>">
+            
+            <div class="form-group mb-3">
+              <label for="date">Visit Date:</label>
+              <input type="date" 
+                     class="form-control" 
+                     id="date" 
+                     name="date" 
+                     required 
+                     min="<%= new Date().toISOString().split('T')[0] %>">
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="time">Preferred Time:</label>
+              <input type="time" 
+                     class="form-control" 
+                     id="time" 
+                     name="time" 
+                     required>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="visitors">Number of Visitors:</label>
+              <input type="number" 
+                     class="form-control" 
+                     id="visitors" 
+                     name="visitors" 
+                     min="1" 
+                     max="10" 
+                     value="1" 
+                     required>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="specialRequests">Special Requests (Optional):</label>
+              <textarea class="form-control" 
+                        id="specialRequests" 
+                        name="specialRequests" 
+                        rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">
+              Proceed to Payment
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 
