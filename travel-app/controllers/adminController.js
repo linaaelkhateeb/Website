@@ -247,6 +247,26 @@ exports.getPendingLocations = async (req, res) => {
 }
 
 exports.approveTrip = async (req, res) => {
+
+  try {
+    const trip = await Trip.findByIdAndUpdate(
+      req.params.id,
+      { isApproved: true },
+      { new: true }
+    );
+    if (!trip) {
+      req.flash('error', 'Trip not found');
+      return res.redirect('/admin/trips');
+    }
+
+    req.flash('success', 'Trip approved successfully!');
+    res.redirect('/admin/trips'); // ✅ this renders the admin trips page
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to approve trip');
+    res.redirect('/admin/trips');
+  }
+};
     try {
         await Trip.findByIdAndUpdate(req.params.id, { isApproved: true })
         res.redirect('/admin/trips')
@@ -254,6 +274,7 @@ exports.approveTrip = async (req, res) => {
         res.status(500).send('Error approving trip')
     }
 }
+
 
 exports.rejectTrip = async (req, res) => {
     try {

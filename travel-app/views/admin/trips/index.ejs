@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Pending & Approved Trips</title>
-  <link rel="stylesheet" href="/homepage.css" />
+  <link rel="stylesheet" href="/form.css" />
   
 </head>
 <body>
@@ -23,13 +23,14 @@
           <em><%= trip.description %></em><br>
           Category: <%= trip.category?.name %> | Price: $<%= trip.price %>
 
-          <form action="/admin/trips/<%= trip._id %>/approve" method="POST">
-            <button type="submit">Approve</button>
-          </form>
+          <form action="/admin/trips/<%= trip._id %>/approve?_method=PUT" method="POST">
+  <button type="submit">Approve</button>
+</form>
 
-          <form action="/admin/trips/<%= trip._id %>/reject" method="POST" onsubmit="return confirm('Reject this trip?');">
-            <button type="submit"> Reject</button>
-          </form>
+
+          <form action="/admin/trips/<%= trip._id %>/reject?_method=PUT" method="POST" onsubmit="return confirm('Reject this trip?');">
+    <button type="submit">Reject</button>
+      </form>
         </li>
       <% }) %>
     </ul>

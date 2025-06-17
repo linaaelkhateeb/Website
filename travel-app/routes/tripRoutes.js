@@ -27,4 +27,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/new', ensureAgency, upload.single('image'), tripController.agencyCreateTrip);
 
+router.get('/trips', ensureAgency, tripController.getAgencyTrips);
+
 module.exports = router;
