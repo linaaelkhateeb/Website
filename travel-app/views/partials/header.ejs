@@ -21,7 +21,7 @@
          <a href="/" id="homeLink"><i class="fas fa-home"></i> Home</a></li>   
         <li><a href="/countries"><i class="fas fa-flag"></i> Countries</a></li>
         <li><a href="/attractions"><i class="fas fa-mountain"></i> Attractions</a></li>
-<% if (user) { %>
+<% if (user && user.role === 'client' ) { %>
   <li>
     <a href="/bookings/mybookings">
       <i class="fas fa-suitcase-rolling"></i> My Bookings

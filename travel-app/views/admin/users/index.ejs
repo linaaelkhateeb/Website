@@ -59,18 +59,37 @@
 <%- include('../../partials/footer') %>
 
 <script>
-  // ✅ Expand/collapse stays same
+  // ✅ Expand/collapse toggle: fix logic for clearer toggle
   document.querySelectorAll('.edit-user-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       const id = this.dataset.id;
       const row = document.getElementById(`details-${id}`);
-      row.style.display = row.style.display === 'none' ? '' : 'none';
+      row.style.display = (row.style.display === 'none' || row.style.display === '') ? '' : 'none';
     });
   });
 
-  // ✅ Sorting stays same (already in your code)
+  // ✅ Sorting stays same: works on visible rows only
+  document.getElementById('sort-users').addEventListener('change', function() {
+    const value = this.value;
+    // Only sort main rows, ignore detail rows
+    const rows = Array.from(document.querySelectorAll('tbody tr'))
+      .filter(r => !r.id.startsWith('details'));
+    if (value === 'alpha') {
+      rows.sort((a, b) => a.cells[0].innerText.localeCompare(b.cells[0].innerText));
+    } else {
+      rows.reverse();
+    }
+    const tbody = document.querySelector('tbody');
+    rows.forEach(r => {
+      tbody.appendChild(r);
+      // Append its matching details row too
+      const id = r.querySelector('.edit-user-btn').dataset.id;
+      const detailsRow = document.getElementById(`details-${id}`);
+      tbody.appendChild(detailsRow);
+    });
+  });
 
-  // ✅ Improved AJAX booking delete
+  // ✅ Improved AJAX booking delete: instant removal + confirmation
   function deleteBooking(id) {
     if (confirm('Are you sure you want to delete this booking?')) {
       fetch(`/admin/bookings/${id}`, {
@@ -79,8 +98,8 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          alert(data.message); // quick pop up
-          // Remove the booking's <li> from the DOM without reloading
+          alert(data.message); // shows "Booking deleted successfully!"
+          // Remove just this booking <li>
           document.querySelector(`button[onclick="deleteBooking('${id}')"]`).parentElement.remove();
         } else {
           alert('Failed to delete booking.');
@@ -93,3 +112,4 @@
     }
   }
 </script>
+

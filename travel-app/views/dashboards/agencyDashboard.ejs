@@ -1,5 +1,7 @@
-<%- include('../partials/header') %> <%- include('../partials/header') %>
+<%- include('../partials/header') %>
+<%- include('../partials/sidebar') %>
 <link rel="stylesheet" href="/agencydashboard.css" />
+<link rel="stylesheet" href="/homepage.css">
 
 <div class="agency-account">
     <h1>Hello!, <%= user.name %>!</h1>
@@ -10,7 +12,7 @@
             <h2>Agency Info</h2>
             <p><strong>Name:</strong> <%= user.name %></p>
             <p><strong>Email:</strong> <%= user.email %></p>
-            <a href="/agency/profile" class="btn">Edit Info</a>
+            <a href="/profile" class="btn">Edit Info</a>
         </section>
 
         <section class="bookings-section">
@@ -22,7 +24,8 @@
         <section class="favorites-section">
             <h2>Add Trip</h2>
             <p>Create a new trip listing for your agency.</p>
-            <a href="/agency/trips/add" class="btn">Add Trip</a>
+            <a href="/agency/trips/new" class="btn">Add Trip</a>
+            <a href="/agency/locations/new" class="btn">Add locations</a>
         </section>
 
         <section class="favorites-section">
