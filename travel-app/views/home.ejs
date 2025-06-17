@@ -42,16 +42,22 @@
             <div class="hero-content">
                 <h1>Discover Amazing Destinations</h1>
                 <p>Find the best attractions, restaurants, and experiences</p>
-                <div class="search-bar">
-                    <input
-                        type="text"
-                        placeholder="Search for a country, city or attraction..."
-                    />
-                    <button>Search</button>
-                    <a href="/trips/search" class="explore-trips-button"
-                        >Explore Available Trips</a
-                    >
-                </div>
+         <div class="search-wrapper">
+  <form action="/trips/search" method="GET" class="search-bar">
+    <input
+      type="text"
+      name="location"
+      placeholder="Search for a country, city or attraction..."
+    />
+    <button type="submit">Explore Available Trips</button>
+  </form>
+</div>
+
+
+
+
+
+
             </div>
         </section>
 

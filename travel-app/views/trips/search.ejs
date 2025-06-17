@@ -165,7 +165,8 @@
           <h3><%= trip.title %></h3>
           <p><strong>Price:</strong> $<%= trip.price %></p>
           <p><strong>Country:</strong> <%= trip.country?.name || 'Not specified' %></p>
-          <p><strong>Category:</strong> <%= trip.category?.name || 'Not specified' %></p>
+<p><strong>Category:</strong> <%= trip.category?.name || 'Not specified' %></p>
+<p><strong>Description:</strong> <%= trip.description || 'No description provided.' %></p>
           <form action="/bookings" method="POST">
             <input type="hidden" name="tripId" value="<%= trip._id %>">
             <button type="submit">Book Now</button>
