@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
-<%- include('../partials/header') %>
+<%- include('../partials/sidebar') %>
 <link rel="stylesheet" href="/agencydashboard.css" />
+<link rel="stylesheet" href="/homepage.css">
 
 <div class="agency-account">
     <h1>Hello!, <%= user.name %>!</h1>
@@ -11,7 +12,7 @@
             <h2>Agency Info</h2>
             <p><strong>Name:</strong> <%= user.name %></p>
             <p><strong>Email:</strong> <%= user.email %></p>
-            <a href="/agency/profile" class="btn">Edit Info</a>
+            <a href="/profile" class="btn">Edit Info</a>
         </section>
 
         <section class="bookings-section">
