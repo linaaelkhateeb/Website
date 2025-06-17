@@ -17,6 +17,12 @@ const tripSchema = new mongoose.Schema({
 endDate: {
   type: Date,
   required: true,
+
+  imageURL: {
+  type: String,
+  default: ''
+},
+
 },
   imageURL: String,
 });

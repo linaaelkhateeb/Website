@@ -48,7 +48,7 @@ const router = express.Router();
 const ensureAgency = require('../middleware/ensureAgency');
 const tripController = require('../controllers/tripController');
 const agencyController = require('../controllers/agencyController');
-
+const upload = require('../middleware/upload');
 
 router.get('/mine', ensureAgency, tripController.getAgencyTrips);
 // Show new trip form
@@ -60,6 +60,9 @@ router.post('/', ensureAgency, tripController.agencyCreateTrip);
 
 router.get('/locations/by-country/:countryId', ensureAgency, tripController.getLocationsByCountry);
 
+
+
+router.post('/new', ensureAgency, upload.single('image'), tripController.agencyCreateTrip);
 
 
 module.exports = router;

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add New Trip</title>
+  <title></title>Add New Trip</title>
   <link rel="stylesheet" href="/form.css" />
 </head>
 <body>
   <h1>Add New Trip</h1>
 
-  <form action="/agency/trips" method="POST">
+  <form action="/trips/new" method="POST" enctype="multipart/form-data"></form-data>
     <input type="text" name="title" placeholder="Trip Title" required /><br />
 
     <input type="text" name="city" placeholder="City" required /><br />
@@ -36,24 +36,19 @@
       <% }) %>
     </select><br />
 
-    <label for="startDate">Start Date:</label><br />
-<input
-  type="date"
-  name="startDate"
-  id="startDate"
-  required
+    <label for="startDate">Start Date:</label>
+    <input type="date" name="startDate" id="startDate" required
   min="<%= new Date().toISOString().split('T')[0] %>"
   value="<%= new Date().toISOString().split('T')[0] %>"
 /><br />
 
 
-    <label for="endDate">End Date:</label><br />
-  <input
-  type="date"
-  name="endDate"
-  id="endDate"
-  required
+    <label for="endDate">End Date:</label>
+<input type="date" name="endDate" id="endDate" required
   /><br />
+
+  <label for="image">Upload Image:</label>
+    <input type="file" name="image" id="image" accept="image/*" required>
 
     <button type="submit">Submit Trip</button>
   </form>
