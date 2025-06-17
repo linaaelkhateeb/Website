@@ -3,6 +3,25 @@ const User = require('../models/user');
 const Trip = require('../models/trips')
 const Country = require('../models/country');
 
+exports.getAgencyTrips = async (req, res) => {
+  try {
+    const trips = await Trip.find({ createdBy: req.user._id }).populate('country category locations');
+    res.render('agency/trips', {
+      trips,
+      user: req.user,
+      success: req.flash('success'),
+      error: req.flash('error'),
+    });
+  } catch (err) {
+    res.status(500).render('agency/trips', {
+      trips: [],
+      error: 'Failed to load your trips',
+      success: null,
+    });
+  }
+};
+
+
 
 //  AGENCY: Create a trip
 // AGENCY: Create a trip
@@ -54,27 +73,75 @@ exports.agencyCreateTrip = async (req, res) => {
       isApproved: false
     });
 
-    await trip.save();
-    res.status(201).json({ message: 'Trip submitted for approval', trip });
+   await trip.save();
+  req.flash('success', 'Trip submitted for approval.');
+    res.redirect('/agency/trips'); 
+
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
 
 //  AGENCY: Get agency’s own trips
-exports.getAgencyTrips = async (req, res) => {
-    try {
-        const trips = await Trip.find({ createdBy: req.user._id }).populate(
-            'country category locations'
-        )
-        res.status(200).json(trips)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch your trips',
-            error: err.message,
-        })
+exports.agencyCreateTrip = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      country,
+      category,
+      locations,
+      price,
+      city,
+      startDate,
+      endDate
+    } = req.body;
+
+    if (!title || !country || !category || !price || !city || !startDate || !endDate) {
+      req.flash('error', 'Missing required fields');
+      return res.redirect('/trips/new');
     }
-}
+
+    const now = new Date().setHours(0, 0, 0, 0);
+    if (new Date(startDate) < now) {
+      req.flash('error', 'Start date must be today or later');
+      return res.redirect('/trips/new');
+    }
+
+    if (new Date(endDate) <= new Date(startDate)) {
+      req.flash('error', 'End date must be after start date');
+      return res.redirect('/trips/new');
+    }
+
+    const imagePath = req.file
+      ? `/uploads/${req.user._id}/${req.file.filename}`
+      : '/images/default-trip.jpg';
+
+    const trip = new Trip({
+      title,
+      description,
+      country,
+      category,
+      locations: Array.isArray(locations) ? locations : [locations],
+      price,
+      city,
+      startDate,
+      endDate,
+      createdBy: req.user._id,
+      imageURL: imagePath,
+      isApproved: false,
+    });
+
+    await trip.save();
+
+    req.flash('success', 'Trip submitted for approval');
+   return  res.redirect('/agency/trips');
+  } catch (err) {
+    console.error('Trip submission error:', err);
+    req.flash('error', 'Server error, please try again');
+    res.redirect('/trips/new');
+  }
+};
 
 
 // Public: Get one trip by ID
@@ -126,41 +193,59 @@ exports.createTrip = async (req, res) => {
 
 //  ADMIN: Approve trip
 exports.approveTrip = async (req, res) => {
-    try {
-        const trip = await Trip.findByIdAndUpdate(
-            req.params.id,
-            { isApproved: true },
-            { new: true }
-        )
-        if (!trip) return res.status(404).json({ message: 'Trip not found' })
-        res.json({ message: 'Trip approved', trip })
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to approve trip',
-            error: err.message,
-        })
+  try {
+    const trip = await Trip.findByIdAndUpdate(
+      req.params.id,
+      { isApproved: true },
+      { new: true }
+    );
+
+    if (!trip) {
+      req.flash('error', 'Trip not found');
+      return res.redirect('/admin/trips');
     }
-}
+
+    req.flash('success', 'Trip approved successfully!');
+    res.redirect('/admin/trips'); // ✅ this sends admin back to the trip list view
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to approve trip');
+    res.redirect('/admin/trips');
+  }
+};
+
 
 
 //  ADMIN: Reject trip
 
 exports.rejectTrip = async (req, res) => {
-    try {
-        const trip = await Trip.findByIdAndUpdate(
-            req.params.id,
-            { isApproved: false },
-            { new: true }
-        )
-        if (!trip) return res.status(404).json({ message: 'Trip not found' })
-        res.json({ message: 'Trip rejected', trip })
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to reject trip',
-            error: err.message,
-        })
-    }
+  try {
+    const trip = await Trip.findByIdAndDelete(req.params.id);
+    if (!trip) return res.status(404).json({ message: 'Trip not found' });
+
+    res.redirect('/admin/trips');
+  } catch (err) {
+    res.status(500).json({
+      message: 'Failed to reject/delete trip',
+      error: err.message,
+    });
+  }
 }
+
+exports.deleteTrip = async (req, res) => {
+  try {
+    const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
+    if (!deletedTrip) return res.status(404).json({ message: 'Trip not found' });
+
+    res.redirect('/admin/trips');
+  } catch (err) {
+    res.status(500).json({
+      message: 'Failed to delete trip',
+      error: err.message,
+    });
+  }
+};
+
 
 //  ADMIN: Get all trips
 // Get trips submitted by agencies

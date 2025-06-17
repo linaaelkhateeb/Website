@@ -100,4 +100,5 @@ router.put('/:id/approve', ensureAdmin, tripController.approveTrip)
 router.put('/:id/reject', ensureAdmin, tripController.rejectTrip)
 
 
-module.exports = router
+router.delete('/:id', tripController.deleteTrip);
+module.exports = router;
