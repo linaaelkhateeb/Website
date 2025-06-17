@@ -252,7 +252,10 @@ exports.getAllTrips = async (req, res) => {
       createdBy: { $in: agencyIds }
     }).populate('country category createdBy locations');
 
-    res.render('admin/trips/index', { pendingTrips, approvedTrips });
+    res.render('admin/trips/index', {
+      pendingTrips,
+      approvedTrips
+    });
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch trips', error: err.message });
   }
@@ -335,46 +338,85 @@ exports.listAgencies = async (req, res) => {
 
 
 
-// Render form for adding a new attraction
+// Route to render the form for adding a new attraction
 exports.renderNewAttractionForm = async (req, res) => {
   try {
-    const countries = await Country.find(); // Fetch all countries
-    res.render('admin/attractions/new', {
-      countries,
+    const countries = await Country.find();
+    res.render('admin/attractions/new', { countries, user: req.user, error: req.flash('error'), success: req.flash('success') });
+  } catch (err) {
+    console.error('Error rendering new attraction form:', err);
+    req.flash('error', 'Failed to load form.');
+    res.redirect('/admin/dashboard');
+  }
+};
+
+// Create a new attraction (handled by adminController)
+exports.createAttraction = async (req, res) => {
+  try {
+    const { name, description, location, price, country, cuisine, rating, category } = req.body;
+
+    let image = null; // Initialize image variable
+
+    // Check if a file was uploaded by Multer
+    if (req.file) {
+      image = `/uploads/attractions/${req.file.filename}`;
+    }
+
+    const newAttraction = new Attraction({
+      name,
+      description,
+      location,
+      price,
+      country,
+      cuisine,    // Assuming cuisine is part of attraction schema
+      rating,     // Assuming rating is part of attraction schema
+      category,   // Assuming category is part of attraction schema
+      image       // Save the constructed image path
+    });
+
+    await newAttraction.save();
+
+    req.flash('success', 'Attraction added successfully!');
+    res.redirect('/admin/attractions'); // Redirect to attractions list
+
+  } catch (err) {
+    console.error('Error adding attraction:', err);
+    req.flash('error', 'Failed to add attraction: ' + err.message);
+    res.redirect('/admin/attractions/new'); // Redirect back to the add form
+  }
+};
+
+// New function to render admin attractions list
+exports.renderAdminAttractionsList = async (req, res) => {
+  try {
+    const attractions = await Attraction.find().populate('country'); // Fetch all attractions
+    res.render('admin/attractions/index', { 
+      attractions,
       user: req.user,
       success: req.flash('success'),
       error: req.flash('error')
     });
   } catch (err) {
-    console.error(err);
-    req.flash('error', 'Failed to load form.');
-    res.redirect('/admin/dashboard'); // Redirect to admin dashboard on error
+    console.error('Error rendering admin attractions list:', err);
+    req.flash('error', 'Failed to load attractions list.');
+    res.redirect('/admin/dashboard');
   }
 };
 
-// Create a new attraction from the admin panel
-exports.createAttraction = async (req, res) => {
+// New function to delete an attraction
+exports.deleteAttraction = async (req, res) => {
   try {
-    const { name, description, price, country } = req.body;
-
-    const newAttraction = new Attraction({
-      name,
-      description,
-      price: parseFloat(price),
-      country,
-    });
-
-    if (req.file) {
-      newAttraction.image = '/uploads/' + req.file.filename; // Correct path for uploads
+    const attraction = await Attraction.findByIdAndDelete(req.params.id);
+    if (!attraction) {
+      req.flash('error', 'Attraction not found.');
+      return res.redirect('/admin/attractions');
     }
-
-    await newAttraction.save();
-    req.flash('success', 'Attraction added successfully!');
-    res.redirect('/admin/attractions/new'); // Redirect back to the form or a list
+    req.flash('success', 'Attraction deleted successfully!');
+    res.redirect('/admin/attractions');
   } catch (err) {
-    console.error(err);
-    req.flash('error', 'Failed to add attraction: ' + err.message);
-    res.redirect('/admin/attractions/new');
+    console.error('Error deleting attraction:', err);
+    req.flash('error', 'Failed to delete attraction: ' + err.message);
+    res.redirect('/admin/attractions');
   }
 };
 

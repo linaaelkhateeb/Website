@@ -18,7 +18,8 @@ exports.agencyCreateTrip = async (req, res) => {
       price,
       city,
       startDate,
-      endDate
+      endDate,
+      imageURL
     } = req.body;
 
     if (!title || !country || !category || !price || !city || !startDate || !endDate) {
@@ -47,7 +48,8 @@ exports.agencyCreateTrip = async (req, res) => {
       startDate,
       endDate,
       createdBy: req.user._id,
-      isApproved: false
+      isApproved: false,
+      imageURL
     });
 
     await trip.save();
@@ -57,7 +59,7 @@ exports.agencyCreateTrip = async (req, res) => {
   }
 };
 
-//  AGENCY: Get agency’s own trips
+//  AGENCY: Get agency's own trips
 exports.getAgencyTrips = async (req, res) => {
     try {
         const trips = await Trip.find({ createdBy: req.user._id }).populate(
@@ -90,7 +92,7 @@ exports.getTripById = async (req, res) => {
 
 exports.createTrip = async (req, res) => {
   try {
-    const { title, description, country, category, locations } = req.body;
+    const { title, description, country, category, locations, price, city, startDate, endDate, imageURL } = req.body;
     const newTrip = new Trip({
       title,
       description,
@@ -98,6 +100,10 @@ exports.createTrip = async (req, res) => {
       category,
       locations: locations || [],
       isApproved: true,
+      price,
+      city,
+      startDate,
+      endDate,
       imageURL
     });
     await newTrip.save();
@@ -110,7 +116,7 @@ exports.createTrip = async (req, res) => {
 
 // Agency: Submit a trip for approval
 
-//  AGENCY: Get agency’s own trips
+//  AGENCY: Get agency's own trips
 
 
 

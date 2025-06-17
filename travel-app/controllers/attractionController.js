@@ -6,13 +6,17 @@ const Review = mongoose.model('Review');
 // Create attraction
 exports.createAttraction = async (req, res) => {
     try {
+        console.log("Attempting to create attraction with data:", req.body);
+        console.log("Uploaded file info:", req.file);
         const attraction = new Attraction(req.body);
         if (req.file) {
             attraction.image = '/uploads/attractions/' + req.file.filename;
         }
         await attraction.save();
+        console.log("Attraction saved successfully:", attraction);
         res.status(201).json(attraction);
     } catch (err) {
+        console.error('Failed to create attraction:', err);
         res.status(500).json({
             message: 'Failed to create attraction',
             error: err.message,
@@ -23,6 +27,7 @@ exports.createAttraction = async (req, res) => {
 // Get all attractions with average rating
 exports.getAllAttractions = async (req, res) => {
     try {
+        console.log("Fetching all attractions...");
         const attractions = await Attraction.find()
             .populate('country')
             .populate({
@@ -32,6 +37,8 @@ exports.getAllAttractions = async (req, res) => {
                     select: 'name'
                 }
             });
+        console.log("Found attractions (getAllAttractions):");
+        attractions.forEach(att => console.log(' - ', att.name, ' (ID:', att._id, ')'));
 
         const attractionsWithAvgRating = attractions.map(attraction => {
             let averageRating = 0;
@@ -121,6 +128,7 @@ exports.addReview = async (req, res) => {
 // Get top attractions for the homepage
 exports.getTopAttractionsForHomepage = async () => {
     try {
+        console.log("Fetching top attractions for homepage...");
         const attractions = await Attraction.find()
             .populate('country')
             .populate({
@@ -131,6 +139,8 @@ exports.getTopAttractionsForHomepage = async () => {
                 }
             })
             .limit(4); // Limit to top 4 attractions for the homepage
+        console.log("Found attractions (getTopAttractionsForHomepage):");
+        attractions.forEach(att => console.log(' - ', att.name, ' (ID:', att._id, ')'));
 
         const attractionsWithAvgRating = attractions.map(attraction => {
             let averageRating = 0;

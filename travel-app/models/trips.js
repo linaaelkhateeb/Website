@@ -18,8 +18,7 @@ endDate: {
   type: Date,
   required: true,
 },
-  // 👇 Add this
-
+  imageURL: String,
 });
 
 

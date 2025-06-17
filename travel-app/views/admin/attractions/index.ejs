@@ -1,0 +1,158 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/sidebar') %>
+
+<style>
+  body {
+    background: #fef9f4;
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .admin-table-container {
+    padding: 120px 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: #4B0101;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+
+  .alert.success {
+    background-color: #d4edda;
+    border-left: 6px solid #155724;
+    color: #155724;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  .alert.error {
+    background-color: #f8d7da;
+    border-left: 6px solid #721c24;
+    color: #721c24;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #4B0101;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  th {
+    background-color: #4B0101;
+    color: white;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover {
+    background-color: #fceeee;
+  }
+
+  .admin-image {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .action-buttons button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+
+  .action-buttons .approve-btn {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .action-buttons .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .no-items {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    color: #555;
+  }
+</style>
+
+<div class="admin-table-container">
+  <h1>Manage Attractions</h1>
+
+  <% if (success) { %>
+    <div class="alert success"><%= success %></div>
+  <% } %>
+  <% if (error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <p><a href="/admin/attractions/new" class="btn btn-primary" style="background-color: #4B0101; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Add New Attraction</a></p>
+
+  <% if (attractions.length === 0) { %>
+    <p class="no-items">No attractions found.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Country</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% attractions.forEach(attraction => { %>
+          <tr>
+            <td>
+              <img class="admin-image" src="<%= attraction.image || '/images/default-attraction.jpg' %>" alt="Attraction Image">
+            </td>
+            <td><%= attraction.name %></td>
+            <td><%= attraction.description %></td>
+            <td>$<%= attraction.price %></td>
+            <td><%= attraction.country ? attraction.country.name : 'N/A' %></td>
+            <td class="action-buttons">
+              <form action="/admin/attractions/<%= attraction._id %>?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete <%= attraction.name %>?');">Delete</button>
+              </form>
+              <!-- Add an Approve/Reject button if you add an isApproved field to Attractions -->
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../../partials/footer') %> 

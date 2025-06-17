@@ -138,9 +138,12 @@
           <div class="price">
             <%= attraction.price === 0 ? 'Free' : '$' + attraction.price %>
           </div>
-          <a href="/booking/new?attractionId=<%= attraction._id %>" class="booking-button">
-            <i class="fas fa-calendar-check"></i> Book Now
-          </a>
+          <form action="/bookings" method="POST">
+            <input type="hidden" name="attractionId" value="<%= attraction._id %>">
+            <button type="submit" class="booking-button">
+              <i class="fas fa-calendar-check"></i> Book Now
+            </button>
+          </form>
         </div>
       </div>
     </div>
