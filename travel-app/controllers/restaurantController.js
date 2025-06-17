@@ -2,14 +2,19 @@ const Restaurant = require('../models/restaurant')
 
 exports.getAllRestaurants = async (req, res) => {
     try {
-        const restaurants = await Restaurant.find().populate(
+        let filter = {}
+        if (req.user && req.user.role === 'agency') {
+            filter = { createdBy: req.user._id }
+        }
+
+        const restaurants = await Restaurant.find(filter).populate(
             'trip location createdBy'
         )
 
         res.render('restaurants/index', {
             restaurants,
             title: 'Restaurants',
-            user: req.user || null, // ✅ Add user to avoid ReferenceError
+            user: req.user || null,
             error: req.flash('error'),
             success: req.flash('success'),
         })
@@ -35,7 +40,7 @@ exports.getAddRestaurantForm = async (req, res) => {
 exports.postAddRestaurant = async (req, res) => {
     try {
         const imagePath = req.file
-            ? `/uploads/${req.user._id}/${req.file.filename}`
+            ? `/uploads/restaurants/${req.file.filename}`
             : ''
 
         const newRestaurant = new Restaurant({
