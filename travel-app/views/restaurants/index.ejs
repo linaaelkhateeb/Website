@@ -9,7 +9,10 @@
     <% } %> <% if (error) { %>
     <div class="error"><%= error %></div>
     <% } %> <% if (restaurants.length === 0) { %>
-    <p>No restaurants available.</p>
+    <p class="no-results">
+        <% if (user && user.role === 'agency') { %> You haven’t added any
+        restaurants yet. <% } else { %> No restaurants available. <% } %>
+    </p>
     <% } else { %> <% restaurants.forEach(restaurant => { %>
     <div class="restaurant-card">
         <img
@@ -23,10 +26,13 @@
             <p><strong>Cuisine:</strong> <%= restaurant.cuisine %></p>
             <p><strong>Price Range:</strong> <%= restaurant.priceRange %></p>
             <p><strong>Rating:</strong> <%= restaurant.rating %></p>
+
+            <% if (user && user.role !== 'agency') { %>
             <p>
                 <strong>Created By:</strong> <%= restaurant.createdBy?.name ||
                 'Unknown' %>
             </p>
+            <% } %>
         </div>
     </div>
     <hr class="divider" />
