@@ -11,7 +11,7 @@ const dotenv = require('dotenv')
 
 // Removed explicit require for Trip at the top
 // const Trip = require('./models/trips');
-const agencyTripRoutes = require('./routes/agencytrips');
+const agencyTripRoutes = require('./routes/agencytrips')
 
 dotenv.config()
 
@@ -40,7 +40,6 @@ require('./models/location')
 require('./models/booking')
 require('./models/category')
 require('./models/attraction') // Attraction references the above, so require it last
-
 
 // Removed redundant require for database connection
 // require('./config/db')
@@ -110,14 +109,11 @@ app.use('/countries', countryRoutes)
 const tripRoutes = require('./routes/tripRoutes')
 app.use('/trips', tripRoutes)
 const bookingRoutes = require('./routes/bookings')
-app.use('/bookings', bookingRoutes) // ✅ This is correct
+app.use('/bookings', bookingRoutes)
 
-
-require('./models/trips');
-const agencyRoutes = require('./routes/agencyLocations');
-app.use('/agency', agencyRoutes);
-
-
+require('./models/trips')
+const agencyRoutes = require('./routes/agencyLocations')
+app.use('/agency', agencyRoutes)
 
 // One for auth and user routes:
 app.use('/', require('./routes/auth'))
@@ -126,26 +122,23 @@ app.use('/profile', require('./routes/profile'))
 
 // Admin-specific:
 app.use('/admin', require('./routes/adminusers'))
-app.use('/admin/users', require('./routes/adminusers'));
+app.use('/admin/users', require('./routes/adminusers'))
 app.use('/admin/trips', require('./routes/admintrips'))
 app.use('/admin/locations', require('./routes/adminLocations'))
 app.use('/admin/attractions', require('./routes/adminAttractions'))
 
 // Agency-specific:
 
-app.use('/agency', require('./routes/agencyCountryRequests'));
-app.use('/agency/trips', require('./routes/agencytrips'));
-app.use('/agency/view', require('./routes/agencyViewData'));
-app.use('/agency/locations', require('./routes/agencyLocations'));
-app.use('/agency/trips', agencyTripRoutes);
-
-
-
+app.use('/agency', require('./routes/agencyCountryRequests'))
+app.use('/agency/trips', require('./routes/agencytrips'))
+app.use('/agency/view', require('./routes/agencyViewData'))
+app.use('/agency/locations', require('./routes/agencyLocations'))
+app.use('/agency/trips', agencyTripRoutes)
 
 app.use('/attractions', require('./routes/attractions'))
 
 // Country management routes
-app.use('/admin', require('./routes/admincountries'));
+app.use('/admin', require('./routes/admincountries'))
 
 // Category management routes
 app.use('/admin/categories', require('./routes/adminCategories'))
@@ -188,11 +181,9 @@ app.get('/', async (req, res) => {
 const paymentRoutes = require('./routes/payment')
 app.use('/payment', paymentRoutes)
 
-
- // Optional, safe to have
+// Optional, safe to have
 
 // Server
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000')
 })
-
