@@ -3,11 +3,11 @@ const User = require('../models/user');
 const Trip = require('../models/trips')
 const Country = require('../models/country');
 
+
 //  AGENCY: Create a trip
 // AGENCY: Create a trip
 exports.agencyCreateTrip = async (req, res) => {
-
-  console.log("🧾 SUBMISSION BODY:", req.body);
+ 
   try {
     const {
       title,
@@ -30,11 +30,14 @@ exports.agencyCreateTrip = async (req, res) => {
       return res.status(400).json({ message: 'Start date must be today or later' });
     }
 
-    
-
     if (new Date(endDate) <= new Date(startDate)) {
       return res.status(400).json({ message: 'End date must be after start date' });
     }
+
+    
+    const imagePath = req.file
+      ? `/uploads/${req.user._id}/${req.file.filename}`
+      : '/images/default-trip.jpg';
 
     const trip = new Trip({
       title,
@@ -47,6 +50,7 @@ exports.agencyCreateTrip = async (req, res) => {
       startDate,
       endDate,
       createdBy: req.user._id,
+      imageURL: imagePath,
       isApproved: false
     });
 
@@ -98,7 +102,7 @@ exports.createTrip = async (req, res) => {
       category,
       locations: locations || [],
       isApproved: true,
-      imageURL
+      
     });
     await newTrip.save();
     res.status(201).json(newTrip);
@@ -241,6 +245,5 @@ exports.getLocationsByCountry = async (req, res) => {
     res.status(500).json({ message: 'Failed to load locations', error: err.message });
   }
 };
-
 
 
