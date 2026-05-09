@@ -267,13 +267,6 @@ exports.approveTrip = async (req, res) => {
     res.redirect('/admin/trips');
   }
 };
-    try {
-        await Trip.findByIdAndUpdate(req.params.id, { isApproved: true })
-        res.redirect('/admin/trips')
-    } catch (err) {
-        res.status(500).send('Error approving trip')
-    }
-}
 
 
 exports.rejectTrip = async (req, res) => {

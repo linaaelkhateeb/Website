@@ -11,20 +11,17 @@ const tripSchema = new mongoose.Schema({
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   isApproved: Boolean,
   startDate: {
-  type: Date,
-  required: true,
-},
-endDate: {
-  type: Date,
-  required: true,
-
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
   imageURL: {
-  type: String,
-  default: ''
-},
-
-},
-  imageURL: String,
+    type: String,
+    default: ''
+  },
 });
 
 

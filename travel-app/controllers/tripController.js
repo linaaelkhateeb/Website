@@ -21,12 +21,8 @@ exports.getAgencyTrips = async (req, res) => {
   }
 };
 
-
-
-//  AGENCY: Create a trip
 // AGENCY: Create a trip
 exports.agencyCreateTrip = async (req, res) => {
- 
   try {
     const {
       title,
@@ -39,82 +35,11 @@ exports.agencyCreateTrip = async (req, res) => {
       startDate,
       endDate,
       imageURL
-    } = req.body;
-
-    if (!title || !country || !category || !price || !city || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    const now = new Date().setHours(0, 0, 0, 0);
-    if (new Date(startDate) < now) {
-      return res.status(400).json({ message: 'Start date must be today or later' });
-    }
-
-    if (new Date(endDate) <= new Date(startDate)) {
-      return res.status(400).json({ message: 'End date must be after start date' });
-    }
-
-    
-    const imagePath = req.file
-      ? `/uploads/${req.user._id}/${req.file.filename}`
-      : '/images/default-trip.jpg';
-
-    const trip = new Trip({
-      title,
-      description,
-      country,
-      category,
-      locations: Array.isArray(locations) ? locations : [locations],
-      price,
-      city,
-      startDate,
-      endDate,
-      createdBy: req.user._id,
-      isApproved: false,
-      imageURL
-    });
-
-   await trip.save();
-  req.flash('success', 'Trip submitted for approval.');
-    res.redirect('/agency/trips'); 
-
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
-};
-
-//  AGENCY: Get agency’s own trips
-exports.agencyCreateTrip = async (req, res) => {
-  try {
-    const {
-      title,
-      description,
-      country,
-      category,
-      locations,
-      price,
-      city,
-      startDate,
-      endDate
     } = req.body;
 
     if (!title || !country || !category || !price || !city || !startDate || !endDate) {
       req.flash('error', 'Missing required fields');
       return res.redirect('/trips/new');
-
-//  AGENCY: Get agency's own trips
-exports.getAgencyTrips = async (req, res) => {
-    try {
-        const trips = await Trip.find({ createdBy: req.user._id }).populate(
-            'country category locations'
-        )
-        res.status(200).json(trips)
-    } catch (err) {
-        res.status(500).json({
-            message: 'Failed to fetch your trips',
-            error: err.message,
-        })
-
     }
 
     const now = new Date().setHours(0, 0, 0, 0);
@@ -143,14 +68,13 @@ exports.getAgencyTrips = async (req, res) => {
       startDate,
       endDate,
       createdBy: req.user._id,
-      imageURL: imagePath,
       isApproved: false,
+      imageURL: imageURL || imagePath
     });
 
     await trip.save();
-
-    req.flash('success', 'Trip submitted for approval');
-   return  res.redirect('/agency/trips');
+    req.flash('success', 'Trip submitted for approval.');
+    return res.redirect('/agency/trips');
   } catch (err) {
     console.error('Trip submission error:', err);
     req.flash('error', 'Server error, please try again');
@@ -349,5 +273,4 @@ exports.getLocationsByCountry = async (req, res) => {
     res.status(500).json({ message: 'Failed to load locations', error: err.message });
   }
 };
-
 
